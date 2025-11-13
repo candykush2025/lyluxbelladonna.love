@@ -1,65 +1,206 @@
-import Image from "next/image";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+      <Header />
+      <main className="flex-1">
+        <div className="px-4 md:px-10 lg:px-20 xl:px-40 py-5">
+          <div className="flex flex-col w-full max-w-[1280px] mx-auto">
+            <div className="flex flex-col gap-16 md:gap-24 mt-8">
+              {/* Hero Section */}
+              <div className="@container">
+                <div className="@[480px]:p-4">
+                  <div
+                    className="flex min-h-[60vh] md:min-h-[75vh] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 @[480px]:rounded-xl items-center justify-center p-4 text-center"
+                    style={{
+                      backgroundImage:
+                        'linear-gradient(rgba(12, 24, 33, 0.2) 0%, rgba(12, 24, 33, 0.6) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBJRymbQDgxn-tAYCA49tAWa0W8GS1wcpT8Xa2sxft5d2ql7ZFYzEGmLVXuvm5BPJUQyMvL7UHUEAvQq9JTtFqw7rBd21CjsYv-_p4gaxJvG22pRAtdSHmp7ta2TwDUjbpreD3_MjMfOrB63wlfGu-USMpiKCeYemgJ7pwfADXLNz4RESBmeWH-szbhJfQ7xLowtM3db6l_Mjb0jUPNnGrmlfM-xkdSGzjh55nAfEScdSZXn6OIMM39oAzlr7WIFtsbclk_owxs0iE")',
+                    }}
+                  >
+                    <div className="flex flex-col gap-4">
+                      <h1 className="text-white text-5xl font-black leading-tight tracking-tight font-serif @[480px]:text-7xl">
+                        The Autumnal Equinox
+                      </h1>
+                      <h2 className="text-white/90 text-base font-normal leading-normal @[480px]:text-lg">
+                        Discover timeless elegance and modern sophistication in
+                        our latest arrivals.
+                      </h2>
+                    </div>
+                    <Link
+                      href="/products"
+                      className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 @[480px]:h-14 @[480px]:px-10 bg-transparent border border-primary text-primary hover:bg-primary hover:text-background-dark transition-colors text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base"
+                    >
+                      <span className="truncate">Shop Now</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* New Arrivals */}
+              <section className="flex flex-col gap-4">
+                <h2 className="text-white text-3xl font-serif font-bold leading-tight tracking-tight px-4">
+                  New Arrivals
+                </h2>
+                <div className="flex overflow-x-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  <div className="flex items-stretch p-4 gap-6">
+                    <Link
+                      href="/products/1"
+                      className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-64 group cursor-pointer"
+                    >
+                      <div
+                        className="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col transition-transform group-hover:scale-105"
+                        style={{
+                          backgroundImage:
+                            'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDozRqj7SpbUvACQ_9JKmzf3KIFTnqV8ZhO0G4ddHJQ9FihincE6031-B_tDUXZDiOjaX1AL9RFp2fMwr8ABZWAfXTsWzdB7ANv0a1qLfRHcPdKd68FBNlqzv5cj2jblAh81N6499-fEj0ikpTK44SgSnRZR9KArZCgfcQn4idkgrFRcQbPD_52sl59LvJtpbAaqflx8eg4-pI3y5lVkZIbv-PIo3HIqCyDdKg6A9iE8qMgoi6BFpBlUWD6xjZfmZLbNBhoNso7B8E")',
+                        }}
+                      ></div>
+                      <div>
+                        <p className="text-white text-base font-medium leading-normal group-hover:text-primary transition-colors">
+                          The Midnight Gown
+                        </p>
+                        <p className="text-primary text-sm font-normal leading-normal">
+                          $1,250
+                        </p>
+                      </div>
+                    </Link>
+                    <Link
+                      href="/products/2"
+                      className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-64 group cursor-pointer"
+                    >
+                      <div
+                        className="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col transition-transform group-hover:scale-105"
+                        style={{
+                          backgroundImage:
+                            'url("https://lh3.googleusercontent.com/aida-public/AB6AXuC3LUsfezkJ2nN9gnJqmjh61GWm5J9bd3gQVbvwMK7ZbgiG6j2N7Yyka1iO6u4wijMcfVgD0vCypDw8r1KFYieILrl38hdM8QUg9JZzTNOiytwCeFMLBaWS8JZGIppAlASqQ0KIZpiSknfX8xprqz9V2NSohUIpRvVkR1vSxafa8bF_XTGlGTYISe9zhqLR-1fA9l4fr6gzuXqOROb-k34i2nvvpRpv3nEHvrx-pfcfyGIOXINIxp6TcXZxwgxhYKDlGJqTjWPMxSc")',
+                        }}
+                      ></div>
+                      <div>
+                        <p className="text-white text-base font-medium leading-normal group-hover:text-primary transition-colors">
+                          Aurelia Handbag
+                        </p>
+                        <p className="text-primary text-sm font-normal leading-normal">
+                          $890
+                        </p>
+                      </div>
+                    </Link>
+                    <Link
+                      href="/products/3"
+                      className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-64 group cursor-pointer"
+                    >
+                      <div
+                        className="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col transition-transform group-hover:scale-105"
+                        style={{
+                          backgroundImage:
+                            'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBFdrE1RAGM0z-laWelAZ_nfPnceceFz_LfsjUYOlxGsVunwhvCEwa-46DMU_q6f91kVG5gxlCkPRomRjYZMEGd70M36IXaBNKaix8J-ipmXSTyD1YiaR0IE71eCVfzG-yH6NkX--hU4WKDzymB8Xb6ObOQxm1amUSL6LUMdGFLf1n84hXbMpujZvtGLgOSd85nwLL8-80rdxekB3I9_EymNJKAyTKzb3ub5NNwmpvvV-iatpDaoV_dHaLaxHVD_OGCIRl4H8eyndA")',
+                        }}
+                      ></div>
+                      <div>
+                        <p className="text-white text-base font-medium leading-normal group-hover:text-primary transition-colors">
+                          Golden Stride Heels
+                        </p>
+                        <p className="text-primary text-sm font-normal leading-normal">
+                          $760
+                        </p>
+                      </div>
+                    </Link>
+                    <Link
+                      href="/products/4"
+                      className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-64 group cursor-pointer"
+                    >
+                      <div
+                        className="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col transition-transform group-hover:scale-105"
+                        style={{
+                          backgroundImage:
+                            'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCqUf9KJwIXeipgToOALyARwRcA1rHgQepPT1X-4pu38Mr58Uqq7O5puxLXgPWggYojhwORXguva1jvHRuEASqpmUZcVUF8Y4_wSpXu3kEhGLNOMiEUBk1Wf8kloeNGQz2byGIjfGqm1QfCk16aw5V5b6Husiv5RswhNYqsb5YhktfX6baw3LvxntqijEw3Y7r6cq3YiCCfMewkDpzMIcXUxZqbRbWGDIjVw9Hxdbg6IPjT-Mt076BVO0fvrkvg64I9cPqdkau5Evk")',
+                        }}
+                      ></div>
+                      <div>
+                        <p className="text-white text-base font-medium leading-normal group-hover:text-primary transition-colors">
+                          Ethereal Silk Scarf
+                        </p>
+                        <p className="text-primary text-sm font-normal leading-normal">
+                          $420
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              </section>
+
+              {/* Featured Collections */}
+              <section className="flex flex-col gap-6">
+                <h2 className="text-white text-3xl font-serif font-bold leading-tight tracking-tight px-4">
+                  Featured Collections
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+                  <Link
+                    className="group relative flex items-end justify-start min-h-96 rounded-xl overflow-hidden"
+                    href="/products"
+                  >
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-500 ease-in-out group-hover:scale-105"
+                      style={{
+                        backgroundImage:
+                          'url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_ducnJ8AmXCNRgW7Rc74jnAwSjG0xWJlnEWnlOr_hVZt7lhrsh7jghy3K5cKBb3NGlmfyuwtofkmEBwZRklNiJeY7_5_oEke3SI8820_c_HvQEQZO9266_s3uDoNqzuvsb_aCcC6pZmb2f9_ABcfhfVJGtfo9U2nQS8SwSEWjV2c7IzA-yp0oBo9fpl_P8qT9L-AU8FBCTXa2kU78sZ-b9SFrRrziragFUszlYHFaxiYNAAoP0pLzdp6Fok1xyIM0WvsfQHvTN0")',
+                      }}
+                    ></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div className="relative p-8">
+                      <h3 className="text-white text-4xl font-serif font-bold">
+                        The Evening Edit
+                      </h3>
+                      <p className="text-primary mt-1">Shop Collection</p>
+                    </div>
+                  </Link>
+                  <Link
+                    className="group relative flex items-end justify-start min-h-96 rounded-xl overflow-hidden"
+                    href="/products"
+                  >
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-500 ease-in-out group-hover:scale-105"
+                      style={{
+                        backgroundImage:
+                          'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDpY63pOULIh0ykCEQ3__5GYxAqX4f6xWY4KV5ORKPkoZW7SJzkR_GJ5VimZvBY7YfbCSLohFxDpJjc1wwIxNHo7CO1FS7kPGZhieKzHpoxDHXZzoc9SalATd4x5dUSOIM_Gx4BCJ5JNPQrhvE72BKVjY4cxUlNhY4E5d-VtNLXUZC9PTiTnuF3xaXSaxkEdTPsO1iiz36KbWe1yOgR97_GA3BJGc5LB_a105xVU8UItQ4RatFtnW7tDXuFyR1xHLHXWEmu9ZKhvEM")',
+                      }}
+                    ></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div className="relative p-8">
+                      <h3 className="text-white text-4xl font-serif font-bold">
+                        Artisan Leather
+                      </h3>
+                      <p className="text-primary mt-1">Shop Collection</p>
+                    </div>
+                  </Link>
+                </div>
+              </section>
+
+              {/* Craft Section */}
+              <section className="bg-white/5 rounded-xl px-8 py-12 md:py-20 flex flex-col items-center text-center gap-6">
+                <h3 className="text-white text-3xl font-serif font-bold">
+                  The Art of Craft
+                </h3>
+                <p className="max-w-3xl text-gray-300">
+                  At Lylux Belladonna, we believe in the enduring power of
+                  craftsmanship. Each piece is meticulously designed and created
+                  with the finest materials, blending traditional techniques
+                  with a modern sensibility to create not just clothing, but
+                  timeless art.
+                </p>
+                <Link
+                  href="/about"
+                  className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-background-dark hover:bg-opacity-90 transition-opacity text-sm font-bold leading-normal tracking-[0.015em]"
+                >
+                  <span className="truncate">Discover Our Philosophy</span>
+                </Link>
+              </section>
+            </div>
+          </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
