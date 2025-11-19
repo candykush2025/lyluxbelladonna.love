@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Manrope, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { CartProvider } from "@/contexts/CartContext";
+import { WishlistProvider } from "@/contexts/WishlistContext";
+import { ToastProvider } from "@/contexts/ToastContext";
+import ToastContainer from "@/components/ToastContainer";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -36,7 +41,16 @@ export default function RootLayout({
       <body
         className={`${manrope.variable} ${playfair.variable} bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200 antialiased`}
       >
-        {children}
+        <AuthProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <ToastProvider>
+                {children}
+                <ToastContainer />
+              </ToastProvider>
+            </CartProvider>
+          </WishlistProvider>
+        </AuthProvider>
       </body>
     </html>
   );

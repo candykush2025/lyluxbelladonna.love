@@ -326,7 +326,7 @@ export default function AboutPage() {
             </main>
 
             {/* Footer */}
-            <footer className="w-full sticky bottom-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm z-50 text-gray-700 dark:text-gray-300">
+            <footer className="w-full mt-auto bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm text-gray-700 dark:text-gray-300">
               <div className="max-w-7xl mx-auto py-6 px-6 lg:px-20">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6">
                   <div className="flex items-center gap-4 text-sm">

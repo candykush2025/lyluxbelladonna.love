@@ -1,0 +1,90 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper function to check if user is authenticated
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return isSignedIn() && 
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // Helper function to validate image files
+    function isValidImage() {
+      return request.resource.size < 5 * 1024 * 1024 && // 5MB max
+             request.resource.contentType.matches('image/.*');
+    }
+    
+    // ============================================
+    // Product Images
+    // ============================================
+    match /products/{productId}/{imageId} {
+      // Anyone can view product images (public)
+      allow read: if true;
+      
+      // Only admins can upload/update product images
+      allow create, update: if isAdmin() && isValidImage();
+      
+      // Only admins can delete product images
+      allow delete: if isAdmin();
+    }
+    
+    // ============================================
+    // User Profile Pictures (Optional)
+    // ============================================
+    match /users/{userId}/profile/{imageId} {
+      // Anyone authenticated can view profile pictures
+      allow read: if isSignedIn();
+      
+      // Users can upload their own profile picture
+      allow create, update: if isSignedIn() && 
+                              request.auth.uid == userId && 
+                              isValidImage();
+      
+      // Users can delete their own profile picture
+      allow delete: if isSignedIn() && request.auth.uid == userId;
+    }
+    
+    // ============================================
+    // Order Receipts/Documents (Optional)
+    // ============================================
+    match /orders/{orderId}/{documentId} {
+      // Users can read their own order documents, admins can read all
+      allow read: if isAdmin();
+      
+      // Only admins can create order documents
+      allow create, update: if isAdmin();
+      
+      // Only admins can delete order documents
+      allow delete: if isAdmin();
+    }
+    
+    // ============================================
+    // Temporary Uploads (for image processing)
+    // ============================================
+    match /temp/{userId}/{imageId} {
+      // Users can upload to their temp folder
+      allow create, update: if isSignedIn() && 
+                              request.auth.uid == userId && 
+                              isValidImage();
+      
+      // Users can delete from their temp folder
+      allow delete: if isSignedIn() && request.auth.uid == userId;
+      
+      // Only owner can read from their temp folder
+      allow read: if isSignedIn() && request.auth.uid == userId;
+    }
+    
+    // ============================================
+    // Default: Deny all other access
+    // ============================================
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,8 +1,53 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import { getProducts } from "@/lib/firestore";
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  subcategory: string;
+  images: string[];
+  sizes?: string[];
+  colors?: string[];
+  stock: number;
+  featured: boolean;
+  status: string;
+  sku: string;
+  tags: string[];
+  rating: number;
+  reviewCount: number;
+}
 
 export default function Home() {
+  const [newArrivals, setNewArrivals] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadNewArrivals();
+  }, []);
+
+  const loadNewArrivals = async () => {
+    try {
+      setLoading(true);
+      // Get featured products or latest products for new arrivals
+      const products = await getProducts();
+      // Take first 4 products as new arrivals (you can modify this logic)
+      const arrivals = products.slice(0, 4);
+      setNewArrivals(arrivals as Product[]);
+    } catch (error) {
+      console.error("Error loading new arrivals:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
       <Header />
@@ -46,86 +91,45 @@ export default function Home() {
                 </h2>
                 <div className="flex overflow-x-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                   <div className="flex items-stretch p-4 gap-6">
-                    <Link
-                      href="/products/1"
-                      className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-64 group cursor-pointer"
-                    >
-                      <div
-                        className="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col transition-transform group-hover:scale-105"
-                        style={{
-                          backgroundImage:
-                            'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDozRqj7SpbUvACQ_9JKmzf3KIFTnqV8ZhO0G4ddHJQ9FihincE6031-B_tDUXZDiOjaX1AL9RFp2fMwr8ABZWAfXTsWzdB7ANv0a1qLfRHcPdKd68FBNlqzv5cj2jblAh81N6499-fEj0ikpTK44SgSnRZR9KArZCgfcQn4idkgrFRcQbPD_52sl59LvJtpbAaqflx8eg4-pI3y5lVkZIbv-PIo3HIqCyDdKg6A9iE8qMgoi6BFpBlUWD6xjZfmZLbNBhoNso7B8E")',
-                        }}
-                      ></div>
-                      <div>
-                        <p className="text-white text-base font-medium leading-normal group-hover:text-primary transition-colors">
-                          The Midnight Gown
-                        </p>
-                        <p className="text-primary text-sm font-normal leading-normal">
-                          $1,250
-                        </p>
-                      </div>
-                    </Link>
-                    <Link
-                      href="/products/2"
-                      className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-64 group cursor-pointer"
-                    >
-                      <div
-                        className="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col transition-transform group-hover:scale-105"
-                        style={{
-                          backgroundImage:
-                            'url("https://lh3.googleusercontent.com/aida-public/AB6AXuC3LUsfezkJ2nN9gnJqmjh61GWm5J9bd3gQVbvwMK7ZbgiG6j2N7Yyka1iO6u4wijMcfVgD0vCypDw8r1KFYieILrl38hdM8QUg9JZzTNOiytwCeFMLBaWS8JZGIppAlASqQ0KIZpiSknfX8xprqz9V2NSohUIpRvVkR1vSxafa8bF_XTGlGTYISe9zhqLR-1fA9l4fr6gzuXqOROb-k34i2nvvpRpv3nEHvrx-pfcfyGIOXINIxp6TcXZxwgxhYKDlGJqTjWPMxSc")',
-                        }}
-                      ></div>
-                      <div>
-                        <p className="text-white text-base font-medium leading-normal group-hover:text-primary transition-colors">
-                          Aurelia Handbag
-                        </p>
-                        <p className="text-primary text-sm font-normal leading-normal">
-                          $890
-                        </p>
-                      </div>
-                    </Link>
-                    <Link
-                      href="/products/3"
-                      className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-64 group cursor-pointer"
-                    >
-                      <div
-                        className="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col transition-transform group-hover:scale-105"
-                        style={{
-                          backgroundImage:
-                            'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBFdrE1RAGM0z-laWelAZ_nfPnceceFz_LfsjUYOlxGsVunwhvCEwa-46DMU_q6f91kVG5gxlCkPRomRjYZMEGd70M36IXaBNKaix8J-ipmXSTyD1YiaR0IE71eCVfzG-yH6NkX--hU4WKDzymB8Xb6ObOQxm1amUSL6LUMdGFLf1n84hXbMpujZvtGLgOSd85nwLL8-80rdxekB3I9_EymNJKAyTKzb3ub5NNwmpvvV-iatpDaoV_dHaLaxHVD_OGCIRl4H8eyndA")',
-                        }}
-                      ></div>
-                      <div>
-                        <p className="text-white text-base font-medium leading-normal group-hover:text-primary transition-colors">
-                          Golden Stride Heels
-                        </p>
-                        <p className="text-primary text-sm font-normal leading-normal">
-                          $760
-                        </p>
-                      </div>
-                    </Link>
-                    <Link
-                      href="/products/4"
-                      className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-64 group cursor-pointer"
-                    >
-                      <div
-                        className="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col transition-transform group-hover:scale-105"
-                        style={{
-                          backgroundImage:
-                            'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCqUf9KJwIXeipgToOALyARwRcA1rHgQepPT1X-4pu38Mr58Uqq7O5puxLXgPWggYojhwORXguva1jvHRuEASqpmUZcVUF8Y4_wSpXu3kEhGLNOMiEUBk1Wf8kloeNGQz2byGIjfGqm1QfCk16aw5V5b6Husiv5RswhNYqsb5YhktfX6baw3LvxntqijEw3Y7r6cq3YiCCfMewkDpzMIcXUxZqbRbWGDIjVw9Hxdbg6IPjT-Mt076BVO0fvrkvg64I9cPqdkau5Evk")',
-                        }}
-                      ></div>
-                      <div>
-                        <p className="text-white text-base font-medium leading-normal group-hover:text-primary transition-colors">
-                          Ethereal Silk Scarf
-                        </p>
-                        <p className="text-primary text-sm font-normal leading-normal">
-                          $420
-                        </p>
-                      </div>
-                    </Link>
+                    {loading
+                      ? // Loading skeleton
+                        Array.from({ length: 4 }).map((_, index) => (
+                          <div
+                            key={index}
+                            className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-64 animate-pulse"
+                          >
+                            <div className="w-full aspect-[3/4] bg-gray-700 rounded-lg"></div>
+                            <div className="space-y-2">
+                              <div className="h-4 bg-gray-700 rounded"></div>
+                              <div className="h-3 bg-gray-700 rounded w-1/2"></div>
+                            </div>
+                          </div>
+                        ))
+                      : newArrivals.map((product) => (
+                          <Link
+                            key={product.id}
+                            href={`/products/${product.id}`}
+                            className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-64 group cursor-pointer"
+                          >
+                            <div
+                              className="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col transition-transform group-hover:scale-105"
+                              style={{
+                                backgroundImage:
+                                  product.images && product.images.length > 0
+                                    ? `url("${product.images[0]}")`
+                                    : 'url("https://via.placeholder.com/300x400?text=No+Image")',
+                              }}
+                            ></div>
+                            <div>
+                              <p className="text-white text-base font-medium leading-normal group-hover:text-primary transition-colors">
+                                {product.name}
+                              </p>
+                              <p className="text-primary text-sm font-normal leading-normal">
+                                ${product.price.toLocaleString()}
+                              </p>
+                            </div>
+                          </Link>
+                        ))}
                   </div>
                 </div>
               </section>
