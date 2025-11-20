@@ -235,11 +235,11 @@ export const getBrands = async () => {
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
 
-export const getBrand = async (id: string) => {
+export const getBrand = async (id: string): Promise<{id: string; name: string; logo: string} | null> => {
   const docRef = doc(db, "brands", id);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    return { id: docSnap.id, ...docSnap.data() };
+    return { id: docSnap.id, ...docSnap.data() } as {id: string; name: string; logo: string};
   }
   return null;
 };
