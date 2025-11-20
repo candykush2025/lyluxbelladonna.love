@@ -10,6 +10,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
 import { createOrder, updateOrder } from "@/lib/firestore";
 import { updateUserProfile } from "@/lib/auth";
+import { useCurrency } from "@/lib/currency-context";
 
 interface ShippingAddress {
   fullName: string;
@@ -30,6 +31,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { user, userProfile } = useAuth();
   const { cartItems, getCartTotal, getCartCount, clearCart } = useCart();
+  const { formatPrice } = useCurrency();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -238,15 +240,6 @@ export default function CheckoutPage() {
         setError("Please enter a valid billing email address.");
         return false;
       }
-    }
-
-    // Check for out of stock items
-    const outOfStockItems = cartItems.filter((item) => item.stock === 0);
-    if (outOfStockItems.length > 0) {
-      setError(
-        "Some items in your cart are out of stock. Please remove them before checking out."
-      );
-      return false;
     }
 
     // Validate payment method selection
@@ -1387,53 +1380,61 @@ export default function CheckoutPage() {
 
                 {/* Cart Items */}
                 <div className="space-y-4 mb-6 max-h-96 overflow-y-auto">
-                  {cartItems.map((item) => (
-                    <div
-                      key={`${item.productId}-${item.size || ""}-${
-                        item.color || ""
-                      }`}
-                      className="flex gap-3"
-                    >
-                      <div className="w-20 h-20 bg-gray-800 rounded-lg overflow-hidden shrink-0">
-                        {item.image ? (
-                          <Image
-                            src={item.image}
-                            alt={item.name || "Product"}
-                            width={80}
-                            height={80}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-gray-600 text-xs">
-                            No Image
-                          </div>
-                        )}
+                  {cartItems.map((item, index) => {
+                    // Generate unique key including variants
+                    const variantKey =
+                      item.variants && Array.isArray(item.variants)
+                        ? item.variants
+                            .map((v) => `${v.name}-${v.option}`)
+                            .join("-")
+                        : "";
+                    const itemKey = `${item.productId}-${item.size || ""}-${
+                      item.color || ""
+                    }-${variantKey || index}`;
+
+                    return (
+                      <div key={itemKey} className="flex gap-3">
+                        <div className="w-20 h-20 bg-gray-800 rounded-lg overflow-hidden shrink-0">
+                          {item.image ? (
+                            <Image
+                              src={item.image}
+                              alt={item.name || "Product"}
+                              width={80}
+                              height={80}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-gray-600 text-xs">
+                              No Image
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-white text-sm font-medium truncate">
+                            {item.name}
+                          </h3>
+                          <p className="text-gray-400 text-xs mt-1">
+                            {item.size && `Size: ${item.size}`}
+                            {item.size && item.color && " | "}
+                            {item.color && `Color: ${item.color}`}
+                          </p>
+                          <p className="text-gray-400 text-xs mt-1">
+                            Qty: {item.quantity}
+                          </p>
+                          <p className="text-primary text-sm font-semibold mt-1">
+                            {formatPrice((item.price || 0) * item.quantity)}
+                          </p>
+                        </div>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-white text-sm font-medium truncate">
-                          {item.name}
-                        </h3>
-                        <p className="text-gray-400 text-xs mt-1">
-                          {item.size && `Size: ${item.size}`}
-                          {item.size && item.color && " | "}
-                          {item.color && `Color: ${item.color}`}
-                        </p>
-                        <p className="text-gray-400 text-xs mt-1">
-                          Qty: {item.quantity}
-                        </p>
-                        <p className="text-primary text-sm font-semibold mt-1">
-                          ${((item.price || 0) * item.quantity).toFixed(2)}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 {/* Totals */}
                 <div className="space-y-4 mb-6 border-t border-white/10 pt-4">
                   <div className="flex justify-between text-gray-300">
                     <span>Subtotal ({getCartCount()} items)</span>
-                    <span>${subtotal.toFixed(2)}</span>
+                    <span>{formatPrice(subtotal)}</span>
                   </div>
                   <div className="flex justify-between text-gray-300">
                     <span>Shipping</span>
@@ -1441,11 +1442,11 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex justify-between text-gray-300">
                     <span>Tax (10%)</span>
-                    <span>${tax.toFixed(2)}</span>
+                    <span>{formatPrice(tax)}</span>
                   </div>
                   <div className="border-t border-white/10 pt-4 flex justify-between text-white font-bold text-lg">
                     <span>Total</span>
-                    <span className="text-primary">${total.toFixed(2)}</span>
+                    <span className="text-primary">{formatPrice(total)}</span>
                   </div>
                 </div>
 
@@ -1502,7 +1503,7 @@ export default function CheckoutPage() {
                       Order Total:
                     </span>
                     <div className="text-2xl font-bold text-primary">
-                      ${total.toFixed(2)}
+                      {formatPrice(total)}
                     </div>
                   </div>
                 </div>

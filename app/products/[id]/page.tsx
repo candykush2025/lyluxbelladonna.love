@@ -15,6 +15,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { useToast } from "@/contexts/ToastContext";
+import { useCurrency } from "@/lib/currency-context";
 
 interface Product {
   id: string;
@@ -72,6 +73,7 @@ export default function ProductDetail({
   const { addToCart: addToCartContext } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const { addToast } = useToast();
+  const { formatPrice } = useCurrency();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState("");
@@ -191,11 +193,54 @@ export default function ProductDetail({
 
     try {
       setAddingToCart(true);
+
+      // Get variant information for the selected options
+      let variantDetails = [];
+
+      if (product.hasVariants && selectedVariantOptions) {
+        // For variant products, collect all selected variant details
+        for (const [variantName, selectedOptionId] of Object.entries(
+          selectedVariantOptions
+        )) {
+          const variant = product.variants?.find((v) => v.name === variantName);
+          if (variant) {
+            const option = variant.options.find(
+              (opt) => opt.id === selectedOptionId
+            );
+            if (option) {
+              variantDetails.push({
+                name: variant.name,
+                option: option.name,
+                price: option.price,
+                image: option.image,
+              });
+            }
+          }
+        }
+      }
+
+      console.log("🛒 Adding to cart with variant details:", variantDetails);
+      console.log("🛒 Product:", {
+        id: product.id,
+        name: product.name,
+        basePrice: product.price,
+      });
+      console.log("🛒 Quantity:", quantity);
+      console.log("🛒 Size/Color:", {
+        size: selectedSize,
+        color: selectedColor,
+      });
+
       await addToCartContext(
         product.id,
         quantity,
         selectedSize || undefined,
-        selectedColor || undefined
+        selectedColor || undefined,
+        variantDetails.length > 0 ? variantDetails : undefined,
+        undefined, // legacy variantName
+        undefined, // legacy variantOption
+        undefined, // legacy variantPrice
+        undefined // legacy variantImage
       );
 
       // Show success message
@@ -372,7 +417,7 @@ export default function ProductDetail({
                   {product.name}
                 </h1>
                 <p className="text-gold text-2xl font-normal leading-normal">
-                  ${getCurrentPrice().toFixed(2)}
+                  {formatPrice(getCurrentPrice())}
                 </p>
                 {/* Stock Status - Only show if stock management is enabled */}
                 {product.manageStock && (
@@ -1024,7 +1069,7 @@ export default function ProductDetail({
                     Aurelia Hoops
                   </h4>
                   <p className="text-sm text-slate-500 dark:text-gray-400">
-                    $450.00
+                    {formatPrice(450)}
                   </p>
                 </div>
               </Link>
@@ -1040,7 +1085,7 @@ export default function ProductDetail({
                     Seraphina Clutch
                   </h4>
                   <p className="text-sm text-slate-500 dark:text-gray-400">
-                    $980.00
+                    {formatPrice(980)}
                   </p>
                 </div>
               </Link>
@@ -1056,7 +1101,7 @@ export default function ProductDetail({
                     Orion Silk Scarf
                   </h4>
                   <p className="text-sm text-slate-500 dark:text-gray-400">
-                    $320.00
+                    {formatPrice(320)}
                   </p>
                 </div>
               </Link>
@@ -1072,7 +1117,7 @@ export default function ProductDetail({
                     Nyx Stilettos
                   </h4>
                   <p className="text-sm text-slate-500 dark:text-gray-400">
-                    $750.00
+                    {formatPrice(750)}
                   </p>
                 </div>
               </Link>

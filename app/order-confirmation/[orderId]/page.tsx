@@ -7,6 +7,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getOrder } from "@/lib/firestore";
+import { useCurrency } from "@/lib/currency-context";
 
 interface OrderItem {
   productId: string;
@@ -88,6 +89,8 @@ export default function OrderConfirmationPage() {
   const [paymentStatusFromUrl, setPaymentStatusFromUrl] = useState<
     string | null
   >(null);
+
+  const { formatPrice } = useCurrency();
 
   useEffect(() => {
     // Check for payment status in URL
@@ -361,10 +364,10 @@ export default function OrderConfirmationPage() {
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-gray-800 dark:text-gray-200">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          {formatPrice(item.price * item.quantity)}
                         </p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">
-                          ${item.price.toFixed(2)} each
+                          {formatPrice(item.price)} each
                         </p>
                       </div>
                     </div>
@@ -435,20 +438,20 @@ export default function OrderConfirmationPage() {
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between text-gray-600 dark:text-gray-400">
                     <span>Subtotal</span>
-                    <span>${order.subtotal.toFixed(2)}</span>
+                    <span>{formatPrice(order.subtotal)}</span>
                   </div>
                   <div className="flex justify-between text-gray-600 dark:text-gray-400">
                     <span>Shipping</span>
-                    <span>${order.shipping.toFixed(2)}</span>
+                    <span>{formatPrice(order.shipping)}</span>
                   </div>
                   <div className="flex justify-between text-gray-600 dark:text-gray-400">
                     <span>Tax</span>
-                    <span>${order.tax.toFixed(2)}</span>
+                    <span>{formatPrice(order.tax)}</span>
                   </div>
                   <div className="border-t border-gray-200 dark:border-gray-700 pt-3">
                     <div className="flex justify-between text-lg font-bold text-gray-800 dark:text-gray-200">
                       <span>Total</span>
-                      <span>${order.total.toFixed(2)}</span>
+                      <span>{formatPrice(order.total)}</span>
                     </div>
                   </div>
                 </div>
@@ -516,7 +519,7 @@ export default function OrderConfirmationPage() {
                                 </span>{" "}
                                 Rp {order.xenditAmount.toLocaleString("id-ID")}
                                 <span className="text-xs ml-2">
-                                  (USD ${order.total.toFixed(2)} @ Rp{" "}
+                                  (USD {formatPrice(order.total)} @ Rp{" "}
                                   {order.xenditConversionRate?.toLocaleString(
                                     "id-ID"
                                   )}

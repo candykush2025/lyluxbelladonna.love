@@ -235,11 +235,17 @@ export const getBrands = async () => {
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
 
-export const getBrand = async (id: string): Promise<{id: string; name: string; logo: string} | null> => {
+export const getBrand = async (
+  id: string
+): Promise<{ id: string; name: string; logo: string } | null> => {
   const docRef = doc(db, "brands", id);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    return { id: docSnap.id, ...docSnap.data() } as {id: string; name: string; logo: string};
+    return { id: docSnap.id, ...docSnap.data() } as {
+      id: string;
+      name: string;
+      logo: string;
+    };
   }
   return null;
 };
@@ -265,4 +271,50 @@ export const updateBrand = async (id: string, data: DocumentData) => {
 export const deleteBrand = async (id: string) => {
   const docRef = doc(db, "brands", id);
   await deleteDoc(docRef);
+};
+
+// Homepage content operations
+export const getHomepageContent = async () => {
+  const docRef = doc(db, "homepage", "content");
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return { id: docSnap.id, ...docSnap.data() };
+  }
+  return null;
+};
+
+export const updateHomepageContent = async (data: DocumentData) => {
+  const docRef = doc(db, "homepage", "content");
+  await setDoc(
+    docRef,
+    {
+      ...data,
+      updatedAt: Timestamp.now(),
+    },
+    { merge: true }
+  );
+  return { id: "content", ...data };
+};
+
+// Currency operations
+export const getCurrencyRates = async () => {
+  const docRef = doc(db, "settings", "currency");
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return { id: docSnap.id, ...docSnap.data() };
+  }
+  return null;
+};
+
+export const updateCurrencyRates = async (data: DocumentData) => {
+  const docRef = doc(db, "settings", "currency");
+  await setDoc(
+    docRef,
+    {
+      ...data,
+      updatedAt: Timestamp.now(),
+    },
+    { merge: true }
+  );
+  return { id: "currency", ...data };
 };

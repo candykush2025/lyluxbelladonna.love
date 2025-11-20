@@ -5,7 +5,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import { getProducts } from "@/lib/firestore";
+import { getHomepageContent } from "@/lib/firestore";
 import { orderBy, limit } from "firebase/firestore";
+import { useCurrency } from "@/lib/currency-context";
 
 interface Product {
   id: string;
@@ -35,12 +37,39 @@ interface Product {
   reviewCount: number;
 }
 
+interface HomepageContent {
+  hero: {
+    title: string;
+    subtitle: string;
+    backgroundImage: string;
+    shopNowText: string;
+  };
+  collections: Array<{
+    id: string;
+    title: string;
+    subtitle: string;
+    backgroundImage: string;
+    link: string;
+  }>;
+  craft: {
+    title: string;
+    description: string;
+    buttonText: string;
+    buttonLink: string;
+  };
+}
+
 export default function Home() {
   const [newArrivals, setNewArrivals] = useState<Product[]>([]);
+  const [homepageContent, setHomepageContent] =
+    useState<HomepageContent | null>(null);
   const [loading, setLoading] = useState(true);
+  const [contentLoading, setContentLoading] = useState(true);
+  const { formatPrice } = useCurrency();
 
   useEffect(() => {
     loadNewArrivals();
+    loadHomepageContent();
   }, []);
 
   const loadNewArrivals = async () => {
@@ -59,6 +88,22 @@ export default function Home() {
     }
   };
 
+  const loadHomepageContent = async () => {
+    try {
+      setContentLoading(true);
+      const content = await getHomepageContent();
+      if (content) {
+        // Remove the id field and cast to HomepageContent
+        const { id, ...contentData } = content;
+        setHomepageContent(contentData as HomepageContent);
+      }
+    } catch (error) {
+      console.error("Error loading homepage content:", error);
+    } finally {
+      setContentLoading(false);
+    }
+  };
+
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
       <Header />
@@ -72,24 +117,28 @@ export default function Home() {
                   <div
                     className="flex min-h-[60vh] md:min-h-[75vh] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 @[480px]:rounded-xl items-center justify-center p-4 text-center"
                     style={{
-                      backgroundImage:
-                        'linear-gradient(rgba(12, 24, 33, 0.2) 0%, rgba(12, 24, 33, 0.6) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBJRymbQDgxn-tAYCA49tAWa0W8GS1wcpT8Xa2sxft5d2ql7ZFYzEGmLVXuvm5BPJUQyMvL7UHUEAvQq9JTtFqw7rBd21CjsYv-_p4gaxJvG22pRAtdSHmp7ta2TwDUjbpreD3_MjMfOrB63wlfGu-USMpiKCeYemgJ7pwfADXLNz4RESBmeWH-szbhJfQ7xLowtM3db6l_Mjb0jUPNnGrmlfM-xkdSGzjh55nAfEScdSZXn6OIMM39oAzlr7WIFtsbclk_owxs0iE")',
+                      backgroundImage: homepageContent?.hero?.backgroundImage
+                        ? `linear-gradient(rgba(12, 24, 33, 0.2) 0%, rgba(12, 24, 33, 0.6) 100%), url("${homepageContent.hero.backgroundImage}")`
+                        : 'linear-gradient(rgba(12, 24, 33, 0.2) 0%, rgba(12, 24, 33, 0.6) 100%), url("https://via.placeholder.com/1920x1080?text=Hero+Image")',
                     }}
                   >
                     <div className="flex flex-col gap-4">
                       <h1 className="text-white text-5xl font-black leading-tight tracking-tight font-serif @[480px]:text-7xl">
-                        The Autumnal Equinox
+                        {homepageContent?.hero?.title ||
+                          "Welcome to Lylux Belladonna"}
                       </h1>
                       <h2 className="text-white/90 text-base font-normal leading-normal @[480px]:text-lg">
-                        Discover timeless elegance and modern sophistication in
-                        our latest arrivals.
+                        {homepageContent?.hero?.subtitle ||
+                          "Discover timeless elegance and modern sophistication."}
                       </h2>
                     </div>
                     <Link
                       href="/products"
                       className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 @[480px]:h-14 @[480px]:px-10 bg-transparent border border-primary text-primary hover:bg-primary hover:text-background-dark transition-colors text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base"
                     >
-                      <span className="truncate">Shop Now</span>
+                      <span className="truncate">
+                        {homepageContent?.hero?.shopNowText || "Shop Now"}
+                      </span>
                     </Link>
                   </div>
                 </div>
@@ -149,11 +198,13 @@ export default function Home() {
                                       const minPrice = Math.min(...allPrices);
                                       const maxPrice = Math.max(...allPrices);
                                       if (minPrice === maxPrice) {
-                                        return `$${minPrice.toLocaleString()}`;
+                                        return formatPrice(minPrice);
                                       }
-                                      return `$${minPrice.toLocaleString()} - $${maxPrice.toLocaleString()}`;
+                                      return `${formatPrice(
+                                        minPrice
+                                      )} - ${formatPrice(maxPrice)}`;
                                     })()
-                                  : `$${product.price.toLocaleString()}`}
+                                  : formatPrice(product.price)}
                               </p>
                             </div>
                           </Link>
@@ -168,64 +219,92 @@ export default function Home() {
                   Featured Collections
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
-                  <Link
-                    className="group relative flex items-end justify-start min-h-96 rounded-xl overflow-hidden"
-                    href="/products"
-                  >
-                    <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-500 ease-in-out group-hover:scale-105"
-                      style={{
-                        backgroundImage:
-                          'url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_ducnJ8AmXCNRgW7Rc74jnAwSjG0xWJlnEWnlOr_hVZt7lhrsh7jghy3K5cKBb3NGlmfyuwtofkmEBwZRklNiJeY7_5_oEke3SI8820_c_HvQEQZO9266_s3uDoNqzuvsb_aCcC6pZmb2f9_ABcfhfVJGtfo9U2nQS8SwSEWjV2c7IzA-yp0oBo9fpl_P8qT9L-AU8FBCTXa2kU78sZ-b9SFrRrziragFUszlYHFaxiYNAAoP0pLzdp6Fok1xyIM0WvsfQHvTN0")',
-                      }}
-                    ></div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div className="relative p-8">
-                      <h3 className="text-white text-4xl font-serif font-bold">
-                        The Evening Edit
-                      </h3>
-                      <p className="text-primary mt-1">Shop Collection</p>
-                    </div>
-                  </Link>
-                  <Link
-                    className="group relative flex items-end justify-start min-h-96 rounded-xl overflow-hidden"
-                    href="/products"
-                  >
-                    <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-500 ease-in-out group-hover:scale-105"
-                      style={{
-                        backgroundImage:
-                          'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDpY63pOULIh0ykCEQ3__5GYxAqX4f6xWY4KV5ORKPkoZW7SJzkR_GJ5VimZvBY7YfbCSLohFxDpJjc1wwIxNHo7CO1FS7kPGZhieKzHpoxDHXZzoc9SalATd4x5dUSOIM_Gx4BCJ5JNPQrhvE72BKVjY4cxUlNhY4E5d-VtNLXUZC9PTiTnuF3xaXSaxkEdTPsO1iiz36KbWe1yOgR97_GA3BJGc5LB_a105xVU8UItQ4RatFtnW7tDXuFyR1xHLHXWEmu9ZKhvEM")',
-                      }}
-                    ></div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div className="relative p-8">
-                      <h3 className="text-white text-4xl font-serif font-bold">
-                        Artisan Leather
-                      </h3>
-                      <p className="text-primary mt-1">Shop Collection</p>
-                    </div>
-                  </Link>
+                  {homepageContent?.collections?.map((collection) => (
+                    <Link
+                      key={collection.id}
+                      className="group relative flex items-end justify-start min-h-96 rounded-xl overflow-hidden"
+                      href={collection.link || "/products"}
+                    >
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-500 ease-in-out group-hover:scale-105"
+                        style={{
+                          backgroundImage: collection.backgroundImage
+                            ? `url("${collection.backgroundImage}")`
+                            : 'url("https://via.placeholder.com/600x400?text=Collection+Image")',
+                        }}
+                      ></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                      <div className="relative p-8">
+                        <h3 className="text-white text-4xl font-serif font-bold">
+                          {collection.title}
+                        </h3>
+                        <p className="text-primary mt-1">
+                          {collection.subtitle}
+                        </p>
+                      </div>
+                    </Link>
+                  )) || (
+                    <>
+                      <Link
+                        className="group relative flex items-end justify-start min-h-96 rounded-xl overflow-hidden"
+                        href="/products"
+                      >
+                        <div
+                          className="absolute inset-0 bg-cover bg-center transition-transform duration-500 ease-in-out group-hover:scale-105"
+                          style={{
+                            backgroundImage:
+                              'url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_ducnJ8AmXCNRgW7Rc74jnAwSjG0xWJlnEWnlOr_hVZt7lhrsh7jghy3K5cKBb3NGlmfyuwtofkmEBwZRklNiJeY7_5_oEke3SI8820_c_HvQEQZO9266_s3uDoNqzuvsb_aCcC6pZmb2f9_ABcfhfVJGtfo9U2nQS8SwSEWjV2c7IzA-yp0oBo9fpl_P8qT9L-AU8FBCTXa2kU78sZ-b9SFrRrziragFUszlYHFaxiYNAAoP0pLzdp6Fok1xyIM0WvsfQHvTN0")',
+                          }}
+                        ></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div className="relative p-8">
+                          <h3 className="text-white text-4xl font-serif font-bold">
+                            The Evening Edit
+                          </h3>
+                          <p className="text-primary mt-1">Shop Collection</p>
+                        </div>
+                      </Link>
+                      <Link
+                        className="group relative flex items-end justify-start min-h-96 rounded-xl overflow-hidden"
+                        href="/products"
+                      >
+                        <div
+                          className="absolute inset-0 bg-cover bg-center transition-transform duration-500 ease-in-out group-hover:scale-105"
+                          style={{
+                            backgroundImage:
+                              'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDpY63pOULIh0ykCEQ3__5GYxAqX4f6xWY4KV5ORKPkoZW7SJzkR_GJ5VimZvBY7YfbCSLohFxDpJjc1wwIxNHo7CO1FS7kPGZhieKzHpoxDHXZzoc9SalATd4x5dUSOIM_Gx4BCJ5JNPQrhvE72BKVjY4cxUlNhY4E5d-VtNLXUZC9PTiTnuF3xaXSaxkEdTPsO1iiz36KbWe1yOgR97_GA3BJGc5LB_a105xVU8UItQ4RatFtnW7tDXuFyR1xHLHXWEmu9ZKhvEM")',
+                          }}
+                        ></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div className="relative p-8">
+                          <h3 className="text-white text-4xl font-serif font-bold">
+                            Artisan Leather
+                          </h3>
+                          <p className="text-primary mt-1">Shop Collection</p>
+                        </div>
+                      </Link>
+                    </>
+                  )}
                 </div>
               </section>
 
               {/* Craft Section */}
               <section className="bg-white/5 rounded-xl px-8 py-12 md:py-20 flex flex-col items-center text-center gap-6">
                 <h3 className="text-white text-3xl font-serif font-bold">
-                  The Art of Craft
+                  {homepageContent?.craft?.title || "The Art of Craft"}
                 </h3>
                 <p className="max-w-3xl text-gray-300">
-                  At Lylux Belladonna, we believe in the enduring power of
-                  craftsmanship. Each piece is meticulously designed and created
-                  with the finest materials, blending traditional techniques
-                  with a modern sensibility to create not just clothing, but
-                  timeless art.
+                  {homepageContent?.craft?.description ||
+                    "At Lylux Belladonna, we believe in the enduring power of craftsmanship. Each piece is meticulously designed and created with the finest materials, blending traditional techniques with a modern sensibility to create not just clothing, but timeless art."}
                 </p>
                 <Link
-                  href="/about"
+                  href={homepageContent?.craft?.buttonLink || "/about"}
                   className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-background-dark hover:bg-opacity-90 transition-opacity text-sm font-bold leading-normal tracking-[0.015em]"
                 >
-                  <span className="truncate">Discover Our Philosophy</span>
+                  <span className="truncate">
+                    {homepageContent?.craft?.buttonText ||
+                      "Discover Our Philosophy"}
+                  </span>
                 </Link>
               </section>
             </div>

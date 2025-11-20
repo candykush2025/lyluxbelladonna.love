@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import { getProducts } from "@/lib/firestore";
 import { orderBy } from "firebase/firestore";
+import { useCurrency } from "@/lib/currency-context";
 
 interface Product {
   id: string;
@@ -41,6 +42,7 @@ export default function ProductsPage() {
     []
   );
   const [inStockOnly, setInStockOnly] = useState(false);
+  const { formatPrice } = useCurrency();
 
   useEffect(() => {
     loadProducts();
@@ -548,7 +550,7 @@ export default function ProductsPage() {
                           {product.name}
                         </p>
                         <p className="text-gold text-sm font-medium">
-                          ${product.price.toFixed(2)}
+                          {formatPrice(product.price)}
                         </p>
                         {product.stock < 10 && product.stock > 0 && (
                           <span className="text-xs text-orange-400">

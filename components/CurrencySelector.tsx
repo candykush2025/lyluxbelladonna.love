@@ -1,0 +1,69 @@
+// components/CurrencySelector.tsx
+"use client";
+
+import { useState } from "react";
+import { useCurrency } from "@/lib/currency-context";
+
+export default function CurrencySelector() {
+  const { currentCurrency, currencyRates, setCurrentCurrency } = useCurrency();
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Include USD as base currency option
+  const allCurrencies = [
+    { code: "USD", name: "US Dollar", symbol: "$", rate: 1, flag: "🇺🇸" },
+    ...currencyRates,
+  ];
+
+  const currentCurrencyData = allCurrencies.find(
+    (c) => c.code === currentCurrency
+  );
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+      >
+        <span>{currentCurrency}</span>
+      </button>
+
+      {isOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-10"
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#1a2332] rounded-lg shadow-lg border border-gray-200 dark:border-white/10 z-20">
+            <div className="py-2">
+              {allCurrencies.map((currency) => (
+                <button
+                  key={currency.code}
+                  onClick={() => {
+                    setCurrentCurrency(currency.code);
+                    setIsOpen(false);
+                  }}
+                  className={`w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-gray-50 dark:hover:bg-[#0f1825] transition-colors ${
+                    currency.code === currentCurrency
+                      ? "bg-primary/10 text-primary"
+                      : "text-gray-700 dark:text-gray-300"
+                  }`}
+                >
+                  <span className="text-lg">{currency.flag}</span>
+                  <div className="flex-1">
+                    <div className="font-medium">{currency.code}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                      {currency.name}
+                    </div>
+                  </div>
+                  <span className="text-gray-500 dark:text-gray-400">
+                    {currency.symbol}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}

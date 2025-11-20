@@ -5,6 +5,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import { WishlistProvider } from "@/contexts/WishlistContext";
 import { ToastProvider } from "@/contexts/ToastContext";
+import { CurrencyProvider } from "@/lib/currency-context";
 import ToastContainer from "@/components/ToastContainer";
 
 const manrope = Manrope({
@@ -44,10 +45,12 @@ export default function RootLayout({
         <AuthProvider>
           <WishlistProvider>
             <CartProvider>
-              <ToastProvider>
-                {children}
-                <ToastContainer />
-              </ToastProvider>
+              <CurrencyProvider>
+                <ToastProvider>
+                  {children}
+                  <ToastContainer />
+                </ToastProvider>
+              </CurrencyProvider>
             </CartProvider>
           </WishlistProvider>
         </AuthProvider>

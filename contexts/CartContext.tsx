@@ -11,6 +11,18 @@ interface CartItem {
   size?: string;
   color?: string;
   addedAt: Date;
+  // Variant information (array for multiple variants)
+  variants?: Array<{
+    name: string;
+    option: string;
+    price?: number;
+    image?: string;
+  }>;
+  // Legacy single variant fields (for backward compatibility)
+  variantName?: string;
+  variantOption?: string;
+  variantPrice?: number;
+  variantImage?: string;
   // Populated fields
   name?: string;
   price?: number;
@@ -25,18 +37,40 @@ interface CartContextType {
     productId: string,
     quantity: number,
     size?: string,
-    color?: string
+    color?: string,
+    variants?: Array<{
+      name: string;
+      option: string;
+      price?: number;
+      image?: string;
+    }>,
+    variantName?: string,
+    variantOption?: string,
+    variantPrice?: number,
+    variantImage?: string
   ) => Promise<void>;
   removeFromCart: (
     productId: string,
     size?: string,
-    color?: string
+    color?: string,
+    variants?: Array<{
+      name: string;
+      option: string;
+      price?: number;
+      image?: string;
+    }>
   ) => Promise<void>;
   updateQuantity: (
     productId: string,
     quantity: number,
     size?: string,
-    color?: string
+    color?: string,
+    variants?: Array<{
+      name: string;
+      option: string;
+      price?: number;
+      image?: string;
+    }>
   ) => Promise<void>;
   clearCart: () => Promise<void>;
   getCartTotal: () => number;
@@ -71,12 +105,60 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
               try {
                 const product = await getProduct(item.productId);
                 const productData = product as any; // Cast to any to access properties
+
+                // Get the correct price and image for variant products
+                let itemPrice = productData?.price;
+                let itemImage = productData?.images?.[0];
+
+                // Use variants array if available (preferred method)
+                if (item.variants && item.variants.length > 0) {
+                  const firstVariant = item.variants[0];
+                  if (firstVariant.price !== undefined) {
+                    itemPrice = firstVariant.price;
+                  }
+                  if (firstVariant.image) {
+                    itemImage = firstVariant.image;
+                  }
+                } else if (item.variantPrice !== undefined) {
+                  // Fallback to legacy single variant fields
+                  itemPrice = item.variantPrice;
+                } else if (productData?.hasVariants && productData?.variants) {
+                  // Fallback to variant lookup logic
+                  for (const variant of productData.variants) {
+                    if (variant.name.toLowerCase() === "size" && item.size) {
+                      const option = variant.options.find(
+                        (opt: any) => opt.name === item.size
+                      );
+                      if (option) {
+                        itemPrice = option.price || itemPrice;
+                        itemImage = option.image || itemImage;
+                      }
+                    } else if (
+                      variant.name.toLowerCase() === "color" &&
+                      item.color
+                    ) {
+                      const option = variant.options.find(
+                        (opt: any) => opt.name === item.color
+                      );
+                      if (option) {
+                        itemPrice = option.price || itemPrice;
+                        itemImage = option.image || itemImage;
+                      }
+                    }
+                  }
+                }
+
+                // Use stored variant image if available (legacy fallback)
+                if (item.variantImage) {
+                  itemImage = item.variantImage;
+                }
+
                 return {
                   ...item,
                   addedAt: item.addedAt?.toDate() || new Date(),
                   name: productData?.name,
-                  price: productData?.price,
-                  image: productData?.images?.[0],
+                  price: itemPrice,
+                  image: itemImage,
                   stock: productData?.stock,
                 };
               } catch (error) {
@@ -110,11 +192,59 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             try {
               const product = await getProduct(item.productId);
               const productData = product as any;
+
+              // Get the correct price and image for variant products
+              let itemPrice = productData?.price;
+              let itemImage = productData?.images?.[0];
+
+              // Use variants array if available (preferred method)
+              if (item.variants && item.variants.length > 0) {
+                const firstVariant = item.variants[0];
+                if (firstVariant.price !== undefined) {
+                  itemPrice = firstVariant.price;
+                }
+                if (firstVariant.image) {
+                  itemImage = firstVariant.image;
+                }
+              } else if (item.variantPrice !== undefined) {
+                // Fallback to legacy single variant fields
+                itemPrice = item.variantPrice;
+              } else if (productData?.hasVariants && productData?.variants) {
+                // Fallback to variant lookup logic
+                for (const variant of productData.variants) {
+                  if (variant.name.toLowerCase() === "size" && item.size) {
+                    const option = variant.options.find(
+                      (opt: any) => opt.name === item.size
+                    );
+                    if (option) {
+                      itemPrice = option.price || itemPrice;
+                      itemImage = option.image || itemImage;
+                    }
+                  } else if (
+                    variant.name.toLowerCase() === "color" &&
+                    item.color
+                  ) {
+                    const option = variant.options.find(
+                      (opt: any) => opt.name === item.color
+                    );
+                    if (option) {
+                      itemPrice = option.price || itemPrice;
+                      itemImage = option.image || itemImage;
+                    }
+                  }
+                }
+              }
+
+              // Use stored variant image if available (legacy fallback)
+              if (item.variantImage) {
+                itemImage = item.variantImage;
+              }
+
               return {
                 ...item,
                 name: productData?.name,
-                price: productData?.price,
-                image: productData?.images?.[0],
+                price: itemPrice,
+                image: itemImage,
                 stock: productData?.stock,
               };
             } catch (error) {
@@ -203,25 +333,103 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     productId: string,
     quantity: number,
     size?: string,
-    color?: string
+    color?: string,
+    variants?: Array<{
+      name: string;
+      option: string;
+      price?: number;
+      image?: string;
+    }>,
+    variantName?: string,
+    variantOption?: string,
+    variantPrice?: number,
+    variantImage?: string
   ) => {
     try {
+      console.log("🛒 CartContext.addToCart called with:", {
+        productId,
+        quantity,
+        size,
+        color,
+        variants,
+        variantName,
+        variantOption,
+        variantPrice,
+        variantImage,
+      });
+
       const newItem: CartItem = {
         productId,
         quantity,
         size,
         color,
+        variants,
+        variantName,
+        variantOption,
+        variantPrice,
+        variantImage,
         addedAt: new Date(),
-      };
-
-      // Load product details
+      }; // Load product details
       const product = await getProduct(productId);
       if (product) {
         const productData = product as any;
+
+        // Check if product is in stock (only if stock management is enabled)
+        if (productData.manageStock && productData.stock <= 0) {
+          throw new Error("This product is currently out of stock.");
+        }
+
+        // Get the correct price and image for variant products
+        let itemPrice = productData.price;
+        let itemImage = productData.images?.[0];
+
+        // Use variants array if provided (preferred method)
+        if (variants && variants.length > 0) {
+          // Use the first variant's price and image as the main item price/image
+          const firstVariant = variants[0];
+          if (firstVariant.price !== undefined) {
+            itemPrice = firstVariant.price;
+          }
+          if (firstVariant.image) {
+            itemImage = firstVariant.image;
+          }
+        } else if (variantPrice !== undefined) {
+          // Fallback to legacy single variant fields
+          itemPrice = variantPrice;
+        } else if (productData.hasVariants && productData.variants) {
+          // Fallback to variant lookup logic
+          for (const variant of productData.variants) {
+            if (variant.name.toLowerCase() === "size" && size) {
+              const option = variant.options.find(
+                (opt: any) => opt.name === size
+              );
+              if (option) {
+                itemPrice = option.price || itemPrice;
+                itemImage = option.image || itemImage;
+              }
+            } else if (variant.name.toLowerCase() === "color" && color) {
+              const option = variant.options.find(
+                (opt: any) => opt.name === color
+              );
+              if (option) {
+                itemPrice = option.price || itemPrice;
+                itemImage = option.image || itemImage;
+              }
+            }
+          }
+        }
+
+        // Use variant image if provided (legacy fallback)
+        if (variantImage) {
+          itemImage = variantImage;
+        }
+
         newItem.name = productData.name;
-        newItem.price = productData.price;
-        newItem.image = productData.images?.[0];
+        newItem.price = itemPrice;
+        newItem.image = itemImage;
         newItem.stock = productData.stock;
+      } else {
+        throw new Error("Product not found.");
       }
 
       if (user) {
@@ -229,11 +437,29 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         const currentCart = await getCart(user.uid);
         const existingItems = currentCart?.items || [];
 
+        // Helper function to compare variants
+        const variantsMatch = (itemVariants: any, newVariants: any) => {
+          if (!itemVariants && !newVariants) return true;
+          if (!itemVariants || !newVariants) return false;
+          if (!Array.isArray(itemVariants) || !Array.isArray(newVariants))
+            return false;
+          if (itemVariants.length !== newVariants.length) return false;
+
+          // Compare each variant option
+          return itemVariants.every((itemVar: any, index: number) => {
+            const newVar = newVariants[index];
+            return (
+              itemVar.name === newVar.name && itemVar.option === newVar.option
+            );
+          });
+        };
+
         const existingIndex = existingItems.findIndex(
           (item: any) =>
             item.productId === productId &&
             item.size === size &&
-            item.color === color
+            item.color === color &&
+            variantsMatch(item.variants, variants)
         );
 
         if (existingIndex >= 0) {
@@ -246,6 +472,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           };
           if (size !== undefined) cartItem.size = size;
           if (color !== undefined) cartItem.color = color;
+          if (variants !== undefined) cartItem.variants = variants;
+          if (variantName !== undefined) cartItem.variantName = variantName;
+          if (variantOption !== undefined)
+            cartItem.variantOption = variantOption;
+          if (variantPrice !== undefined) cartItem.variantPrice = variantPrice;
+          if (variantImage !== undefined) cartItem.variantImage = variantImage;
           existingItems.push(cartItem);
         }
 
@@ -253,11 +485,29 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         await loadCart();
       } else {
         // Save to localStorage
+        // Helper function to compare variants
+        const variantsMatch = (itemVariants: any, newVariants: any) => {
+          if (!itemVariants && !newVariants) return true;
+          if (!itemVariants || !newVariants) return false;
+          if (!Array.isArray(itemVariants) || !Array.isArray(newVariants))
+            return false;
+          if (itemVariants.length !== newVariants.length) return false;
+
+          // Compare each variant option
+          return itemVariants.every((itemVar: any, index: number) => {
+            const newVar = newVariants[index];
+            return (
+              itemVar.name === newVar.name && itemVar.option === newVar.option
+            );
+          });
+        };
+
         const existingIndex = cartItems.findIndex(
           (item) =>
             item.productId === productId &&
             item.size === size &&
-            item.color === color
+            item.color === color &&
+            variantsMatch(item.variants, variants)
         );
 
         let updatedItems;
@@ -280,9 +530,31 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const removeFromCart = async (
     productId: string,
     size?: string,
-    color?: string
+    color?: string,
+    variants?: Array<{
+      name: string;
+      option: string;
+      price?: number;
+      image?: string;
+    }>
   ) => {
     try {
+      // Helper function to compare variants
+      const variantsMatch = (itemVariants: any, newVariants: any) => {
+        if (!itemVariants && !newVariants) return true;
+        if (!itemVariants || !newVariants) return false;
+        if (!Array.isArray(itemVariants) || !Array.isArray(newVariants))
+          return false;
+        if (itemVariants.length !== newVariants.length) return false;
+
+        return itemVariants.every((itemVar: any, index: number) => {
+          const newVar = newVariants[index];
+          return (
+            itemVar.name === newVar.name && itemVar.option === newVar.option
+          );
+        });
+      };
+
       if (user) {
         const currentCart = await getCart(user.uid);
         const existingItems = currentCart?.items || [];
@@ -292,7 +564,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             !(
               item.productId === productId &&
               item.size === size &&
-              item.color === color
+              item.color === color &&
+              variantsMatch(item.variants, variants)
             )
         );
 
@@ -304,7 +577,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             !(
               item.productId === productId &&
               item.size === size &&
-              item.color === color
+              item.color === color &&
+              variantsMatch(item.variants, variants)
             )
         );
         setCartItems(filteredItems);
@@ -320,14 +594,36 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     productId: string,
     quantity: number,
     size?: string,
-    color?: string
+    color?: string,
+    variants?: Array<{
+      name: string;
+      option: string;
+      price?: number;
+      image?: string;
+    }>
   ) => {
     if (quantity <= 0) {
-      await removeFromCart(productId, size, color);
+      await removeFromCart(productId, size, color, variants);
       return;
     }
 
     try {
+      // Helper function to compare variants
+      const variantsMatch = (itemVariants: any, newVariants: any) => {
+        if (!itemVariants && !newVariants) return true;
+        if (!itemVariants || !newVariants) return false;
+        if (!Array.isArray(itemVariants) || !Array.isArray(newVariants))
+          return false;
+        if (itemVariants.length !== newVariants.length) return false;
+
+        return itemVariants.every((itemVar: any, index: number) => {
+          const newVar = newVariants[index];
+          return (
+            itemVar.name === newVar.name && itemVar.option === newVar.option
+          );
+        });
+      };
+
       if (user) {
         const currentCart = await getCart(user.uid);
         const existingItems = currentCart?.items || [];
@@ -336,7 +632,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           (item: any) =>
             item.productId === productId &&
             item.size === size &&
-            item.color === color
+            item.color === color &&
+            variantsMatch(item.variants, variants)
         );
 
         if (itemIndex >= 0) {
@@ -349,7 +646,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           (item) =>
             item.productId === productId &&
             item.size === size &&
-            item.color === color
+            item.color === color &&
+            variantsMatch(item.variants, variants)
         );
 
         if (itemIndex >= 0) {

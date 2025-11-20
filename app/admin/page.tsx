@@ -19,10 +19,21 @@ import {
   getCustomers,
   getBrands,
   createBrand,
+  getHomepageContent,
+  updateHomepageContent,
+  getCurrencyRates,
+  updateCurrencyRates,
 } from "@/lib/firestore";
 import { uploadImages, deleteImages } from "@/lib/storage";
 
-type Tab = "dashboard" | "products" | "orders" | "customers" | "reviews";
+type Tab =
+  | "dashboard"
+  | "products"
+  | "orders"
+  | "customers"
+  | "reviews"
+  | "homepage"
+  | "currency";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<Tab>("dashboard");
@@ -147,6 +158,38 @@ export default function AdminDashboard() {
                   <span className="font-medium">Reviews</span>
                 )}
               </button>
+
+              <button
+                onClick={() => setActiveTab("homepage")}
+                className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${
+                  activeTab === "homepage"
+                    ? "bg-primary/10 text-primary border-r-2 border-primary"
+                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#0f1825] hover:text-gray-900 dark:hover:text-white"
+                }`}
+              >
+                <span className="material-symbols-outlined text-xl shrink-0">
+                  home
+                </span>
+                {!sidebarCollapsed && (
+                  <span className="font-medium">Homepage</span>
+                )}
+              </button>
+
+              <button
+                onClick={() => setActiveTab("currency")}
+                className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${
+                  activeTab === "currency"
+                    ? "bg-primary/10 text-primary border-r-2 border-primary"
+                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#0f1825] hover:text-gray-900 dark:hover:text-white"
+                }`}
+              >
+                <span className="material-symbols-outlined text-xl shrink-0">
+                  attach_money
+                </span>
+                {!sidebarCollapsed && (
+                  <span className="font-medium">Currency</span>
+                )}
+              </button>
             </div>
           </nav>
 
@@ -218,6 +261,8 @@ export default function AdminDashboard() {
             {activeTab === "orders" && <OrdersManagement />}
             {activeTab === "customers" && <CustomersManagement />}
             {activeTab === "reviews" && <ReviewsManagement />}
+            {activeTab === "homepage" && <HomepageManagement />}
+            {activeTab === "currency" && <CurrencyManagement />}
           </main>
         </div>
 
@@ -3055,6 +3100,998 @@ function ReviewsManagement() {
               </div>
             </div>
           ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function HomepageManagement() {
+  const [homepageContent, setHomepageContent] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const toastContext = useToast();
+
+  // Available pages for dropdown
+  const availablePages = [
+    { value: "/about", label: "About Us" },
+    { value: "/contact", label: "Contact" },
+    { value: "/products", label: "Products" },
+  ];
+
+  // Image upload states
+  const [heroImageFile, setHeroImageFile] = useState<File | null>(null);
+  const [heroImagePreview, setHeroImagePreview] = useState<string>("");
+  const [collectionImageFiles, setCollectionImageFiles] = useState<
+    (File | null)[]
+  >([null, null]);
+  const [collectionImagePreviews, setCollectionImagePreviews] = useState<
+    string[]
+  >(["", ""]);
+
+  useEffect(() => {
+    loadHomepageContent();
+  }, []);
+
+  const loadHomepageContent = async () => {
+    try {
+      setLoading(true);
+      const content = await getHomepageContent();
+      if (content) {
+        const { id, ...data } = content;
+        setHomepageContent(data);
+      } else {
+        // Set default content if none exists
+        setHomepageContent({
+          hero: {
+            title: "Welcome to Lylux Belladonna",
+            subtitle: "Discover timeless elegance and modern sophistication.",
+            backgroundImage: "",
+            shopNowText: "Shop Now",
+          },
+          collections: [
+            {
+              id: "collection-1",
+              title: "Featured Collection",
+              subtitle: "Shop Collection",
+              backgroundImage: "",
+              link: "/products",
+            },
+            {
+              id: "collection-2",
+              title: "New Arrivals",
+              subtitle: "Shop Collection",
+              backgroundImage: "",
+              link: "/products",
+            },
+          ],
+          craft: {
+            title: "The Art of Craft",
+            description:
+              "At Lylux Belladonna, we believe in the enduring power of craftsmanship. Each piece is meticulously designed and created with the finest materials, blending traditional techniques with a modern sensibility to create not just clothing, but timeless art.",
+            buttonText: "Discover Our Philosophy",
+            buttonLink: "/about",
+          },
+        });
+      }
+    } catch (error) {
+      console.error("Error loading homepage content:", error);
+      toastContext?.addToast("Error loading homepage content", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      setSaving(true);
+
+      // Upload images first
+      let heroImageUrl = homepageContent.hero.backgroundImage;
+      if (heroImageFile) {
+        const uploadedUrls = await uploadImages(
+          [heroImageFile],
+          `homepage/hero/${Date.now()}`
+        );
+        heroImageUrl = uploadedUrls[0];
+      }
+
+      const collectionImageUrls = await Promise.all(
+        collectionImageFiles.map(async (file, index) => {
+          if (file) {
+            const uploadedUrls = await uploadImages(
+              [file],
+              `homepage/collections/${index}/${Date.now()}`
+            );
+            return uploadedUrls[0];
+          }
+          return homepageContent.collections[index].backgroundImage;
+        })
+      );
+
+      // Update content with new image URLs
+      const updatedContent = {
+        ...homepageContent,
+        hero: {
+          ...homepageContent.hero,
+          backgroundImage: heroImageUrl,
+        },
+        collections: homepageContent.collections.map(
+          (col: any, index: number) => ({
+            ...col,
+            backgroundImage: collectionImageUrls[index],
+          })
+        ),
+      };
+
+      await updateHomepageContent(updatedContent);
+
+      // Reset file states
+      setHeroImageFile(null);
+      setHeroImagePreview("");
+      setCollectionImageFiles([null, null]);
+      setCollectionImagePreviews(["", ""]);
+
+      toastContext?.addToast(
+        "Homepage content updated successfully!",
+        "success"
+      );
+    } catch (error) {
+      console.error("Error saving homepage content:", error);
+      toastContext?.addToast("Error saving homepage content", "error");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const updateHero = (field: string, value: string) => {
+    setHomepageContent((prev: any) => ({
+      ...prev,
+      hero: {
+        ...prev.hero,
+        [field]: value,
+      },
+    }));
+  };
+
+  const updateCollection = (index: number, field: string, value: string) => {
+    setHomepageContent((prev: any) => ({
+      ...prev,
+      collections: prev.collections.map((col: any, i: number) =>
+        i === index ? { ...col, [field]: value } : col
+      ),
+    }));
+  };
+
+  const updateCraft = (field: string, value: string) => {
+    setHomepageContent((prev: any) => ({
+      ...prev,
+      craft: {
+        ...prev.craft,
+        [field]: value,
+      },
+    }));
+  };
+
+  // Image upload handlers
+  const handleHeroImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setHeroImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setHeroImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCollectionImageSelect = (
+    index: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const newFiles = [...collectionImageFiles];
+      newFiles[index] = file;
+      setCollectionImageFiles(newFiles);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const newPreviews = [...collectionImagePreviews];
+        newPreviews[index] = reader.result as string;
+        setCollectionImagePreviews(newPreviews);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-8">
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-serif font-bold text-gray-900 dark:text-white">
+          Homepage Management
+        </h2>
+        <button
+          onClick={handleSave}
+          disabled={saving}
+          className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        >
+          {saving ? "Saving..." : "Save Changes"}
+        </button>
+      </div>
+
+      {/* Hero Section */}
+      <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow p-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+          Hero Section
+        </h3>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Title
+            </label>
+            <input
+              type="text"
+              value={homepageContent?.hero?.title || ""}
+              onChange={(e) => updateHero("title", e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Subtitle
+            </label>
+            <input
+              type="text"
+              value={homepageContent?.hero?.subtitle || ""}
+              onChange={(e) => updateHero("subtitle", e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Background Image
+            </label>
+            <div className="space-y-3">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleHeroImageSelect}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90"
+              />
+              {(heroImagePreview || homepageContent?.hero?.backgroundImage) && (
+                <div className="relative">
+                  <img
+                    src={
+                      heroImagePreview || homepageContent?.hero?.backgroundImage
+                    }
+                    alt="Hero preview"
+                    className="w-full max-h-64 object-contain rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800"
+                  />
+                  <button
+                    onClick={() => {
+                      setHeroImageFile(null);
+                      setHeroImagePreview("");
+                      updateHero("backgroundImage", "");
+                    }}
+                    className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm"
+                  >
+                    ×
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Button Text
+            </label>
+            <input
+              type="text"
+              value={homepageContent?.hero?.shopNowText || ""}
+              onChange={(e) => updateHero("shopNowText", e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Collections */}
+      <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow p-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+          Featured Collections
+        </h3>
+        <div className="space-y-6">
+          {homepageContent?.collections?.map(
+            (collection: any, index: number) => (
+              <div
+                key={collection.id}
+                className="border border-gray-200 dark:border-gray-600 rounded-lg p-4"
+              >
+                <h4 className="font-medium text-gray-900 dark:text-white mb-3">
+                  Collection {index + 1}
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Title
+                    </label>
+                    <input
+                      type="text"
+                      value={collection.title || ""}
+                      onChange={(e) =>
+                        updateCollection(index, "title", e.target.value)
+                      }
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Subtitle
+                    </label>
+                    <input
+                      type="text"
+                      value={collection.subtitle || ""}
+                      onChange={(e) =>
+                        updateCollection(index, "subtitle", e.target.value)
+                      }
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Background Image
+                    </label>
+                    <div className="space-y-3">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleCollectionImageSelect(index, e)}
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90"
+                      />
+                      {(collectionImagePreviews[index] ||
+                        collection.backgroundImage) && (
+                        <div className="relative">
+                          <img
+                            src={
+                              collectionImagePreviews[index] ||
+                              collection.backgroundImage
+                            }
+                            alt={`Collection ${index + 1} preview`}
+                            className="w-full max-h-48 object-contain rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800"
+                          />
+                          <button
+                            onClick={() => {
+                              const newFiles = [...collectionImageFiles];
+                              const newPreviews = [...collectionImagePreviews];
+                              newFiles[index] = null;
+                              newPreviews[index] = "";
+                              setCollectionImageFiles(newFiles);
+                              setCollectionImagePreviews(newPreviews);
+                              updateCollection(index, "backgroundImage", "");
+                            }}
+                            className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
+          )}
+        </div>
+      </div>
+
+      {/* Craft Section */}
+      <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow p-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+          Craft Section
+        </h3>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Title
+            </label>
+            <input
+              type="text"
+              value={homepageContent?.craft?.title || ""}
+              onChange={(e) => updateCraft("title", e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Description
+            </label>
+            <textarea
+              value={homepageContent?.craft?.description || ""}
+              onChange={(e) => updateCraft("description", e.target.value)}
+              rows={4}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+            />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Button Text
+              </label>
+              <input
+                type="text"
+                value={homepageContent?.craft?.buttonText || ""}
+                onChange={(e) => updateCraft("buttonText", e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Button Link
+              </label>
+              <select
+                value={homepageContent?.craft?.buttonLink || ""}
+                onChange={(e) => updateCraft("buttonLink", e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+              >
+                <option value="">Select a page...</option>
+                {availablePages.map((page) => (
+                  <option key={page.value} value={page.value}>
+                    {page.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Currency Management Component
+function CurrencyManagement() {
+  const [currencyRates, setCurrencyRates] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [availableCurrencies, setAvailableCurrencies] = useState<any[]>([]);
+  const [fetchingCurrencies, setFetchingCurrencies] = useState(false);
+  const [currencySearch, setCurrencySearch] = useState("");
+  const toastContext = useToast();
+
+  useEffect(() => {
+    loadCurrencyRates();
+  }, []);
+
+  const loadCurrencyRates = async () => {
+    try {
+      setLoading(true);
+      const rates = await getCurrencyRates();
+      if (rates) {
+        setCurrencyRates(rates);
+      } else {
+        // Initialize with default rates - Updated November 2025
+        setCurrencyRates({
+          baseCurrency: "USD",
+          rates: [
+            { code: "EUR", name: "Euro", symbol: "€", rate: 0.92, flag: "🇪🇺" },
+            {
+              code: "GBP",
+              name: "British Pound",
+              symbol: "£",
+              rate: 0.78,
+              flag: "🇬🇧",
+            },
+            {
+              code: "JPY",
+              name: "Japanese Yen",
+              symbol: "¥",
+              rate: 152,
+              flag: "🇯🇵",
+            },
+            {
+              code: "AUD",
+              name: "Australian Dollar",
+              symbol: "A$",
+              rate: 1.52,
+              flag: "🇦🇺",
+            },
+            {
+              code: "IDR",
+              name: "Indonesian Rupiah",
+              symbol: "Rp",
+              rate: 15500,
+              flag: "🇮🇩",
+            },
+          ],
+          lastUpdated: new Date(),
+        });
+      }
+    } catch (error) {
+      console.error("Error loading currency rates:", error);
+      toastContext?.addToast("Failed to load currency rates", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateCurrencyRate = (index: number, field: string, value: any) => {
+    if (!currencyRates) return;
+
+    const updatedRates = [...currencyRates.rates];
+    updatedRates[index] = { ...updatedRates[index], [field]: value };
+
+    setCurrencyRates({
+      ...currencyRates,
+      rates: updatedRates,
+    });
+  };
+
+  const saveCurrencyRates = async () => {
+    if (!currencyRates) return;
+
+    try {
+      setSaving(true);
+      await updateCurrencyRates({
+        ...currencyRates,
+        lastUpdated: new Date(),
+      });
+      toastContext?.addToast("Currency rates updated successfully", "success");
+    } catch (error) {
+      console.error("Error saving currency rates:", error);
+      toastContext?.addToast("Failed to save currency rates", "error");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const fetchLatestRates = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/currency/update", {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        // Reload current rates
+        await loadCurrencyRates();
+        toastContext?.addToast(
+          "Currency rates updated successfully!",
+          "success"
+        );
+      } else {
+        toastContext?.addToast("Failed to update currency rates", "error");
+      }
+    } catch (error) {
+      console.error("Error fetching latest rates:", error);
+      toastContext?.addToast("Error updating currency rates", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchSupportedCurrencies = async () => {
+    try {
+      setFetchingCurrencies(true);
+      const response = await fetch(
+        "https://v6.exchangerate-api.com/v6/6b455dd83fbad089acb2892c/codes"
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.result === "success" && data.supported_codes) {
+          // Filter out currencies that are already in our rates
+          const existingCodes =
+            currencyRates?.rates?.map((r: any) => r.code) || [];
+          const available = data.supported_codes
+            .filter(([code]: [string, string]) => !existingCodes.includes(code))
+            .map(([code, name]: [string, string]) => ({ code, name }));
+          setAvailableCurrencies(available);
+        } else {
+          toastContext?.addToast(
+            "Failed to fetch supported currencies",
+            "error"
+          );
+        }
+      } else {
+        toastContext?.addToast("Failed to fetch supported currencies", "error");
+      }
+    } catch (error) {
+      console.error("Error fetching supported currencies:", error);
+      toastContext?.addToast("Error fetching supported currencies", "error");
+    } finally {
+      setFetchingCurrencies(false);
+    }
+  };
+
+  const addCurrency = async (currencyCode: string, currencyName: string) => {
+    if (!currencyRates) return;
+
+    try {
+      // Get the latest rate from the API
+      const response = await fetch(
+        `https://v6.exchangerate-api.com/v6/6b455dd83fbad089acb2892c/latest/USD`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.result === "success" && data.conversion_rates) {
+          const rate = data.conversion_rates[currencyCode];
+          if (rate) {
+            // Get currency symbol and flag
+            const symbol = getCurrencySymbol(currencyCode);
+            const flag = getCurrencyFlag(currencyCode);
+
+            const newCurrency = {
+              code: currencyCode,
+              name: currencyName,
+              symbol: symbol,
+              rate: rate,
+              flag: flag,
+            };
+
+            const updatedRates = {
+              ...currencyRates,
+              rates: [...currencyRates.rates, newCurrency],
+            };
+
+            setCurrencyRates(updatedRates);
+            setShowAddModal(false);
+            setAvailableCurrencies([]);
+            setCurrencySearch("");
+            toastContext?.addToast(
+              `Added ${currencyName} (${currencyCode})`,
+              "success"
+            );
+          } else {
+            toastContext?.addToast(
+              `Rate not found for ${currencyCode}`,
+              "error"
+            );
+          }
+        } else {
+          toastContext?.addToast("Failed to fetch currency rate", "error");
+        }
+      } else {
+        toastContext?.addToast("Failed to fetch currency rate", "error");
+      }
+    } catch (error) {
+      console.error("Error adding currency:", error);
+      toastContext?.addToast("Error adding currency", "error");
+    }
+  };
+
+  const removeCurrency = (index: number) => {
+    if (!currencyRates) return;
+
+    const currencyToRemove = currencyRates.rates[index];
+    if (
+      confirm(`Remove ${currencyToRemove.name} (${currencyToRemove.code})?`)
+    ) {
+      const updatedRates = {
+        ...currencyRates,
+        rates: currencyRates.rates.filter((_: any, i: number) => i !== index),
+      };
+
+      setCurrencyRates(updatedRates);
+      toastContext?.addToast(`Removed ${currencyToRemove.name}`, "success");
+    }
+  };
+
+  // Helper functions for currency symbols and flags
+  const getCurrencySymbol = (code: string): string => {
+    const symbols: { [key: string]: string } = {
+      EUR: "€",
+      GBP: "£",
+      JPY: "¥",
+      AUD: "A$",
+      CAD: "C$",
+      CHF: "Fr",
+      CNY: "¥",
+      SEK: "kr",
+      NZD: "NZ$",
+      MXN: "$",
+      SGD: "S$",
+      HKD: "HK$",
+      NOK: "kr",
+      KRW: "₩",
+      TRY: "₺",
+      RUB: "₽",
+      INR: "₹",
+      BRL: "R$",
+      ZAR: "R",
+      // Add more as needed
+    };
+    return symbols[code] || code;
+  };
+
+  const getCurrencyFlag = (code: string): string => {
+    const flags: { [key: string]: string } = {
+      EUR: "🇪🇺",
+      GBP: "🇬🇧",
+      JPY: "🇯🇵",
+      AUD: "🇦🇺",
+      CAD: "🇨🇦",
+      CHF: "🇨🇭",
+      CNY: "🇨🇳",
+      SEK: "🇸🇪",
+      NZD: "🇳🇿",
+      MXN: "🇲🇽",
+      SGD: "🇸🇬",
+      HKD: "🇭🇰",
+      NOK: "🇳🇴",
+      KRW: "🇰🇷",
+      TRY: "🇹🇷",
+      RUB: "🇷🇺",
+      INR: "🇮🇳",
+      BRL: "🇧🇷",
+      ZAR: "🇿🇦",
+      IDR: "🇮🇩",
+      // Add more as needed
+    };
+    return flags[code] || getCurrencySymbol(code);
+  };
+
+  // Filter currencies based on search term
+  const filteredCurrencies = availableCurrencies.filter(
+    (currency) =>
+      currency.code.toLowerCase().includes(currencySearch.toLowerCase()) ||
+      currency.name.toLowerCase().includes(currencySearch.toLowerCase())
+  );
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-serif font-bold text-gray-900 dark:text-white">
+            Currency Management
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
+            Manage currency exchange rates for international pricing
+          </p>
+        </div>
+        <div className="flex gap-3">
+          <button
+            onClick={() => {
+              setShowAddModal(true);
+              fetchSupportedCurrencies();
+            }}
+            className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 flex items-center gap-2"
+          >
+            <span>+ Add Currency</span>
+          </button>
+          <button
+            onClick={fetchLatestRates}
+            disabled={loading}
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            {loading && (
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+            )}
+            <span>Fetch Latest Rates</span>
+          </button>
+          <button
+            onClick={saveCurrencyRates}
+            disabled={saving}
+            className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            {saving && (
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+            )}
+            <span>Save Changes</span>
+          </button>
+        </div>
+      </div>
+
+      <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm border border-gray-200 dark:border-white/10">
+        <div className="p-6">
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              Base Currency
+            </h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              All rates are relative to USD (United States Dollar)
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-7 gap-4 font-medium text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-white/10 pb-2">
+              <div>Flag</div>
+              <div>Code</div>
+              <div>Name</div>
+              <div>Symbol</div>
+              <div>Rate (to USD)</div>
+              <div>Example</div>
+              <div>Actions</div>
+            </div>
+
+            {currencyRates?.rates?.map((rate: any, index: number) => (
+              <div
+                key={rate.code}
+                className="grid grid-cols-1 md:grid-cols-7 gap-4 items-center py-2"
+              >
+                <div className="text-2xl">{rate.flag}</div>
+                <div className="font-mono font-medium text-gray-900 dark:text-white">
+                  {rate.code}
+                </div>
+                <div className="text-gray-900 dark:text-white">{rate.name}</div>
+                <div className="text-gray-900 dark:text-white font-mono">
+                  {rate.symbol}
+                </div>
+                <div>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={rate.rate}
+                    onChange={(e) =>
+                      updateCurrencyRate(
+                        index,
+                        "rate",
+                        parseFloat(e.target.value)
+                      )
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+                  />
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  {rate.code === "IDR"
+                    ? `${rate.symbol}${Math.round(100 * rate.rate)
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")} = $100`
+                    : `${rate.symbol}${(
+                        100 * rate.rate
+                      ).toLocaleString()} = $100`}
+                </div>
+                <div>
+                  <button
+                    onClick={() => removeCurrency(index)}
+                    className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition-colors"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">
+              Currency Detection
+            </h4>
+            <p className="text-sm text-blue-800 dark:text-blue-200">
+              Users from Indonesia will automatically see prices in IDR. Users
+              from other countries will see prices in USD by default, but can
+              manually switch currencies.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Add Currency Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-hidden">
+            <div className="p-6 border-b border-gray-200 dark:border-white/10">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  Add Currency
+                </h3>
+                <button
+                  onClick={() => {
+                    setShowAddModal(false);
+                    setAvailableCurrencies([]);
+                    setCurrencySearch("");
+                  }}
+                  className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 overflow-y-auto max-h-96">
+              {fetchingCurrencies ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+                  <span className="ml-3 text-gray-600 dark:text-gray-400">
+                    Fetching supported currencies...
+                  </span>
+                </div>
+              ) : availableCurrencies.length > 0 ? (
+                <div className="space-y-4">
+                  {/* Search Input */}
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Search currencies by code or name..."
+                      value={currencySearch}
+                      onChange={(e) => setCurrencySearch(e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                    />
+                  </div>
+
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Select a currency to add to your supported currencies list:
+                    {currencySearch && (
+                      <span className="ml-2 text-primary font-medium">
+                        ({filteredCurrencies.length} results)
+                      </span>
+                    )}
+                  </p>
+
+                  {filteredCurrencies.length > 0 ? (
+                    <div className="space-y-2 max-h-80 overflow-y-auto">
+                      {filteredCurrencies.map((currency) => (
+                        <div
+                          key={currency.code}
+                          className="flex items-center justify-between p-3 border border-gray-200 dark:border-white/10 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5"
+                        >
+                          <div className="flex items-center gap-3">
+                            <span className="text-2xl">
+                              {getCurrencyFlag(currency.code)}
+                            </span>
+                            <div>
+                              <div className="font-medium text-gray-900 dark:text-white">
+                                {currency.code}
+                              </div>
+                              <div className="text-sm text-gray-600 dark:text-gray-400">
+                                {currency.name}
+                              </div>
+                            </div>
+                          </div>
+                          <button
+                            onClick={() =>
+                              addCurrency(currency.code, currency.name)
+                            }
+                            className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+                          >
+                            Add
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8">
+                      <p className="text-gray-600 dark:text-gray-400">
+                        {currencySearch
+                          ? `No currencies found matching "${currencySearch}"`
+                          : "No additional currencies available"}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-600 dark:text-gray-400">
+                    No additional currencies available or failed to fetch
+                    currencies.
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
+                    Make sure your ExchangeRate API key is configured correctly.
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>

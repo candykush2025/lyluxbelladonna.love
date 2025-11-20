@@ -8,11 +8,13 @@ import Image from "next/image";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/contexts/ToastContext";
+import { useCurrency } from "@/lib/currency-context";
 
 export default function WishlistPage() {
   const { wishlistItems, removeFromWishlist, loading } = useWishlist();
   const { addToCart } = useCart();
   const { addToast } = useToast();
+  const { formatPrice } = useCurrency();
   const [removing, setRemoving] = useState<string | null>(null);
 
   const handleRemoveFromWishlist = async (productId: string) => {
@@ -133,7 +135,7 @@ export default function WishlistPage() {
                     </h3>
                   </Link>
                   <p className="text-primary text-lg font-semibold mb-3">
-                    ${item.price.toFixed(2)}
+                    {formatPrice(item.price)}
                   </p>
 
                   <div className="flex flex-col gap-2">

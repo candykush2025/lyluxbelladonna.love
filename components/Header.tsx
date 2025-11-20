@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
+import CurrencySelector from "@/components/CurrencySelector";
 
 export default function Header() {
   const { user, isAdmin } = useAuth();
@@ -73,6 +74,7 @@ export default function Header() {
             </Link>
           </nav>
           <div className="flex gap-2">
+            <CurrencySelector />
             <button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-white/10 text-white hover:bg-white/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
               <span className="material-symbols-outlined text-xl">search</span>
             </button>
