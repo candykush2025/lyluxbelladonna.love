@@ -15,11 +15,16 @@ export interface CurrencyApiResponse {
   conversion_rates: ExchangeRates;
 }
 
-const EXCHANGE_RATE_API_KEY = "6b455dd83fbad089acb2892c";
+const EXCHANGE_RATE_API_KEY = process.env.EXCHANGE_RATE_API_KEY;
 const EXCHANGE_RATE_API_URL = `https://v6.exchangerate-api.com/v6/${EXCHANGE_RATE_API_KEY}/latest/USD`;
 
 export const fetchExchangeRates = async (): Promise<ExchangeRates | null> => {
   try {
+    if (!EXCHANGE_RATE_API_KEY) {
+      console.error("Exchange Rate API key not found in environment variables");
+      return null;
+    }
+
     const response = await fetch(EXCHANGE_RATE_API_URL);
 
     if (!response.ok) {
