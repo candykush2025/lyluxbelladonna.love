@@ -226,3 +226,43 @@ export const getCustomers = async () => {
   const snapshot = await getDocs(q);
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
+
+// Brand operations
+export const getBrands = async () => {
+  const brandsRef = collection(db, "brands");
+  const q = query(brandsRef, orderBy("name", "asc"));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};
+
+export const getBrand = async (id: string) => {
+  const docRef = doc(db, "brands", id);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return { id: docSnap.id, ...docSnap.data() };
+  }
+  return null;
+};
+
+export const createBrand = async (data: DocumentData) => {
+  const brandsRef = collection(db, "brands");
+  const docRef = await addDoc(brandsRef, {
+    ...data,
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+  });
+  return { id: docRef.id, ...data };
+};
+
+export const updateBrand = async (id: string, data: DocumentData) => {
+  const docRef = doc(db, "brands", id);
+  await updateDoc(docRef, {
+    ...data,
+    updatedAt: Timestamp.now(),
+  });
+};
+
+export const deleteBrand = async (id: string) => {
+  const docRef = doc(db, "brands", id);
+  await deleteDoc(docRef);
+};

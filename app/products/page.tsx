@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import { getProducts } from "@/lib/firestore";
+import { orderBy } from "firebase/firestore";
 
 interface Product {
   id: string;
@@ -48,7 +49,7 @@ export default function ProductsPage() {
   const loadProducts = async () => {
     try {
       setLoading(true);
-      const fetchedProducts = await getProducts();
+      const fetchedProducts = await getProducts([orderBy("createdAt", "desc")]);
       setProducts(fetchedProducts as Product[]);
     } catch (error) {
       console.error("Error loading products:", error);

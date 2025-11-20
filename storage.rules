@@ -23,15 +23,15 @@ service firebase.storage {
     // ============================================
     // Product Images
     // ============================================
-    match /products/{productId}/{imageId} {
+    match /products/{allPaths=**} {
       // Anyone can view product images (public)
       allow read: if true;
       
-      // Only admins can upload/update product images
-      allow create, update: if isAdmin() && isValidImage();
+      // Authenticated users can upload/update product images
+      allow create, update: if isSignedIn() && isValidImage();
       
-      // Only admins can delete product images
-      allow delete: if isAdmin();
+      // Authenticated users can delete product images
+      allow delete: if isSignedIn();
     }
     
     // ============================================
@@ -81,7 +81,19 @@ service firebase.storage {
     }
     
     // ============================================
-    // Default: Deny all other access
+    // Brand Logos
+    // ============================================
+    match /brands/{brandId}/{imageId} {
+      // Anyone can view brand logos (public)
+      allow read: if true;
+      
+      // Only admins can upload/update brand logos
+      allow create, update: if isAdmin() && isValidImage();
+      
+      // Only admins can delete brand logos
+      allow delete: if isAdmin();
+    }
+    
     // ============================================
     match /{allPaths=**} {
       allow read, write: if false;

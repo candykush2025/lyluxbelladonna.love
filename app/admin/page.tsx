@@ -6,6 +6,7 @@ import Image from "next/image";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/contexts/ToastContext";
 import {
   getProducts,
   createProduct,
@@ -16,6 +17,8 @@ import {
   deleteReview,
   getOrders,
   getCustomers,
+  getBrands,
+  createBrand,
 } from "@/lib/firestore";
 import { uploadImages, deleteImages } from "@/lib/storage";
 
@@ -26,6 +29,7 @@ export default function AdminDashboard() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { userProfile, logout } = useAuth();
   const router = useRouter();
+  const toastContext = useToast();
 
   const handleLogout = async () => {
     await logout();
@@ -585,6 +589,7 @@ function DashboardOverview() {
 // Products Management Component
 // Products Management Component
 function ProductsManagement() {
+  const { addToast } = useToast();
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -608,13 +613,41 @@ function ProductsManagement() {
     featured: false,
     sizes: "",
     colors: "",
+    brand: "",
   });
   const [existingImages, setExistingImages] = useState<string[]>([]);
   const [newImageFiles, setNewImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
+  // Variant state
+  const [hasVariants, setHasVariants] = useState(false);
+  const [variants, setVariants] = useState<any[]>([]);
+  const [variantImages, setVariantImages] = useState<{ [key: string]: File[] }>(
+    {}
+  );
+  const [variantImagePreviews, setVariantImagePreviews] = useState<{
+    [key: string]: string[];
+  }>({});
+
+  // Brand state
+  const [brands, setBrands] = useState<any[]>([]);
+  const [showNewBrandForm, setShowNewBrandForm] = useState(false);
+  const [showBrandDropdown, setShowBrandDropdown] = useState(false);
+  const [newBrandData, setNewBrandData] = useState({
+    name: "",
+    logo: null as File | null,
+    logoPreview: "",
+  });
+
+  // Category state
+  const [availableCategories, setAvailableCategories] = useState<string[]>([]);
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
+
   useEffect(() => {
     fetchProducts();
+    fetchBrands();
+    fetchCategories();
   }, []);
 
   useEffect(() => {
@@ -668,8 +701,11 @@ function ProductsManagement() {
         featured: product.featured || false,
         sizes: product.sizes?.join(", ") || "",
         colors: product.colors?.join(", ") || "",
+        brand: product.brand || "",
       });
       setExistingImages(product.images || []);
+      setHasVariants(product.hasVariants || false);
+      setVariants(product.variants || []);
     } else {
       resetForm();
     }
@@ -691,10 +727,20 @@ function ProductsManagement() {
       featured: false,
       sizes: "",
       colors: "",
+      brand: "",
     });
     setExistingImages([]);
     setNewImageFiles([]);
     setImagePreviews([]);
+    setHasVariants(false);
+    setVariants([]);
+    setVariantImages({});
+    setVariantImagePreviews({});
+    setShowNewBrandForm(false);
+    setShowBrandDropdown(false);
+    setNewBrandData({ name: "", logo: null, logoPreview: "" });
+    setShowCategoryDropdown(false);
+    setNewCategoryName("");
   };
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -719,6 +765,193 @@ function ProductsManagement() {
     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // Variant management functions
+  const addVariant = () => {
+    setVariants([
+      ...variants,
+      {
+        id: `variant-${Date.now()}`,
+        name: "",
+        options: [
+          { id: `option-${Date.now()}`, name: "", price: 0, image: "" },
+        ],
+      },
+    ]);
+  };
+
+  const removeVariant = (variantIndex: number) => {
+    setVariants(variants.filter((_, i) => i !== variantIndex));
+  };
+
+  const updateVariant = (variantIndex: number, field: string, value: any) => {
+    const updatedVariants = [...variants];
+    updatedVariants[variantIndex] = {
+      ...updatedVariants[variantIndex],
+      [field]: value,
+    };
+    setVariants(updatedVariants);
+  };
+
+  const addVariantOption = (variantIndex: number) => {
+    const updatedVariants = [...variants];
+    updatedVariants[variantIndex].options.push({
+      id: `option-${Date.now()}`,
+      name: "",
+      price: 0,
+      image: "",
+    });
+    setVariants(updatedVariants);
+  };
+
+  const removeVariantOption = (variantIndex: number, optionIndex: number) => {
+    const updatedVariants = [...variants];
+    updatedVariants[variantIndex].options = updatedVariants[
+      variantIndex
+    ].options.filter((_: any, i: number) => i !== optionIndex);
+    setVariants(updatedVariants);
+  };
+
+  const updateVariantOption = (
+    variantIndex: number,
+    optionIndex: number,
+    field: string,
+    value: any
+  ) => {
+    const updatedVariants = [...variants];
+    updatedVariants[variantIndex].options[optionIndex] = {
+      ...updatedVariants[variantIndex].options[optionIndex],
+      [field]: value,
+    };
+    setVariants(updatedVariants);
+  };
+
+  const handleVariantImageSelect = (
+    variantIndex: number,
+    optionIndex: number,
+    files: FileList
+  ) => {
+    const fileArray = Array.from(files);
+    const key = `${variantIndex}-${optionIndex}`;
+
+    setVariantImages((prev) => ({ ...prev, [key]: fileArray }));
+
+    fileArray.forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setVariantImagePreviews((prev) => ({
+          ...prev,
+          [key]: [...(prev[key] || []), reader.result as string],
+        }));
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const removeVariantImage = (
+    variantIndex: number,
+    optionIndex: number,
+    imageIndex: number
+  ) => {
+    const key = `${variantIndex}-${optionIndex}`;
+    setVariantImages((prev) => ({
+      ...prev,
+      [key]: (prev[key] || []).filter((_, i) => i !== imageIndex),
+    }));
+    setVariantImagePreviews((prev) => ({
+      ...prev,
+      [key]: (prev[key] || []).filter((_, i) => i !== imageIndex),
+    }));
+  };
+
+  // Brand management functions
+  const fetchBrands = async () => {
+    try {
+      // Assuming there's a getBrands function - if not, we'll need to create it
+      const fetchedBrands = await getBrands();
+      setBrands(fetchedBrands as any[]);
+    } catch (err) {
+      console.error("Error fetching brands:", err);
+    }
+  };
+
+  const handleBrandLogoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setNewBrandData((prev) => ({ ...prev, logo: file }));
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewBrandData((prev) => ({
+          ...prev,
+          logoPreview: reader.result as string,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const createNewBrand = async () => {
+    if (!newBrandData.name.trim()) {
+      addToast("Please enter a brand name", "error");
+      return;
+    }
+
+    try {
+      let logoUrl = "";
+      if (newBrandData.logo) {
+        const uploadedUrls = await uploadImages(
+          [newBrandData.logo],
+          `brands/${Date.now()}`
+        );
+        logoUrl = uploadedUrls[0];
+      }
+
+      const brandData = {
+        name: newBrandData.name,
+        logo: logoUrl,
+        createdAt: new Date(),
+      };
+
+      // Assuming there's a createBrand function - if not, we'll need to create it
+      const newBrand = await createBrand(brandData);
+
+      setBrands((prev) => [...prev, newBrand]);
+      setFormData((prev) => ({ ...prev, brand: newBrand.id }));
+      setShowNewBrandForm(false);
+      setNewBrandData({ name: "", logo: null, logoPreview: "" });
+      addToast("Brand created successfully!", "success");
+    } catch (err) {
+      console.error("Error creating brand:", err);
+      addToast("Failed to create brand. Please try again.", "error");
+    }
+  };
+
+  // Category management functions
+  const fetchCategories = async () => {
+    try {
+      const fetchedProducts = await getProducts();
+      const uniqueCategories = Array.from(
+        new Set(fetchedProducts.map((p: any) => p.category))
+      ).filter(Boolean);
+      setAvailableCategories(uniqueCategories as string[]);
+    } catch (err) {
+      console.error("Error fetching categories:", err);
+    }
+  };
+
+  const createNewCategory = () => {
+    if (!newCategoryName.trim()) {
+      addToast("Please enter a category name", "error");
+      return;
+    }
+
+    // Add to available categories
+    setAvailableCategories((prev) => [...prev, newCategoryName.trim()]);
+    setFormData((prev) => ({ ...prev, category: newCategoryName.trim() }));
+    setShowCategoryDropdown(false);
+    setNewCategoryName("");
+    addToast("Category added successfully!", "success");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
@@ -735,31 +968,80 @@ function ProductsManagement() {
 
       const allImages = [...existingImages, ...uploadedImageUrls];
 
-      const productData = {
-        name: formData.name,
-        description: formData.description,
-        price: Number(formData.price),
-        category: formData.category,
-        stock: Number(formData.stock),
-        featured: formData.featured,
-        images: allImages,
-        sizes: formData.sizes
-          ? formData.sizes
-              .split(",")
-              .map((s) => s.trim())
-              .filter(Boolean)
-          : [],
-        colors: formData.colors
-          ? formData.colors
-              .split(",")
-              .map((c) => c.trim())
-              .filter(Boolean)
-          : [],
-      };
+      // Process variant images
+      const processedVariants = await Promise.all(
+        variants.map(async (variant, variantIndex) => {
+          const processedOptions = await Promise.all(
+            variant.options.map(async (option: any, optionIndex: number) => {
+              let optionImageUrl = option.image || "";
+              const key = `${variantIndex}-${optionIndex}`;
+              const variantFiles = variantImages[key] || [];
+
+              if (variantFiles.length > 0) {
+                const productId = selectedProduct?.id || `temp-${Date.now()}`;
+                const uploadedUrls = await uploadImages(
+                  variantFiles,
+                  `products/${productId}/variants/${variant.id}/${option.id}`
+                );
+                optionImageUrl = uploadedUrls[0] || optionImageUrl;
+              }
+
+              return {
+                ...option,
+                image: optionImageUrl,
+              };
+            })
+          );
+
+          return {
+            ...variant,
+            options: processedOptions,
+          };
+        })
+      );
+
+      const productData = hasVariants
+        ? {
+            name: formData.name,
+            description: formData.description,
+            category: formData.category,
+            brand: formData.brand,
+            featured: formData.featured,
+            images: allImages,
+            hasVariants: true,
+            variants: processedVariants,
+            // For variant products, base price and stock are not used
+            price: 0,
+            stock: 0,
+          }
+        : {
+            name: formData.name,
+            description: formData.description,
+            price: Number(formData.price),
+            category: formData.category,
+            brand: formData.brand,
+            stock: Number(formData.stock),
+            featured: formData.featured,
+            images: allImages,
+            hasVariants: false,
+            variants: [],
+            sizes: formData.sizes
+              ? formData.sizes
+                  .split(",")
+                  .map((s) => s.trim())
+                  .filter(Boolean)
+              : [],
+            colors: formData.colors
+              ? formData.colors
+                  .split(",")
+                  .map((c) => c.trim())
+                  .filter(Boolean)
+              : [],
+          };
 
       if (modalMode === "create") {
         await createProduct(productData);
-        alert("Product created successfully!");
+        addToast("Product created successfully!", "success");
       } else if (modalMode === "edit" && selectedProduct) {
         const removedImages = (selectedProduct.images || []).filter(
           (img: string) => !existingImages.includes(img)
@@ -769,14 +1051,14 @@ function ProductsManagement() {
         }
 
         await updateProduct(selectedProduct.id, productData);
-        alert("Product updated successfully!");
+        addToast("Product updated successfully!", "success");
       }
 
       await fetchProducts();
       closeModal();
     } catch (err) {
       console.error("Error saving product:", err);
-      alert("Failed to save product. Please try again.");
+      addToast("Failed to save product. Please try again.", "error");
     } finally {
       setSaving(false);
     }
@@ -793,11 +1075,11 @@ function ProductsManagement() {
         await deleteImages(product.images);
       }
       await deleteProduct(product.id);
-      alert("Product deleted successfully!");
+      addToast("Product deleted successfully!", "success");
       await fetchProducts();
     } catch (err) {
       console.error("Error deleting product:", err);
-      alert("Failed to delete product. Please try again.");
+      addToast("Failed to delete product. Please try again.", "error");
     } finally {
       setSaving(false);
     }
@@ -805,7 +1087,9 @@ function ProductsManagement() {
 
   const categories = [
     "all",
-    ...Array.from(new Set(products.map((p) => p.category))),
+    ...Array.from(
+      new Set([...products.map((p) => p.category), ...availableCategories])
+    ),
   ];
 
   return (
@@ -910,22 +1194,91 @@ function ProductsManagement() {
 
               {/* Product Info */}
               <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1 line-clamp-1">
                   {product.name}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 line-clamp-2">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
                   {product.description}
                 </p>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xl font-bold text-primary">
-                    ${product.price.toFixed(2)}
-                  </span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">
-                    Stock: {product.stock}
-                  </span>
+
+                {/* Price/Variant Info */}
+                <div className="mb-3">
+                  {product.hasVariants ? (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-400 rounded text-xs font-medium">
+                          {product.variants?.length || 0} Variant
+                          {product.variants?.length !== 1 ? "s" : ""}
+                        </span>
+                        <span className="text-xs text-gray-600 dark:text-gray-400">
+                          {product.variants?.reduce(
+                            (total: number, variant: any) =>
+                              total + (variant.options?.length || 0),
+                            0
+                          ) || 0}{" "}
+                          Options
+                        </span>
+                      </div>
+                      {product.variants && product.variants.length > 0 && (
+                        <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+                          {product.variants
+                            .slice(0, 2)
+                            .map((variant: any, idx: number) => (
+                              <div
+                                key={idx}
+                                className="flex items-center gap-1"
+                              >
+                                <span className="material-symbols-outlined text-sm">
+                                  chevron_right
+                                </span>
+                                <span className="font-medium">
+                                  {variant.name}:
+                                </span>
+                                <span>
+                                  {variant.options?.length || 0} options
+                                </span>
+                              </div>
+                            ))}
+                          {product.variants.length > 2 && (
+                            <div className="text-xs text-gray-500 italic">
+                              +{product.variants.length - 2} more...
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-between">
+                      <span className="text-xl font-bold text-primary">
+                        ${product.price?.toFixed(2)}
+                      </span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        Stock: {product.stock}
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <div className="text-xs text-gray-500 dark:text-gray-400 mb-3">
-                  Category: {product.category}
+
+                {/* Category & Brand */}
+                <div className="flex flex-wrap items-center gap-2 mb-3 text-xs">
+                  <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded">
+                    {product.category}
+                  </span>
+                  {product.brand && (
+                    <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/20 text-purple-800 dark:text-purple-400 rounded flex items-center gap-1">
+                      {brands.find((b) => b.id === product.brand)?.logo && (
+                        <Image
+                          src={brands.find((b) => b.id === product.brand)?.logo}
+                          alt="Brand logo"
+                          width={14}
+                          height={14}
+                          className="object-contain rounded"
+                        />
+                      )}
+                      {brands.find((b) => b.id === product.brand)?.name ||
+                        product.brand}
+                    </span>
+                  )}
                 </div>
 
                 {/* Actions */}
@@ -1010,21 +1363,251 @@ function ProductsManagement() {
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                           Category *
                         </label>
-                        <input
-                          type="text"
-                          value={formData.category}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              category: e.target.value,
-                            })
-                          }
-                          disabled={modalMode === "view"}
-                          required
-                          placeholder="e.g., Dresses, Handbags"
-                          className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
-                        />
+                        <div className="relative">
+                          {/* Custom Category Dropdown */}
+                          <div
+                            className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer flex items-center justify-between"
+                            onClick={() =>
+                              setShowCategoryDropdown(!showCategoryDropdown)
+                            }
+                          >
+                            <span>
+                              {formData.category || "Select a category"}
+                            </span>
+                            <span className="material-symbols-outlined text-gray-400">
+                              {showCategoryDropdown
+                                ? "expand_less"
+                                : "expand_more"}
+                            </span>
+                          </div>
+
+                          {/* Dropdown Options */}
+                          {showCategoryDropdown && (
+                            <div className="absolute z-10 w-full mt-1 bg-white dark:bg-[#1a2332] border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                              <div
+                                className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#0f1825] cursor-pointer text-gray-900 dark:text-white"
+                                onClick={() => {
+                                  setFormData({ ...formData, category: "" });
+                                  setShowCategoryDropdown(false);
+                                }}
+                              >
+                                Select a category
+                              </div>
+                              {availableCategories.map((category) => (
+                                <div
+                                  key={category}
+                                  className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#0f1825] cursor-pointer text-gray-900 dark:text-white"
+                                  onClick={() => {
+                                    setFormData({ ...formData, category });
+                                    setShowCategoryDropdown(false);
+                                  }}
+                                >
+                                  {category}
+                                </div>
+                              ))}
+                              <div className="border-t border-gray-200 dark:border-gray-600 p-3">
+                                <div className="flex gap-2">
+                                  <input
+                                    type="text"
+                                    value={newCategoryName}
+                                    onChange={(e) =>
+                                      setNewCategoryName(e.target.value)
+                                    }
+                                    placeholder="New category name"
+                                    className="flex-1 px-3 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter") {
+                                        e.preventDefault();
+                                        createNewCategory();
+                                      }
+                                    }}
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={createNewCategory}
+                                    className="px-3 py-2 bg-primary text-white text-sm font-medium rounded hover:bg-opacity-90 transition-colors"
+                                  >
+                                    Add
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
+                    </div>
+
+                    {/* Brand Selection */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Brand
+                      </label>
+                      <div className="relative">
+                        {/* Custom Brand Dropdown */}
+                        <div
+                          className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer flex items-center justify-between"
+                          onClick={() =>
+                            setShowBrandDropdown(!showBrandDropdown)
+                          }
+                        >
+                          <div className="flex items-center gap-3">
+                            {formData.brand &&
+                              brands.find((b) => b.id === formData.brand)
+                                ?.logo && (
+                                <Image
+                                  src={
+                                    brands.find((b) => b.id === formData.brand)
+                                      ?.logo
+                                  }
+                                  alt="Selected brand"
+                                  width={24}
+                                  height={24}
+                                  className="object-contain rounded"
+                                />
+                              )}
+                            <span>
+                              {formData.brand
+                                ? brands.find((b) => b.id === formData.brand)
+                                    ?.name || "Unknown Brand"
+                                : "Select a brand (optional)"}
+                            </span>
+                          </div>
+                          <span className="material-symbols-outlined text-gray-400">
+                            {showBrandDropdown ? "expand_less" : "expand_more"}
+                          </span>
+                        </div>
+
+                        {/* Dropdown Options */}
+                        {showBrandDropdown && (
+                          <div className="absolute z-10 w-full mt-1 bg-white dark:bg-[#1a2332] border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                            <div
+                              className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#0f1825] cursor-pointer text-gray-900 dark:text-white"
+                              onClick={() => {
+                                setFormData({ ...formData, brand: "" });
+                                setShowBrandDropdown(false);
+                              }}
+                            >
+                              Select a brand (optional)
+                            </div>
+                            {brands.map((brand) => (
+                              <div
+                                key={brand.id}
+                                className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#0f1825] cursor-pointer text-gray-900 dark:text-white flex items-center gap-3"
+                                onClick={() => {
+                                  setFormData({ ...formData, brand: brand.id });
+                                  setShowBrandDropdown(false);
+                                }}
+                              >
+                                {brand.logo && (
+                                  <Image
+                                    src={brand.logo}
+                                    alt={brand.name}
+                                    width={24}
+                                    height={24}
+                                    className="object-contain rounded"
+                                  />
+                                )}
+                                <span>{brand.name}</span>
+                              </div>
+                            ))}
+                            <div className="border-t border-gray-200 dark:border-gray-600">
+                              <div
+                                className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#0f1825] cursor-pointer text-primary flex items-center gap-2"
+                                onClick={() => {
+                                  setShowBrandDropdown(false);
+                                  setShowNewBrandForm(true);
+                                }}
+                              >
+                                <span className="material-symbols-outlined text-lg">
+                                  add
+                                </span>
+                                Create New Brand
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* New Brand Form */}
+                      {showNewBrandForm && (
+                        <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4 bg-gray-50 dark:bg-[#0f1825]">
+                          <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                            Create New Brand
+                          </h4>
+                          <div className="space-y-4">
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Brand Name *
+                              </label>
+                              <input
+                                type="text"
+                                value={newBrandData.name}
+                                onChange={(e) =>
+                                  setNewBrandData({
+                                    ...newBrandData,
+                                    name: e.target.value,
+                                  })
+                                }
+                                placeholder="Enter brand name"
+                                required
+                                className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Brand Logo
+                              </label>
+                              <div className="flex items-center gap-4">
+                                {newBrandData.logoPreview && (
+                                  <Image
+                                    src={newBrandData.logoPreview}
+                                    alt="Brand logo preview"
+                                    width={80}
+                                    height={80}
+                                    className="object-contain rounded"
+                                  />
+                                )}
+                                <label className="flex items-center justify-center px-4 py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-primary transition-colors">
+                                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                                    {newBrandData.logo
+                                      ? "Change logo"
+                                      : "Upload logo"}
+                                  </span>
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleBrandLogoSelect}
+                                    className="hidden"
+                                  />
+                                </label>
+                              </div>
+                            </div>
+                            <div className="flex gap-2">
+                              <button
+                                type="button"
+                                onClick={createNewBrand}
+                                className="px-4 py-2 bg-primary text-white text-sm font-medium rounded hover:bg-opacity-90 transition-colors"
+                              >
+                                Create Brand
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setShowNewBrandForm(false);
+                                  setNewBrandData({
+                                    name: "",
+                                    logo: null,
+                                    logoPreview: "",
+                                  });
+                                }}
+                                className="px-4 py-2 bg-gray-500 text-white text-sm font-medium rounded hover:bg-gray-600 transition-colors"
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     <div>
@@ -1046,103 +1629,476 @@ function ProductsManagement() {
                       />
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Price ($) *
-                        </label>
-                        <input
-                          type="number"
-                          step="0.01"
-                          value={formData.price}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              price: Number(e.target.value),
-                            })
-                          }
-                          disabled={modalMode === "view"}
-                          required
-                          className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
-                        />
+                    {/* Product Type Toggle */}
+                    {modalMode !== "view" && (
+                      <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-4">
+                          <div>
+                            <h4 className="text-lg font-medium text-gray-900 dark:text-white">
+                              Product Type
+                            </h4>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              Choose whether this product has multiple variants
+                              or is a simple product
+                            </p>
+                          </div>
+                          <label className="flex items-center gap-3 cursor-pointer">
+                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                              Has Variants
+                            </span>
+                            <input
+                              type="checkbox"
+                              checked={hasVariants}
+                              onChange={(e) => setHasVariants(e.target.checked)}
+                              className="w-5 h-5 text-primary focus:ring-primary border-gray-300 rounded"
+                            />
+                          </label>
+                        </div>
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Stock *
-                        </label>
-                        <input
-                          type="number"
-                          value={formData.stock}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              stock: Number(e.target.value),
-                            })
-                          }
-                          disabled={modalMode === "view"}
-                          required
-                          className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
-                        />
-                      </div>
-                      <div className="flex items-end">
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={formData.featured}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                featured: e.target.checked,
-                              })
-                            }
-                            disabled={modalMode === "view"}
-                            className="w-5 h-5 text-primary focus:ring-primary border-gray-300 rounded"
-                          />
-                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Featured Product
-                          </span>
-                        </label>
-                      </div>
-                    </div>
+                    )}
 
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Available Sizes (comma-separated)
-                        </label>
+                    {/* Simple Product Fields */}
+                    {!hasVariants && (
+                      <>
+                        <div className="grid md:grid-cols-3 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                              Price ($) *
+                            </label>
+                            <input
+                              type="number"
+                              step="0.01"
+                              value={formData.price}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  price: Number(e.target.value),
+                                })
+                              }
+                              disabled={modalMode === "view"}
+                              required
+                              className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                              Stock *
+                            </label>
+                            <input
+                              type="number"
+                              value={formData.stock}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  stock: Number(e.target.value),
+                                })
+                              }
+                              disabled={modalMode === "view"}
+                              required
+                              className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+                            />
+                          </div>
+                          <div className="flex items-end">
+                            <label className="flex items-center gap-2 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={formData.featured}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    featured: e.target.checked,
+                                  })
+                                }
+                                disabled={modalMode === "view"}
+                                className="w-5 h-5 text-primary focus:ring-primary border-gray-300 rounded"
+                              />
+                              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                Featured Product
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                              Available Sizes (comma-separated)
+                            </label>
+                            <input
+                              type="text"
+                              value={formData.sizes}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  sizes: e.target.value,
+                                })
+                              }
+                              disabled={modalMode === "view"}
+                              placeholder="e.g., XS, S, M, L, XL"
+                              className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                              Available Colors (comma-separated)
+                            </label>
+                            <input
+                              type="text"
+                              value={formData.colors}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  colors: e.target.value,
+                                })
+                              }
+                              disabled={modalMode === "view"}
+                              placeholder="e.g., Black, White, Red"
+                              className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+                            />
+                          </div>
+                        </div>
+                      </>
+                    )}
+
+                    {/* Variant Product Fields */}
+                    {hasVariants && modalMode !== "view" && (
+                      <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-4">
+                          <h4 className="text-lg font-medium text-gray-900 dark:text-white">
+                            Product Variants
+                          </h4>
+                          <button
+                            type="button"
+                            onClick={addVariant}
+                            className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-opacity-90 transition-colors"
+                          >
+                            <span className="material-symbols-outlined text-sm mr-1">
+                              add
+                            </span>
+                            Add Variant
+                          </button>
+                        </div>
+
+                        {variants.length === 0 ? (
+                          <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                            <span className="material-symbols-outlined text-4xl mb-2">
+                              inventory_2
+                            </span>
+                            <p>
+                              No variants added yet. Click "Add Variant" to get
+                              started.
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="space-y-6">
+                            {variants.map((variant, variantIndex) => (
+                              <div
+                                key={variant.id}
+                                className="border border-gray-200 dark:border-gray-600 rounded-lg p-4"
+                              >
+                                <div className="flex items-center justify-between mb-4">
+                                  <div className="flex-1 mr-4">
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                      Variant Name *
+                                    </label>
+                                    <input
+                                      type="text"
+                                      value={variant.name}
+                                      onChange={(e) =>
+                                        updateVariant(
+                                          variantIndex,
+                                          "name",
+                                          e.target.value
+                                        )
+                                      }
+                                      placeholder="e.g., Sizes, Colors, Style"
+                                      required
+                                      className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                                    />
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={() => removeVariant(variantIndex)}
+                                    className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                                  >
+                                    <span className="material-symbols-outlined">
+                                      delete
+                                    </span>
+                                  </button>
+                                </div>
+
+                                <div className="mb-4">
+                                  <div className="flex items-center justify-between mb-3">
+                                    <h5 className="text-md font-medium text-gray-900 dark:text-white">
+                                      Variant Options
+                                    </h5>
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        addVariantOption(variantIndex)
+                                      }
+                                      className="px-3 py-1 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-600 transition-colors"
+                                    >
+                                      <span className="material-symbols-outlined text-sm mr-1">
+                                        add
+                                      </span>
+                                      Add Option
+                                    </button>
+                                  </div>
+
+                                  <div className="space-y-3">
+                                    {variant.options.map(
+                                      (option: any, optionIndex: number) => (
+                                        <div
+                                          key={option.id}
+                                          className="border border-gray-200 dark:border-gray-600 rounded p-3"
+                                        >
+                                          <div className="grid md:grid-cols-4 gap-3 mb-3">
+                                            <div>
+                                              <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                                                Option Name *
+                                              </label>
+                                              <input
+                                                type="text"
+                                                value={option.name}
+                                                onChange={(e) =>
+                                                  updateVariantOption(
+                                                    variantIndex,
+                                                    optionIndex,
+                                                    "name",
+                                                    e.target.value
+                                                  )
+                                                }
+                                                placeholder="e.g., S, M, L"
+                                                required
+                                                className="w-full px-3 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                                              />
+                                            </div>
+                                            <div>
+                                              <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                                                Price ($) *
+                                              </label>
+                                              <input
+                                                type="number"
+                                                step="0.01"
+                                                value={option.price}
+                                                onChange={(e) =>
+                                                  updateVariantOption(
+                                                    variantIndex,
+                                                    optionIndex,
+                                                    "price",
+                                                    Number(e.target.value)
+                                                  )
+                                                }
+                                                placeholder="0.00"
+                                                required
+                                                className="w-full px-3 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                                              />
+                                            </div>
+                                            <div className="md:col-span-2">
+                                              <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                                                Image (Optional)
+                                              </label>
+                                              <div className="flex gap-2">
+                                                <label className="flex-1 flex items-center justify-center px-3 py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded cursor-pointer hover:border-primary transition-colors">
+                                                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                                                    {variantImagePreviews[
+                                                      `${variantIndex}-${optionIndex}`
+                                                    ]?.length
+                                                      ? `${
+                                                          variantImagePreviews[
+                                                            `${variantIndex}-${optionIndex}`
+                                                          ].length
+                                                        } image(s) selected`
+                                                      : "Click to upload"}
+                                                  </span>
+                                                  <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={(e) =>
+                                                      e.target.files &&
+                                                      handleVariantImageSelect(
+                                                        variantIndex,
+                                                        optionIndex,
+                                                        e.target.files
+                                                      )
+                                                    }
+                                                    className="hidden"
+                                                  />
+                                                </label>
+                                                <button
+                                                  type="button"
+                                                  onClick={() =>
+                                                    removeVariantOption(
+                                                      variantIndex,
+                                                      optionIndex
+                                                    )
+                                                  }
+                                                  className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors"
+                                                >
+                                                  <span className="material-symbols-outlined text-sm">
+                                                    delete
+                                                  </span>
+                                                </button>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          {/* Variant Option Image Previews */}
+                                          {variantImagePreviews[
+                                            `${variantIndex}-${optionIndex}`
+                                          ]?.length > 0 && (
+                                            <div className="grid grid-cols-4 gap-2 mt-2">
+                                              {variantImagePreviews[
+                                                `${variantIndex}-${optionIndex}`
+                                              ].map((preview, imageIndex) => (
+                                                <div
+                                                  key={imageIndex}
+                                                  className="relative group"
+                                                >
+                                                  <img
+                                                    src={preview}
+                                                    alt={`Preview ${
+                                                      imageIndex + 1
+                                                    }`}
+                                                    className="w-full h-16 object-cover rounded"
+                                                  />
+                                                  <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                      removeVariantImage(
+                                                        variantIndex,
+                                                        optionIndex,
+                                                        imageIndex
+                                                      )
+                                                    }
+                                                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                                                  >
+                                                    <span className="material-symbols-outlined text-xs">
+                                                      close
+                                                    </span>
+                                                  </button>
+                                                </div>
+                                              ))}
+                                            </div>
+                                          )}
+                                        </div>
+                                      )
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Featured checkbox for variant products */}
+                    {hasVariants && (
+                      <div className="flex items-center gap-2">
                         <input
-                          type="text"
-                          value={formData.sizes}
+                          type="checkbox"
+                          checked={formData.featured}
                           onChange={(e) =>
                             setFormData({
                               ...formData,
-                              sizes: e.target.value,
+                              featured: e.target.checked,
                             })
                           }
                           disabled={modalMode === "view"}
-                          placeholder="e.g., XS, S, M, L, XL"
-                          className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+                          className="w-5 h-5 text-primary focus:ring-primary border-gray-300 rounded"
                         />
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                          Featured Product
+                        </span>
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Available Colors (comma-separated)
-                        </label>
-                        <input
-                          type="text"
-                          value={formData.colors}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              colors: e.target.value,
-                            })
-                          }
-                          disabled={modalMode === "view"}
-                          placeholder="e.g., Black, White, Red"
-                          className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
-                        />
+                    )}
+
+                    {/* View Brand Information */}
+                    {modalMode === "view" && selectedProduct?.brand && (
+                      <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                        <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                          Brand Information
+                        </h4>
+                        <div className="flex items-center gap-3">
+                          {brands.find((b) => b.id === selectedProduct.brand)
+                            ?.logo && (
+                            <Image
+                              src={
+                                brands.find(
+                                  (b) => b.id === selectedProduct.brand
+                                )?.logo
+                              }
+                              alt="Brand logo"
+                              width={48}
+                              height={48}
+                              className="object-contain rounded"
+                            />
+                          )}
+                          <div>
+                            <p className="text-lg font-medium text-gray-900 dark:text-white">
+                              {brands.find(
+                                (b) => b.id === selectedProduct.brand
+                              )?.name || selectedProduct.brand}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    )}
+
+                    {/* View Variant Information */}
+                    {modalMode === "view" && selectedProduct?.hasVariants && (
+                      <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                        <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                          Product Variants
+                        </h4>
+                        <div className="space-y-4">
+                          {selectedProduct.variants?.map(
+                            (variant: any, variantIndex: number) => (
+                              <div
+                                key={variant.id}
+                                className="border border-gray-200 dark:border-gray-600 rounded-lg p-4"
+                              >
+                                <h5 className="text-md font-medium text-gray-900 dark:text-white mb-3">
+                                  {variant.name}
+                                </h5>
+                                <div className="grid gap-3">
+                                  {variant.options?.map(
+                                    (option: any, optionIndex: number) => (
+                                      <div
+                                        key={option.id}
+                                        className="flex items-center justify-between bg-gray-50 dark:bg-[#0f1825] rounded p-3"
+                                      >
+                                        <div className="flex items-center gap-3">
+                                          {option.image && (
+                                            <Image
+                                              src={option.image}
+                                              alt={option.name}
+                                              width={40}
+                                              height={40}
+                                              className="object-cover rounded"
+                                            />
+                                          )}
+                                          <div>
+                                            <span className="font-medium text-gray-900 dark:text-white">
+                                              {option.name}
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <span className="text-lg font-bold text-primary">
+                                          ${option.price?.toFixed(2)}
+                                        </span>
+                                      </div>
+                                    )
+                                  )}
+                                </div>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      </div>
+                    )}
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -1865,6 +2821,7 @@ function CustomersManagement() {
 
 // Reviews Management Component
 function ReviewsManagement() {
+  const { addToast } = useToast();
   const [reviews, setReviews] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>("all");
@@ -1889,22 +2846,22 @@ function ReviewsManagement() {
   const handleApprove = async (id: string) => {
     try {
       await updateReview(id, { status: "approved" });
-      alert("Review approved!");
+      addToast("Review approved!", "success");
       loadReviews();
     } catch (error) {
       console.error("Error approving review:", error);
-      alert("Failed to approve review");
+      addToast("Failed to approve review", "error");
     }
   };
 
   const handleReject = async (id: string) => {
     try {
       await updateReview(id, { status: "rejected" });
-      alert("Review rejected!");
+      addToast("Review rejected!", "success");
       loadReviews();
     } catch (error) {
       console.error("Error rejecting review:", error);
-      alert("Failed to reject review");
+      addToast("Failed to reject review", "error");
     }
   };
 
@@ -1913,11 +2870,11 @@ function ReviewsManagement() {
 
     try {
       await deleteReview(id);
-      alert("Review deleted!");
+      addToast("Review deleted!", "success");
       loadReviews();
     } catch (error) {
       console.error("Error deleting review:", error);
-      alert("Failed to delete review");
+      addToast("Failed to delete review", "error");
     }
   };
 

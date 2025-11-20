@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import { getProducts } from "@/lib/firestore";
+import { orderBy, limit } from "firebase/firestore";
 
 interface Product {
   id: string;
@@ -22,6 +23,15 @@ interface Product {
   sku: string;
   tags: string[];
   rating: number;
+  hasVariants?: boolean;
+  variants?: Array<{
+    name: string;
+    options: Array<{
+      name: string;
+      price: number;
+      image?: string;
+    }>;
+  }>;
   reviewCount: number;
 }
 
@@ -36,11 +46,12 @@ export default function Home() {
   const loadNewArrivals = async () => {
     try {
       setLoading(true);
-      // Get featured products or latest products for new arrivals
-      const products = await getProducts();
-      // Take first 4 products as new arrivals (you can modify this logic)
-      const arrivals = products.slice(0, 4);
-      setNewArrivals(arrivals as Product[]);
+      // Get newest products sorted by creation date (descending)
+      const products = await getProducts([
+        orderBy("createdAt", "desc"),
+        limit(4),
+      ]);
+      setNewArrivals(products as Product[]);
     } catch (error) {
       console.error("Error loading new arrivals:", error);
     } finally {
@@ -125,7 +136,24 @@ export default function Home() {
                                 {product.name}
                               </p>
                               <p className="text-primary text-sm font-normal leading-normal">
-                                ${product.price.toLocaleString()}
+                                {product.hasVariants && product.variants
+                                  ? (() => {
+                                      const allPrices = product.variants
+                                        .flatMap(
+                                          (v: any) =>
+                                            v.options?.map(
+                                              (o: any) => o.price
+                                            ) || []
+                                        )
+                                        .filter((p: number) => p > 0);
+                                      const minPrice = Math.min(...allPrices);
+                                      const maxPrice = Math.max(...allPrices);
+                                      if (minPrice === maxPrice) {
+                                        return `$${minPrice.toLocaleString()}`;
+                                      }
+                                      return `$${minPrice.toLocaleString()} - $${maxPrice.toLocaleString()}`;
+                                    })()
+                                  : `$${product.price.toLocaleString()}`}
                               </p>
                             </div>
                           </Link>
