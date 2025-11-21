@@ -113,9 +113,9 @@ export default function Home() {
             <div className="flex flex-col gap-16 md:gap-24 mt-8">
               {/* Hero Section */}
               <div className="@container">
-                <div className="@[480px]:p-4">
+                <div className="p-4 sm:p-4">
                   <div
-                    className="flex min-h-[60vh] md:min-h-[75vh] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 @[480px]:rounded-xl items-center justify-center p-4 text-center"
+                    className="flex min-h-[60vh] md:min-h-[75vh] flex-col gap-8 bg-cover bg-center bg-no-repeat rounded-xl items-center justify-center p-4 text-center"
                     style={{
                       backgroundImage: homepageContent?.hero?.backgroundImage
                         ? `linear-gradient(rgba(12, 24, 33, 0.2) 0%, rgba(12, 24, 33, 0.6) 100%), url("${homepageContent.hero.backgroundImage}")`
@@ -123,18 +123,18 @@ export default function Home() {
                     }}
                   >
                     <div className="flex flex-col gap-4">
-                      <h1 className="text-white text-5xl font-black leading-tight tracking-tight font-serif @[480px]:text-7xl">
+                      <h1 className="text-white text-5xl font-black leading-tight tracking-tight font-serif sm:text-7xl">
                         {homepageContent?.hero?.title ||
                           "Welcome to Lylux Belladonna"}
                       </h1>
-                      <h2 className="text-white/90 text-base font-normal leading-normal @[480px]:text-lg">
+                      <h2 className="text-white/90 text-base font-normal leading-normal sm:text-lg">
                         {homepageContent?.hero?.subtitle ||
                           "Discover timeless elegance and modern sophistication."}
                       </h2>
                     </div>
                     <Link
                       href="/products"
-                      className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 @[480px]:h-14 @[480px]:px-10 bg-transparent border border-primary text-primary hover:bg-primary hover:text-background-dark transition-colors text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base"
+                      className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 sm:h-14 sm:px-10 bg-transparent border border-primary text-primary hover:bg-primary hover:text-background-dark transition-colors text-sm font-bold leading-normal tracking-[0.015em] sm:text-base"
                     >
                       <span className="truncate">
                         {homepageContent?.hero?.shopNowText || "Shop Now"}
@@ -233,7 +233,7 @@ export default function Home() {
                             : 'url("https://via.placeholder.com/600x400?text=Collection+Image")',
                         }}
                       ></div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                      <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
                       <div className="relative p-8">
                         <h3 className="text-white text-4xl font-serif font-bold">
                           {collection.title}
@@ -256,7 +256,7 @@ export default function Home() {
                               'url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_ducnJ8AmXCNRgW7Rc74jnAwSjG0xWJlnEWnlOr_hVZt7lhrsh7jghy3K5cKBb3NGlmfyuwtofkmEBwZRklNiJeY7_5_oEke3SI8820_c_HvQEQZO9266_s3uDoNqzuvsb_aCcC6pZmb2f9_ABcfhfVJGtfo9U2nQS8SwSEWjV2c7IzA-yp0oBo9fpl_P8qT9L-AU8FBCTXa2kU78sZ-b9SFrRrziragFUszlYHFaxiYNAAoP0pLzdp6Fok1xyIM0WvsfQHvTN0")',
                           }}
                         ></div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
                         <div className="relative p-8">
                           <h3 className="text-white text-4xl font-serif font-bold">
                             The Evening Edit
@@ -275,7 +275,7 @@ export default function Home() {
                               'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDpY63pOULIh0ykCEQ3__5GYxAqX4f6xWY4KV5ORKPkoZW7SJzkR_GJ5VimZvBY7YfbCSLohFxDpJjc1wwIxNHo7CO1FS7kPGZhieKzHpoxDHXZzoc9SalATd4x5dUSOIM_Gx4BCJ5JNPQrhvE72BKVjY4cxUlNhY4E5d-VtNLXUZC9PTiTnuF3xaXSaxkEdTPsO1iiz36KbWe1yOgR97_GA3BJGc5LB_a105xVU8UItQ4RatFtnW7tDXuFyR1xHLHXWEmu9ZKhvEM")',
                           }}
                         ></div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
                         <div className="relative p-8">
                           <h3 className="text-white text-4xl font-serif font-bold">
                             Artisan Leather
