@@ -41,7 +41,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${manrope.variable} ${playfair.variable} bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200 antialiased`}
+        className={`${manrope.variable} ${playfair.variable} bg-background-dark font-display text-gray-200 antialiased`}
       >
         <AuthProvider>
           <WishlistProvider>

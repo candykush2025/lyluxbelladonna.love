@@ -150,9 +150,9 @@ export default function ProductsPage() {
     <div className="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
       <Header />
       <div className="layout-container flex h-full grow flex-col">
-        <div className="px-4 sm:px-10 md:px-20 lg:px-40 flex flex-1 justify-center py-5">
-          <div className="layout-content-container flex flex-col max-w-[1280px] flex-1">
-            <main className="flex flex-col gap-6 px-4 py-8">
+        <div className="w-full flex flex-1 justify-center py-5">
+          <div className="layout-content-container flex flex-col w-full max-w-[1280px] flex-1">
+            <main className="flex flex-col gap-6 px-4 md:px-6 lg:px-8 py-8">
               {/* Breadcrumbs */}
               <div className="flex flex-col gap-4">
                 <div className="flex flex-wrap gap-2">
@@ -223,7 +223,7 @@ export default function ProductsPage() {
               </div>
 
               {/* Filter and Sort Bar */}
-              <div className="flex flex-wrap items-center justify-between gap-4 py-3 border-y border-solid border-gold/20">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-3 border-y border-solid border-gold/20">
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setShowFilters(!showFilters)}
@@ -247,7 +247,7 @@ export default function ProductsPage() {
                       Clear all
                     </button>
                   )}
-                  <div className="hidden sm:flex gap-1 p-1 rounded-lg bg-white/5">
+                  <div className="flex gap-1 p-1 rounded-lg bg-white/5">
                     <button
                       onClick={() => setViewMode("grid")}
                       className={`p-1.5 rounded-md ${
@@ -274,11 +274,11 @@ export default function ProductsPage() {
                     </button>
                   </div>
                 </div>
-                <div className="relative">
+                <div className="relative w-full sm:w-auto">
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as any)}
-                    className="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-gold text-navy gap-2 text-sm font-bold leading-normal tracking-[0.015em] px-4 pr-10 hover:opacity-90 transition-opacity appearance-none"
+                    className="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-gold text-navy gap-2 text-sm font-bold leading-normal tracking-[0.015em] px-4 pr-10 hover:opacity-90 transition-opacity appearance-none w-full"
                   >
                     <option value="newest">Sort by: Newest</option>
                     <option value="price-asc">Price: Low to High</option>
@@ -531,7 +531,7 @@ export default function ProductsPage() {
                 <div
                   className={
                     viewMode === "grid"
-                      ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
+                      ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
                       : "flex flex-col gap-4"
                   }
                 >
@@ -583,3 +583,5 @@ export default function ProductsPage() {
     </div>
   );
 }
+
+
