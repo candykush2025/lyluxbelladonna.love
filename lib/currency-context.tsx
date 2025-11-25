@@ -39,7 +39,7 @@ interface CurrencyProviderProps {
 export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({
   children,
 }) => {
-  const [currentCurrency, setCurrentCurrency] = useState<string>("USD");
+  const [currentCurrency, setCurrentCurrency] = useState<string>("IDR");
   const [currencyRates, setCurrencyRates] =
     useState<CurrencyRate[]>(DEFAULT_CURRENCIES);
   const [isLoading, setIsLoading] = useState(true);
@@ -99,24 +99,23 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({
   }, [currencyRates]);
 
   const formatPrice = (price: number): string => {
-    // Handle USD separately since it's the base currency
-    if (currentCurrency === "USD") {
-      return `$${price.toFixed(2)}`;
+    // Handle IDR separately since it's the base currency
+    if (currentCurrency === "IDR") {
+      // Price is already in IDR, just format it
+      const idrAmount = Math.round(price);
+      return `Rp${idrAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
     }
 
     const currency = currencyRates.find((c) => c.code === currentCurrency);
-    if (!currency) return `$${price.toFixed(2)}`;
+    if (!currency) return `Rp${Math.round(price).toLocaleString("id-ID")}`;
 
+    // Convert from IDR (base currency) to target currency
     const convertedAmount = price * currency.rate;
 
     // Format based on currency
     switch (currentCurrency) {
-      case "IDR":
-        // Indonesian Rupiah: integer only, use dots as thousand separators
-        const idrAmount = Math.round(convertedAmount);
-        return `${currency.symbol}${idrAmount
-          .toString()
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+      case "USD":
+        return `${currency.symbol}${convertedAmount.toFixed(2)}`;
       case "JPY":
         return `${currency.symbol}${Math.round(convertedAmount).toLocaleString(
           "ja-JP"
@@ -136,11 +135,11 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({
 
   const convertPrice = (
     price: number,
-    fromCurrency: string = "USD"
+    fromCurrency: string = "IDR"
   ): number => {
-    // If converting to USD, just return the price as-is
-    if (currentCurrency === "USD") {
-      return fromCurrency === "USD" ? price : price;
+    // If converting to IDR, just return the price as-is
+    if (currentCurrency === "IDR") {
+      return fromCurrency === "IDR" ? price : price;
     }
 
     const fromRate =
@@ -148,9 +147,9 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({
     const toRate =
       currencyRates.find((c) => c.code === currentCurrency)?.rate || 1;
 
-    // Convert to USD first, then to target currency
-    const usdAmount = price / fromRate;
-    return usdAmount * toRate;
+    // Convert to IDR first, then to target currency
+    const idrAmount = price / fromRate;
+    return idrAmount * toRate;
   };
 
   const value: CurrencyContextType = {

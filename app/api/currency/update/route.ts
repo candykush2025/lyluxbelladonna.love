@@ -17,42 +17,42 @@ export async function POST(request: NextRequest) {
 
     // Extract the rates we need
     const updatedRates = {
-      baseCurrency: "USD",
+      baseCurrency: "IDR",
       rates: [
         {
           code: "EUR",
           name: "Euro",
           symbol: "€",
-          rate: rates.EUR || 0.92,
+          rate: rates.EUR || 0.000064,
           flag: "🇪🇺",
         },
         {
           code: "GBP",
           name: "British Pound",
           symbol: "£",
-          rate: rates.GBP || 0.78,
+          rate: rates.GBP || 0.000053,
           flag: "🇬🇧",
         },
         {
           code: "JPY",
           name: "Japanese Yen",
           symbol: "¥",
-          rate: rates.JPY || 152,
+          rate: rates.JPY || 0.0103,
           flag: "🇯🇵",
         },
         {
           code: "AUD",
           name: "Australian Dollar",
           symbol: "A$",
-          rate: rates.AUD || 1.52,
+          rate: rates.AUD || 0.000098,
           flag: "🇦🇺",
         },
         {
-          code: "IDR",
-          name: "Indonesian Rupiah",
-          symbol: "Rp",
-          rate: rates.IDR || 15500,
-          flag: "🇮🇩",
+          code: "USD",
+          name: "United States Dollar",
+          symbol: "$",
+          rate: rates.USD || 0.000064,
+          flag: "��",
         },
       ],
       lastUpdated: new Date(),

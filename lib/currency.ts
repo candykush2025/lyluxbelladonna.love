@@ -5,34 +5,41 @@ export interface CurrencyRate {
   code: string;
   name: string;
   symbol: string;
-  rate: number; // Rate relative to USD
+  rate: number; // Rate relative to IDR
   flag: string;
 }
 
 export interface CurrencySettings {
-  baseCurrency: string; // USD
+  baseCurrency: string; // IDR
   rates: CurrencyRate[];
   lastUpdated: Date;
 }
 
-// Default currency rates (top 5 international currencies + IDR) - Updated November 2025
+// Default currency rates (IDR is base currency) - Updated November 2025
 export const DEFAULT_CURRENCIES: CurrencyRate[] = [
-  { code: "EUR", name: "Euro", symbol: "€", rate: 0.92, flag: "🇪🇺" },
-  { code: "GBP", name: "British Pound", symbol: "£", rate: 0.78, flag: "🇬🇧" },
-  { code: "JPY", name: "Japanese Yen", symbol: "¥", rate: 152, flag: "🇯🇵" },
+  { code: "IDR", name: "Indonesian Rupiah", symbol: "Rp", rate: 1, flag: "🇮🇩" },
+  {
+    code: "USD",
+    name: "United States Dollar",
+    symbol: "$",
+    rate: 0.000064,
+    flag: "🇺🇸",
+  },
+  { code: "EUR", name: "Euro", symbol: "€", rate: 0.00006, flag: "🇪🇺" },
+  {
+    code: "GBP",
+    name: "British Pound",
+    symbol: "£",
+    rate: 0.000051,
+    flag: "🇬🇧",
+  },
+  { code: "JPY", name: "Japanese Yen", symbol: "¥", rate: 0.0097, flag: "🇯🇵" },
   {
     code: "AUD",
     name: "Australian Dollar",
     symbol: "A$",
-    rate: 1.52,
-    flag: "🇦🇺",
-  },
-  {
-    code: "IDR",
-    name: "Indonesian Rupiah",
-    symbol: "Rp",
-    rate: 15500,
-    flag: "🇮🇩",
+    rate: 0.000098,
+    flag: "🇦�",
   },
 ];
 
@@ -69,33 +76,40 @@ export const formatCurrency = (
   rates: CurrencyRate[]
 ): string => {
   const currency = rates.find((c) => c.code === currencyCode);
-  if (!currency) return `$${amount.toFixed(2)}`;
+  if (!currency) return `Rp${amount.toLocaleString("id-ID")}`;
 
-  const convertedAmount = amount * currency.rate;
+  // Since rates are relative to IDR, amount is in IDR
+  // For IDR, return as is; for others, convert using the rate
+  let displayAmount: number;
+  if (currencyCode === "IDR") {
+    displayAmount = amount;
+  } else {
+    displayAmount = amount * currency.rate;
+  }
 
   // Format based on currency
   switch (currencyCode) {
     case "IDR":
-      return `${currency.symbol}${convertedAmount.toLocaleString("id-ID")}`;
+      return `${currency.symbol}${displayAmount.toLocaleString("id-ID")}`;
     case "JPY":
-      return `${currency.symbol}${Math.round(convertedAmount).toLocaleString(
+      return `${currency.symbol}${Math.round(displayAmount).toLocaleString(
         "ja-JP"
       )}`;
     case "EUR":
-      return `${currency.symbol}${convertedAmount
-        .toFixed(2)
-        .replace(".", ",")}`;
+      return `${currency.symbol}${displayAmount.toFixed(2).replace(".", ",")}`;
     case "GBP":
-      return `${currency.symbol}${convertedAmount.toFixed(2)}`;
+      return `${currency.symbol}${displayAmount.toFixed(2)}`;
     case "AUD":
-      return `${currency.symbol}${convertedAmount.toFixed(2)}`;
+      return `${currency.symbol}${displayAmount.toFixed(2)}`;
+    case "USD":
+      return `${currency.symbol}${displayAmount.toFixed(2)}`;
     default:
-      return `${currency.symbol}${convertedAmount.toFixed(2)}`;
+      return `${currency.symbol}${displayAmount.toFixed(2)}`;
   }
 };
 
 export const convertPrice = (
-  usdPrice: number,
+  idrPrice: number,
   fromCurrency: string,
   toCurrency: string,
   rates: CurrencyRate[]
@@ -103,7 +117,7 @@ export const convertPrice = (
   const fromRate = rates.find((c) => c.code === fromCurrency)?.rate || 1;
   const toRate = rates.find((c) => c.code === toCurrency)?.rate || 1;
 
-  // Convert to USD first, then to target currency
-  const usdAmount = usdPrice / fromRate;
-  return usdAmount * toRate;
+  // Convert to IDR first, then to target currency
+  const idrAmount = idrPrice / fromRate;
+  return idrAmount * toRate;
 };

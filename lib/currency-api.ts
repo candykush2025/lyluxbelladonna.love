@@ -16,7 +16,7 @@ export interface CurrencyApiResponse {
 }
 
 const EXCHANGE_RATE_API_KEY = process.env.EXCHANGE_RATE_API_KEY;
-const EXCHANGE_RATE_API_URL = `https://v6.exchangerate-api.com/v6/${EXCHANGE_RATE_API_KEY}/latest/USD`;
+const EXCHANGE_RATE_API_URL = `https://v6.exchangerate-api.com/v6/${EXCHANGE_RATE_API_KEY}/latest/IDR`;
 
 export const fetchExchangeRates = async (): Promise<ExchangeRates | null> => {
   try {

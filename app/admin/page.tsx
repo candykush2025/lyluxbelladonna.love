@@ -7,6 +7,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/contexts/ToastContext";
+import { useCurrency } from "@/lib/currency-context";
 import {
   getProducts,
   createProduct,
@@ -41,6 +42,7 @@ export default function AdminDashboard() {
   const { userProfile, logout } = useAuth();
   const router = useRouter();
   const toastContext = useToast();
+  const { formatPrice } = useCurrency();
 
   const handleLogout = async () => {
     await logout();
@@ -256,10 +258,18 @@ export default function AdminDashboard() {
 
           {/* Content Area */}
           <main className="p-4 sm:p-6 lg:p-8">
-            {activeTab === "dashboard" && <DashboardOverview />}
-            {activeTab === "products" && <ProductsManagement />}
-            {activeTab === "orders" && <OrdersManagement />}
-            {activeTab === "customers" && <CustomersManagement />}
+            {activeTab === "dashboard" && (
+              <DashboardOverview formatPrice={formatPrice} />
+            )}
+            {activeTab === "products" && (
+              <ProductsManagement formatPrice={formatPrice} />
+            )}
+            {activeTab === "orders" && (
+              <OrdersManagement formatPrice={formatPrice} />
+            )}
+            {activeTab === "customers" && (
+              <CustomersManagement formatPrice={formatPrice} />
+            )}
             {activeTab === "reviews" && <ReviewsManagement />}
             {activeTab === "homepage" && <HomepageManagement />}
             {activeTab === "currency" && <CurrencyManagement />}
@@ -279,7 +289,11 @@ export default function AdminDashboard() {
 }
 
 // Dashboard Overview Component
-function DashboardOverview() {
+function DashboardOverview({
+  formatPrice,
+}: {
+  formatPrice: (price: number) => string;
+}) {
   const [stats, setStats] = useState({
     totalRevenue: 0,
     totalOrders: 0,
@@ -398,7 +412,7 @@ function DashboardOverview() {
                 Total Revenue
               </p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
-                ${stats.totalRevenue.toLocaleString()}
+                {formatPrice(stats.totalRevenue)}
               </p>
             </div>
             <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center">
@@ -591,7 +605,7 @@ function DashboardOverview() {
                       {order.items?.[0]?.name || "Product"}
                     </td>
                     <td className="py-3 px-4 text-sm text-gray-900 dark:text-white">
-                      ${order.total?.toFixed(2) || "0.00"}
+                      {formatPrice(order.total || 0)}
                     </td>
                     <td className="py-3 px-4">
                       <span
@@ -633,7 +647,11 @@ function DashboardOverview() {
 
 // Products Management Component
 // Products Management Component
-function ProductsManagement() {
+function ProductsManagement({
+  formatPrice,
+}: {
+  formatPrice: (price: number) => string;
+}) {
   const { addToast } = useToast();
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
@@ -751,6 +769,22 @@ function ProductsManagement() {
       setExistingImages(product.images || []);
       setHasVariants(product.hasVariants || false);
       setVariants(product.variants || []);
+
+      // Populate variant image previews with existing images
+      if (product.variants && product.variants.length > 0) {
+        const previews: { [key: string]: string[] } = {};
+        product.variants.forEach((variant: any, variantIndex: number) => {
+          if (variant.options && variant.options.length > 0) {
+            variant.options.forEach((option: any, optionIndex: number) => {
+              if (option.image) {
+                const key = `${variantIndex}-${optionIndex}`;
+                previews[key] = [option.image];
+              }
+            });
+          }
+        });
+        setVariantImagePreviews(previews);
+      }
     } else {
       resetForm();
     }
@@ -898,14 +932,34 @@ function ProductsManagement() {
     imageIndex: number
   ) => {
     const key = `${variantIndex}-${optionIndex}`;
+
+    // Remove from file arrays
     setVariantImages((prev) => ({
       ...prev,
       [key]: (prev[key] || []).filter((_, i) => i !== imageIndex),
     }));
-    setVariantImagePreviews((prev) => ({
-      ...prev,
-      [key]: (prev[key] || []).filter((_, i) => i !== imageIndex),
-    }));
+
+    // Remove from preview arrays
+    setVariantImagePreviews((prev) => {
+      const updated = {
+        ...prev,
+        [key]: (prev[key] || []).filter((_, i) => i !== imageIndex),
+      };
+
+      // If no previews left, also clear the option's image property
+      if (updated[key].length === 0) {
+        const updatedVariants = [...variants];
+        if (updatedVariants[variantIndex]?.options[optionIndex]) {
+          updatedVariants[variantIndex].options[optionIndex] = {
+            ...updatedVariants[variantIndex].options[optionIndex],
+            image: "",
+          };
+          setVariants(updatedVariants);
+        }
+      }
+
+      return updated;
+    });
   };
 
   // Brand management functions
@@ -1295,7 +1349,7 @@ function ProductsManagement() {
                   ) : (
                     <div className="flex items-center justify-between">
                       <span className="text-xl font-bold text-primary">
-                        ${product.price?.toFixed(2)}
+                        {formatPrice(product.price || 0)}
                       </span>
                       <span className="text-sm text-gray-600 dark:text-gray-400">
                         Stock: {product.stock}
@@ -1708,7 +1762,7 @@ function ProductsManagement() {
                         <div className="grid md:grid-cols-3 gap-4">
                           <div>
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                              Price ($) *
+                              Price (Rp) *
                             </label>
                             <input
                               type="number"
@@ -1921,7 +1975,7 @@ function ProductsManagement() {
                                             </div>
                                             <div>
                                               <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
-                                                Price ($) *
+                                                Price (Rp) *
                                               </label>
                                               <input
                                                 type="number"
@@ -2132,7 +2186,7 @@ function ProductsManagement() {
                                           </div>
                                         </div>
                                         <span className="text-lg font-bold text-primary">
-                                          ${option.price?.toFixed(2)}
+                                          {formatPrice(option.price || 0)}
                                         </span>
                                       </div>
                                     )
@@ -2268,7 +2322,11 @@ function ProductsManagement() {
 }
 
 // Orders Management Component
-function OrdersManagement() {
+function OrdersManagement({
+  formatPrice,
+}: {
+  formatPrice: (price: number) => string;
+}) {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -2406,7 +2464,7 @@ function OrdersManagement() {
                       {order.items?.[0]?.name || "N/A"}
                     </td>
                     <td className="py-4 px-6 text-sm font-medium text-gray-900 dark:text-white">
-                      ${order.total?.toFixed(2) || "0.00"}
+                      {formatPrice(order.total || 0)}
                     </td>
                     <td className="py-4 px-6 text-sm text-gray-600 dark:text-gray-300">
                       {formatDate(order.createdAt)}
@@ -2556,7 +2614,7 @@ function OrdersManagement() {
                     Amount
                   </p>
                   <p className="text-sm font-medium text-gray-900 dark:text-white">
-                    ${order.total?.toFixed(2) || "0.00"}
+                    {formatPrice(order.total || 0)}
                   </p>
                 </div>
                 <div>
@@ -2582,7 +2640,11 @@ function OrdersManagement() {
 }
 
 // Customers Management Component
-function CustomersManagement() {
+function CustomersManagement({
+  formatPrice,
+}: {
+  formatPrice: (price: number) => string;
+}) {
   const [customers, setCustomers] = useState<any[]>([]);
   const [customerStats, setCustomerStats] = useState<Map<string, any>>(
     new Map()
@@ -2729,7 +2791,7 @@ function CustomersManagement() {
                         {stats?.orderCount || 0}
                       </td>
                       <td className="py-4 px-6 text-sm font-medium text-gray-900 dark:text-white">
-                        ${(stats?.totalSpent || 0).toFixed(2)}
+                        {formatPrice(stats?.totalSpent || 0)}
                       </td>
                       <td className="py-4 px-6 text-sm text-gray-600 dark:text-gray-300">
                         {formatDate(customer.createdAt)}
@@ -2829,7 +2891,7 @@ function CustomersManagement() {
                       Spent
                     </p>
                     <p className="text-gray-900 dark:text-white font-medium">
-                      ${(stats?.totalSpent || 0).toFixed(2)}
+                      {formatPrice(stats?.totalSpent || 0)}
                     </p>
                   </div>
                   <div>
@@ -3582,36 +3644,42 @@ function CurrencyManagement() {
       } else {
         // Initialize with default rates - Updated November 2025
         setCurrencyRates({
-          baseCurrency: "USD",
+          baseCurrency: "IDR",
           rates: [
-            { code: "EUR", name: "Euro", symbol: "€", rate: 0.92, flag: "🇪🇺" },
+            {
+              code: "EUR",
+              name: "Euro",
+              symbol: "€",
+              rate: 0.000064,
+              flag: "🇪🇺",
+            },
             {
               code: "GBP",
               name: "British Pound",
               symbol: "£",
-              rate: 0.78,
+              rate: 0.000053,
               flag: "🇬🇧",
             },
             {
               code: "JPY",
               name: "Japanese Yen",
               symbol: "¥",
-              rate: 152,
+              rate: 0.0103,
               flag: "🇯🇵",
             },
             {
               code: "AUD",
               name: "Australian Dollar",
               symbol: "A$",
-              rate: 1.52,
+              rate: 0.000098,
               flag: "🇦🇺",
             },
             {
-              code: "IDR",
-              name: "Indonesian Rupiah",
-              symbol: "Rp",
-              rate: 15500,
-              flag: "🇮🇩",
+              code: "USD",
+              name: "United States Dollar",
+              symbol: "$",
+              rate: 0.000064,
+              flag: "��",
             },
           ],
           lastUpdated: new Date(),
@@ -3721,7 +3789,7 @@ function CurrencyManagement() {
     try {
       // Get the latest rate from the API
       const response = await fetch(
-        `https://v6.exchangerate-api.com/v6/6b455dd83fbad089acb2892c/latest/USD`
+        `https://v6.exchangerate-api.com/v6/6b455dd83fbad089acb2892c/latest/IDR`
       );
 
       if (response.ok) {
@@ -3909,7 +3977,7 @@ function CurrencyManagement() {
               Base Currency
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              All rates are relative to USD (United States Dollar)
+              All rates are relative to IDR (Indonesian Rupiah)
             </p>
           </div>
 
@@ -3919,7 +3987,7 @@ function CurrencyManagement() {
               <div>Code</div>
               <div>Name</div>
               <div>Symbol</div>
-              <div>Rate (to USD)</div>
+              <div>Rate (to IDR)</div>
               <div>Example</div>
               <div>Actions</div>
             </div>
