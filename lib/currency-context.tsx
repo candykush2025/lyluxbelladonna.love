@@ -39,7 +39,13 @@ interface CurrencyProviderProps {
 export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({
   children,
 }) => {
-  const [currentCurrency, setCurrentCurrency] = useState<string>("IDR");
+  // Initialize from localStorage if available
+  const [currentCurrency, setCurrentCurrency] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("selectedCurrency") || "IDR";
+    }
+    return "IDR";
+  });
   const [currencyRates, setCurrencyRates] =
     useState<CurrencyRate[]>(DEFAULT_CURRENCIES);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,13 +61,102 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({
         if (data.success && data.rates) {
           const ratesData = data.rates as any;
           if (ratesData.rates) {
-            setCurrencyRates(ratesData.rates);
+            // Ensure proper currency list with IDR first and USD
+            let ratesArray = [...ratesData.rates];
+
+            // Remove any broken USD entries
+            ratesArray = ratesArray.filter((r: CurrencyRate) => {
+              if (r.code === "USD" && (!r.flag || r.flag.includes("�"))) {
+                return false;
+              }
+              return true;
+            });
+
+            // Ensure IDR is at the beginning
+            const idrIndex = ratesArray.findIndex(
+              (r: CurrencyRate) => r.code === "IDR"
+            );
+            if (idrIndex === -1) {
+              // Add IDR at the beginning
+              ratesArray.unshift({
+                code: "IDR",
+                name: "Indonesian Rupiah",
+                symbol: "Rp",
+                rate: 1,
+                flag: "🇮🇩",
+              });
+            } else if (idrIndex > 0) {
+              // Move IDR to the beginning
+              const idrCurrency = ratesArray.splice(idrIndex, 1)[0];
+              ratesArray.unshift(idrCurrency);
+            }
+
+            // Ensure USD exists
+            const hasUSD = ratesArray.some(
+              (r: CurrencyRate) => r.code === "USD"
+            );
+            if (!hasUSD) {
+              // Add USD after IDR
+              ratesArray.splice(1, 0, {
+                code: "USD",
+                name: "United States Dollar",
+                symbol: "$",
+                rate: 0.000064,
+                flag: "🇺🇸",
+              });
+            }
+
+            setCurrencyRates(ratesArray);
           }
         } else {
           // Fallback to direct database query
           const rates = await getCurrencyRates();
           if (rates && (rates as any).rates) {
-            setCurrencyRates((rates as any).rates);
+            let ratesArray = [...(rates as any).rates];
+
+            // Remove any broken USD entries
+            ratesArray = ratesArray.filter((r: CurrencyRate) => {
+              if (r.code === "USD" && (!r.flag || r.flag.includes("�"))) {
+                return false;
+              }
+              return true;
+            });
+
+            // Ensure IDR is at the beginning
+            const idrIndex = ratesArray.findIndex(
+              (r: CurrencyRate) => r.code === "IDR"
+            );
+            if (idrIndex === -1) {
+              // Add IDR at the beginning
+              ratesArray.unshift({
+                code: "IDR",
+                name: "Indonesian Rupiah",
+                symbol: "Rp",
+                rate: 1,
+                flag: "🇮🇩",
+              });
+            } else if (idrIndex > 0) {
+              // Move IDR to the beginning
+              const idrCurrency = ratesArray.splice(idrIndex, 1)[0];
+              ratesArray.unshift(idrCurrency);
+            }
+
+            // Ensure USD exists
+            const hasUSD = ratesArray.some(
+              (r: CurrencyRate) => r.code === "USD"
+            );
+            if (!hasUSD) {
+              // Add USD after IDR
+              ratesArray.splice(1, 0, {
+                code: "USD",
+                name: "United States Dollar",
+                symbol: "$",
+                rate: 0.000064,
+                flag: "🇺🇸",
+              });
+            }
+
+            setCurrencyRates(ratesArray);
           }
         }
       } catch (error) {
@@ -74,18 +169,25 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({
     loadCurrencyRates();
   }, []);
 
-  // Detect user location and set currency
+  // Detect user location and set currency (only if no saved preference)
   useEffect(() => {
     const detectUserCurrency = async () => {
       try {
-        const location = await getUserLocation();
-        if (location && location.countryCode) {
-          const detectedCurrency = getCurrencyForCountry(location.countryCode);
-          if (
-            detectedCurrency &&
-            currencyRates.find((c) => c.code === detectedCurrency)
-          ) {
-            setCurrentCurrency(detectedCurrency);
+        // Only auto-detect if user hasn't manually selected a currency
+        const savedCurrency = localStorage.getItem("selectedCurrency");
+        if (!savedCurrency) {
+          const location = await getUserLocation();
+          if (location && location.countryCode) {
+            const detectedCurrency = getCurrencyForCountry(
+              location.countryCode
+            );
+            if (
+              detectedCurrency &&
+              currencyRates.find((c) => c.code === detectedCurrency)
+            ) {
+              setCurrentCurrency(detectedCurrency);
+              localStorage.setItem("selectedCurrency", detectedCurrency);
+            }
           }
         }
       } catch (error) {
@@ -152,10 +254,18 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({
     return idrAmount * toRate;
   };
 
+  // Wrapper function to save currency selection to localStorage
+  const handleSetCurrency = (currency: string) => {
+    setCurrentCurrency(currency);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("selectedCurrency", currency);
+    }
+  };
+
   const value: CurrencyContextType = {
     currentCurrency,
     currencyRates,
-    setCurrentCurrency,
+    setCurrentCurrency: handleSetCurrency,
     formatPrice,
     convertPrice,
     isLoading,

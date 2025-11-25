@@ -3640,17 +3640,78 @@ function CurrencyManagement() {
       setLoading(true);
       const rates = await getCurrencyRates();
       if (rates) {
-        setCurrencyRates(rates);
+        // Ensure IDR is always included and USD is properly formatted
+        let ratesArray = (rates as any).rates || [];
+
+        // Remove any broken USD entries (with bad flag)
+        ratesArray = ratesArray.filter((r: any) => {
+          if (r.code === "USD" && (!r.flag || r.flag.includes("�"))) {
+            return false;
+          }
+          return true;
+        });
+
+        // Check if IDR exists
+        const hasIDR = ratesArray.some((r: any) => r.code === "IDR");
+        if (!hasIDR) {
+          // Add IDR at the beginning
+          ratesArray.unshift({
+            code: "IDR",
+            name: "Indonesian Rupiah",
+            symbol: "Rp",
+            rate: 1,
+            flag: "🇮🇩",
+          });
+        } else {
+          // Move IDR to the beginning if it exists but not at start
+          const idrIndex = ratesArray.findIndex((r: any) => r.code === "IDR");
+          if (idrIndex > 0) {
+            const idrCurrency = ratesArray.splice(idrIndex, 1)[0];
+            ratesArray.unshift(idrCurrency);
+          }
+        }
+
+        // Check if USD exists
+        const hasUSD = ratesArray.some((r: any) => r.code === "USD");
+        if (!hasUSD) {
+          // Add USD after IDR
+          ratesArray.splice(1, 0, {
+            code: "USD",
+            name: "United States Dollar",
+            symbol: "$",
+            rate: 0.000064,
+            flag: "🇺🇸",
+          });
+        }
+
+        setCurrencyRates({
+          ...(rates as any),
+          rates: ratesArray,
+        });
       } else {
-        // Initialize with default rates - Updated November 2025
+        // Initialize with default rates (IDR is base currency) - Updated November 2025
         setCurrencyRates({
           baseCurrency: "IDR",
           rates: [
             {
+              code: "IDR",
+              name: "Indonesian Rupiah",
+              symbol: "Rp",
+              rate: 1,
+              flag: "🇮🇩",
+            },
+            {
+              code: "USD",
+              name: "United States Dollar",
+              symbol: "$",
+              rate: 0.000064,
+              flag: "🇺🇸",
+            },
+            {
               code: "EUR",
               name: "Euro",
               symbol: "€",
-              rate: 0.000064,
+              rate: 0.00006,
               flag: "🇪🇺",
             },
             {

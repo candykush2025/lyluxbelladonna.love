@@ -8,11 +8,8 @@ export default function CurrencySelector() {
   const { currentCurrency, currencyRates, setCurrentCurrency } = useCurrency();
   const [isOpen, setIsOpen] = useState(false);
 
-  // Include USD as base currency option
-  const allCurrencies = [
-    { code: "USD", name: "US Dollar", symbol: "$", rate: 1, flag: "🇺🇸" },
-    ...currencyRates,
-  ];
+  // Use the currency rates from context (already includes IDR and all currencies)
+  const allCurrencies = currencyRates;
 
   const currentCurrencyData = allCurrencies.find(
     (c) => c.code === currentCurrency
@@ -22,9 +19,11 @@ export default function CurrencySelector() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+        className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors border border-gray-300 dark:border-white/20 rounded-lg hover:border-primary dark:hover:border-primary"
       >
+        <span className="text-base">{currentCurrencyData?.flag || "🌐"}</span>
         <span>{currentCurrency}</span>
+        <span className="text-xs text-gray-500">▼</span>
       </button>
 
       {isOpen && (
