@@ -1767,15 +1767,16 @@ function ProductsManagement({
                             <input
                               type="number"
                               step="0.01"
-                              value={formData.price}
+                              value={formData.price || ""}
                               onChange={(e) =>
                                 setFormData({
                                   ...formData,
-                                  price: Number(e.target.value),
+                                  price: e.target.value ? Number(e.target.value) : 0,
                                 })
                               }
                               disabled={modalMode === "view"}
                               required
+                              placeholder="Enter price"
                               className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
                             />
                           </div>
@@ -1785,15 +1786,16 @@ function ProductsManagement({
                             </label>
                             <input
                               type="number"
-                              value={formData.stock}
+                              value={formData.stock || ""}
                               onChange={(e) =>
                                 setFormData({
                                   ...formData,
-                                  stock: Number(e.target.value),
+                                  stock: e.target.value ? Number(e.target.value) : 0,
                                 })
                               }
                               disabled={modalMode === "view"}
                               required
+                              placeholder="Enter stock quantity"
                               className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
                             />
                           </div>
@@ -1815,45 +1817,6 @@ function ProductsManagement({
                                 Featured Product
                               </span>
                             </label>
-                          </div>
-                        </div>
-
-                        <div className="grid md:grid-cols-2 gap-4">
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                              Available Sizes (comma-separated)
-                            </label>
-                            <input
-                              type="text"
-                              value={formData.sizes}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  sizes: e.target.value,
-                                })
-                              }
-                              disabled={modalMode === "view"}
-                              placeholder="e.g., XS, S, M, L, XL"
-                              className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                              Available Colors (comma-separated)
-                            </label>
-                            <input
-                              type="text"
-                              value={formData.colors}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  colors: e.target.value,
-                                })
-                              }
-                              disabled={modalMode === "view"}
-                              placeholder="e.g., Black, White, Red"
-                              className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
-                            />
                           </div>
                         </div>
                       </>
@@ -1980,16 +1943,16 @@ function ProductsManagement({
                                               <input
                                                 type="number"
                                                 step="0.01"
-                                                value={option.price}
+                                                value={option.price || ""}
                                                 onChange={(e) =>
                                                   updateVariantOption(
                                                     variantIndex,
                                                     optionIndex,
                                                     "price",
-                                                    Number(e.target.value)
+                                                    e.target.value ? Number(e.target.value) : 0
                                                   )
                                                 }
-                                                placeholder="0.00"
+                                                placeholder="Enter price"
                                                 required
                                                 className="w-full px-3 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
                                               />
