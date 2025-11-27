@@ -171,7 +171,7 @@ export default function ProductsPage() {
                 </div>
                 <div className="flex min-w-72 flex-col gap-2">
                   <p className="text-cream text-4xl lg:text-5xl font-black leading-tight tracking-[-0.033em]">
-                    Belladonna Collections
+                    Lylux Belladonna Collections
                   </p>
                   <p className="text-cream/70 text-base font-normal leading-normal">
                     Discover the latest in high-end fashion, curated just for
@@ -583,5 +583,3 @@ export default function ProductsPage() {
     </div>
   );
 }
-
-

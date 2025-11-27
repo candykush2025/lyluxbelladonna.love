@@ -41,24 +41,9 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full bg-background-dark/80 backdrop-blur-sm border-b border-solid border-white/10">
       <div className="mx-auto flex max-w-7xl items-center justify-between whitespace-nowrap px-4 sm:px-10 py-4">
         <Link className="flex items-center gap-3 text-white" href="/">
-          <svg
-            className="h-8 w-auto text-primary"
-            fill="none"
-            viewBox="0 0 34 32"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M16.9998 0.504883L33.4947 16L16.9998 31.4951L0.504883 16L16.9998 0.504883Z"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            ></path>
-            <path
-              d="M17 31.4951V0.504883L8.75244 16L17 31.4951Z"
-              fill="currentColor"
-            ></path>
-          </svg>
+          <img src="/logo.jpg" alt="Lylux Belladonna" className="h-10 w-auto" />
           <span className="text-white text-2xl font-serif font-bold tracking-wide">
-            Belladonna
+            Lylux Belladonna
           </span>
         </Link>
         <div className="hidden lg:flex flex-1 justify-end gap-8">

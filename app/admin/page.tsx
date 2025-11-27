@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -51,15 +51,15 @@ export default function AdminDashboard() {
 
   return (
     <ProtectedRoute requireAdmin={true}>
-      <div className="min-h-screen bg-gray-100 dark:bg-[#0A192F] flex">
+      <div className="min-h-screen bg-[#0A192F] flex">
         {/* Sidebar */}
         <aside
-          className={`bg-white dark:bg-[#1a2332] shadow-lg transition-all duration-300 ease-in-out ${
+          className={`bg-[#1a2332] shadow-lg transition-all duration-300 ease-in-out ${
             sidebarCollapsed ? "w-16" : "w-64"
           } fixed left-0 top-0 h-full z-40`}
         >
           {/* Sidebar Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-white/10">
+          <div className="flex items-center justify-between p-4 border-b border-white/10">
             {!sidebarCollapsed && (
               <Link
                 href="/"
@@ -70,9 +70,9 @@ export default function AdminDashboard() {
             )}
             <button
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#0f1825] transition-colors"
+              className="p-2 rounded-lg hover:bg-[#0f1825] transition-colors"
             >
-              <span className="material-symbols-outlined text-gray-600 dark:text-gray-300">
+              <span className="material-symbols-outlined text-gray-300">
                 {sidebarCollapsed ? "menu" : "close"}
               </span>
             </button>
@@ -86,7 +86,7 @@ export default function AdminDashboard() {
                 className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${
                   activeTab === "dashboard"
                     ? "bg-primary/10 text-primary border-r-2 border-primary"
-                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#0f1825] hover:text-gray-900 dark:hover:text-white"
+                    : "text-gray-300 hover:bg-[#0f1825] hover:text-white"
                 }`}
               >
                 <span className="material-symbols-outlined text-xl shrink-0">
@@ -102,7 +102,7 @@ export default function AdminDashboard() {
                 className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${
                   activeTab === "products"
                     ? "bg-primary/10 text-primary border-r-2 border-primary"
-                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#0f1825] hover:text-gray-900 dark:hover:text-white"
+                    : "text-gray-300 hover:bg-[#0f1825] hover:text-white"
                 }`}
               >
                 <span className="material-symbols-outlined text-xl shrink-0">
@@ -118,7 +118,7 @@ export default function AdminDashboard() {
                 className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${
                   activeTab === "orders"
                     ? "bg-primary/10 text-primary border-r-2 border-primary"
-                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#0f1825] hover:text-gray-900 dark:hover:text-white"
+                    : "text-gray-300 hover:bg-[#0f1825] hover:text-white"
                 }`}
               >
                 <span className="material-symbols-outlined text-xl shrink-0">
@@ -134,7 +134,7 @@ export default function AdminDashboard() {
                 className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${
                   activeTab === "customers"
                     ? "bg-primary/10 text-primary border-r-2 border-primary"
-                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#0f1825] hover:text-gray-900 dark:hover:text-white"
+                    : "text-gray-300 hover:bg-[#0f1825] hover:text-white"
                 }`}
               >
                 <span className="material-symbols-outlined text-xl shrink-0">
@@ -150,7 +150,7 @@ export default function AdminDashboard() {
                 className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${
                   activeTab === "reviews"
                     ? "bg-primary/10 text-primary border-r-2 border-primary"
-                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#0f1825] hover:text-gray-900 dark:hover:text-white"
+                    : "text-gray-300 hover:bg-[#0f1825] hover:text-white"
                 }`}
               >
                 <span className="material-symbols-outlined text-xl shrink-0">
@@ -166,7 +166,7 @@ export default function AdminDashboard() {
                 className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${
                   activeTab === "homepage"
                     ? "bg-primary/10 text-primary border-r-2 border-primary"
-                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#0f1825] hover:text-gray-900 dark:hover:text-white"
+                    : "text-gray-300 hover:bg-[#0f1825] hover:text-white"
                 }`}
               >
                 <span className="material-symbols-outlined text-xl shrink-0">
@@ -182,7 +182,7 @@ export default function AdminDashboard() {
                 className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${
                   activeTab === "currency"
                     ? "bg-primary/10 text-primary border-r-2 border-primary"
-                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#0f1825] hover:text-gray-900 dark:hover:text-white"
+                    : "text-gray-300 hover:bg-[#0f1825] hover:text-white"
                 }`}
               >
                 <span className="material-symbols-outlined text-xl shrink-0">
@@ -196,10 +196,10 @@ export default function AdminDashboard() {
           </nav>
 
           {/* Sidebar Footer */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-white/10">
+          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10">
             <button
               onClick={handleLogout}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 ${
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors text-red-400 hover:bg-red-900/20 ${
                 sidebarCollapsed ? "justify-center" : ""
               }`}
             >
@@ -218,37 +218,37 @@ export default function AdminDashboard() {
           }`}
         >
           {/* Top Header */}
-          <header className="bg-white dark:bg-[#1a2332] shadow-sm sticky top-0 z-30">
+          <header className="bg-[#1a2332] shadow-sm sticky top-0 z-30">
             <div className="px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-                  className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#0f1825] transition-colors"
+                  className="md:hidden p-2 rounded-lg hover:bg-[#0f1825] transition-colors"
                 >
-                  <span className="material-symbols-outlined text-gray-600 dark:text-gray-300">
+                  <span className="material-symbols-outlined text-gray-300">
                     menu
                   </span>
                 </button>
-                <h1 className="text-lg font-semibold text-gray-900 dark:text-white capitalize">
+                <h1 className="text-lg font-semibold text-white capitalize">
                   {activeTab}
                 </h1>
               </div>
               <div className="flex items-center gap-4">
                 <Link
                   href="/"
-                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-primary transition-colors"
+                  className="text-sm text-gray-300 hover:text-primary transition-colors"
                 >
                   View Site
                 </Link>
                 <Link
                   href="/populate-dummy-data"
-                  className="text-sm text-orange-600 dark:text-orange-400 hover:text-orange-500 font-medium transition-colors"
+                  className="text-sm text-orange-400 hover:text-orange-500 font-medium transition-colors"
                 >
                   Populate Data
                 </Link>
                 <Link
                   href="/create-test-user"
-                  className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-500 font-medium transition-colors"
+                  className="text-sm text-blue-400 hover:text-blue-500 font-medium transition-colors"
                 >
                   Create Test User
                 </Link>
@@ -356,14 +356,14 @@ function DashboardOverview({
 
   const getStatusColor = (status: string, paymentStatus: string) => {
     if (paymentStatus === "paid")
-      return "bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400";
+      return "bg-green-900/20 text-green-400";
     if (status === "processing")
-      return "bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-400";
+      return "bg-blue-900/20 text-blue-400";
     if (status === "shipped")
-      return "bg-purple-100 dark:bg-purple-900/20 text-purple-800 dark:text-purple-400";
+      return "bg-purple-900/20 text-purple-400";
     if (status === "completed")
-      return "bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400";
-    return "bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-400";
+      return "bg-green-900/20 text-green-400";
+    return "bg-yellow-900/20 text-yellow-400";
   };
 
   if (stats.loading) {
@@ -373,26 +373,26 @@ function DashboardOverview({
           {[...Array(4)].map((_, i) => (
             <div
               key={i}
-              className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm p-6 animate-pulse"
+              className="bg-[#1a2332] rounded-lg shadow-sm p-6 animate-pulse"
             >
               <div className="flex items-center justify-between">
                 <div className="space-y-2">
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-20"></div>
-                  <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-16"></div>
+                  <div className="h-4 bg-gray-700 rounded w-20"></div>
+                  <div className="h-8 bg-gray-700 rounded w-16"></div>
                 </div>
-                <div className="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                <div className="w-12 h-12 bg-gray-700 rounded-full"></div>
               </div>
-              <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-24 mt-2"></div>
+              <div className="h-3 bg-gray-700 rounded w-24 mt-2"></div>
             </div>
           ))}
         </div>
-        <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm p-6 animate-pulse">
-          <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-32 mb-4"></div>
+        <div className="bg-[#1a2332] rounded-lg shadow-sm p-6 animate-pulse">
+          <div className="h-6 bg-gray-700 rounded w-32 mb-4"></div>
           <div className="space-y-3">
             {[...Array(3)].map((_, i) => (
               <div
                 key={i}
-                className="h-12 bg-gray-200 dark:bg-gray-700 rounded"
+                className="h-12 bg-gray-700 rounded"
               ></div>
             ))}
           </div>
@@ -405,185 +405,185 @@ function DashboardOverview({
     <div className="space-y-6">
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm p-6">
+        <div className="bg-[#1a2332] rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-400">
                 Total Revenue
               </p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+              <p className="text-2xl font-bold text-white mt-1">
                 {formatPrice(stats.totalRevenue)}
               </p>
             </div>
-            <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center">
-              <span className="material-symbols-outlined text-green-600 dark:text-green-400">
+            <div className="w-12 h-12 bg-green-900/20 rounded-full flex items-center justify-center">
+              <span className="material-symbols-outlined text-green-400">
                 attach_money
               </span>
             </div>
           </div>
-          <p className="text-xs text-green-600 dark:text-green-400 mt-2">
+          <p className="text-xs text-green-400 mt-2">
             From completed orders
           </p>
         </div>
 
-        <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm p-6">
+        <div className="bg-[#1a2332] rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-400">
                 Total Orders
               </p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+              <p className="text-2xl font-bold text-white mt-1">
                 {stats.totalOrders}
               </p>
             </div>
-            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center">
-              <span className="material-symbols-outlined text-blue-600 dark:text-blue-400">
+            <div className="w-12 h-12 bg-blue-900/20 rounded-full flex items-center justify-center">
+              <span className="material-symbols-outlined text-blue-400">
                 shopping_cart
               </span>
             </div>
           </div>
-          <p className="text-xs text-blue-600 dark:text-blue-400 mt-2">
+          <p className="text-xs text-blue-400 mt-2">
             All time orders
           </p>
         </div>
 
-        <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm p-6">
+        <div className="bg-[#1a2332] rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-400">
                 Total Customers
               </p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+              <p className="text-2xl font-bold text-white mt-1">
                 {stats.totalCustomers}
               </p>
             </div>
-            <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center">
-              <span className="material-symbols-outlined text-purple-600 dark:text-purple-400">
+            <div className="w-12 h-12 bg-purple-900/20 rounded-full flex items-center justify-center">
+              <span className="material-symbols-outlined text-purple-400">
                 group
               </span>
             </div>
           </div>
-          <p className="text-xs text-purple-600 dark:text-purple-400 mt-2">
+          <p className="text-xs text-purple-400 mt-2">
             Registered users
           </p>
         </div>
 
-        <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm p-6">
+        <div className="bg-[#1a2332] rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-400">
                 Products
               </p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+              <p className="text-2xl font-bold text-white mt-1">
                 {stats.totalProducts}
               </p>
             </div>
-            <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/20 rounded-full flex items-center justify-center">
-              <span className="material-symbols-outlined text-yellow-600 dark:text-yellow-400">
+            <div className="w-12 h-12 bg-yellow-900/20 rounded-full flex items-center justify-center">
+              <span className="material-symbols-outlined text-yellow-400">
                 inventory
               </span>
             </div>
           </div>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+          <p className="text-xs text-gray-400 mt-2">
             Active listings
           </p>
         </div>
 
         <Link
           href="/admin/reviews"
-          className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow block"
+          className="bg-[#1a2332] rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow block"
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-400">
                 Reviews
               </p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+              <p className="text-2xl font-bold text-white mt-1">
                 {stats.totalReviews}
               </p>
             </div>
-            <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center">
-              <span className="material-symbols-outlined text-orange-600 dark:text-orange-400">
+            <div className="w-12 h-12 bg-orange-900/20 rounded-full flex items-center justify-center">
+              <span className="material-symbols-outlined text-orange-400">
                 rate_review
               </span>
             </div>
           </div>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+          <p className="text-xs text-gray-400 mt-2">
             Manage customer reviews
           </p>
         </Link>
 
         <Link
           href="/admin/inventory"
-          className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow block"
+          className="bg-[#1a2332] rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow block"
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-400">
                 Inventory
               </p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+              <p className="text-2xl font-bold text-white mt-1">
                 Manage Stock
               </p>
             </div>
-            <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/20 rounded-full flex items-center justify-center">
-              <span className="material-symbols-outlined text-indigo-600 dark:text-indigo-400">
+            <div className="w-12 h-12 bg-indigo-900/20 rounded-full flex items-center justify-center">
+              <span className="material-symbols-outlined text-indigo-400">
                 warehouse
               </span>
             </div>
           </div>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+          <p className="text-xs text-gray-400 mt-2">
             Track stock levels and alerts
           </p>
         </Link>
 
         <Link
           href="/admin/analytics"
-          className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow block"
+          className="bg-[#1a2332] rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow block"
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-400">
                 Analytics
               </p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+              <p className="text-2xl font-bold text-white mt-1">
                 View Reports
               </p>
             </div>
-            <div className="w-12 h-12 bg-teal-100 dark:bg-teal-900/20 rounded-full flex items-center justify-center">
-              <span className="material-symbols-outlined text-teal-600 dark:text-teal-400">
+            <div className="w-12 h-12 bg-teal-900/20 rounded-full flex items-center justify-center">
+              <span className="material-symbols-outlined text-teal-400">
                 analytics
               </span>
             </div>
           </div>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+          <p className="text-xs text-gray-400 mt-2">
             Sales insights and metrics
           </p>
         </Link>
       </div>
 
       {/* Recent Orders */}
-      <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm p-6">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+      <div className="bg-[#1a2332] rounded-lg shadow-sm p-6">
+        <h2 className="text-lg font-semibold text-white mb-4">
           Recent Orders
         </h2>
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="border-b border-gray-200 dark:border-white/10">
+            <thead className="border-b border-white/10">
               <tr>
-                <th className="text-left py-3 px-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-4 text-sm font-medium text-gray-400">
                   Order ID
                 </th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-4 text-sm font-medium text-gray-400">
                   Customer
                 </th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-4 text-sm font-medium text-gray-400">
                   Product
                 </th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-4 text-sm font-medium text-gray-400">
                   Amount
                 </th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-4 text-sm font-medium text-gray-400">
                   Status
                 </th>
               </tr>
@@ -593,18 +593,18 @@ function DashboardOverview({
                 recentOrders.map((order: any) => (
                   <tr
                     key={order.id}
-                    className="border-b border-gray-100 dark:border-white/5"
+                    className="border-b border-white/5"
                   >
-                    <td className="py-3 px-4 text-sm text-gray-900 dark:text-white">
+                    <td className="py-3 px-4 text-sm text-white">
                       #{order.orderNumber || order.id.slice(-8)}
                     </td>
-                    <td className="py-3 px-4 text-sm text-gray-900 dark:text-white">
+                    <td className="py-3 px-4 text-sm text-white">
                       {order.shippingAddress?.fullName || order.email || "N/A"}
                     </td>
-                    <td className="py-3 px-4 text-sm text-gray-600 dark:text-gray-300">
+                    <td className="py-3 px-4 text-sm text-gray-300">
                       {order.items?.[0]?.name || "Product"}
                     </td>
-                    <td className="py-3 px-4 text-sm text-gray-900 dark:text-white">
+                    <td className="py-3 px-4 text-sm text-white">
                       {formatPrice(order.total || 0)}
                     </td>
                     <td className="py-3 px-4">
@@ -631,7 +631,7 @@ function DashboardOverview({
                 <tr>
                   <td
                     colSpan={5}
-                    className="py-8 px-4 text-center text-gray-500 dark:text-gray-400"
+                    className="py-8 px-4 text-center text-gray-400"
                   >
                     No orders found
                   </td>
@@ -1195,7 +1195,7 @@ function ProductsManagement({
     <div className="space-y-6">
       {/* Filters and Search */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+        <h2 className="text-xl font-semibold text-white">
           Product Management
         </h2>
         <button
@@ -1215,7 +1215,7 @@ function ProductsManagement({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search products..."
-              className="w-full px-4 py-3 pl-10 bg-white dark:bg-[#1a2332] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-3 pl-10 bg-[#1a2332] border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary"
             />
             <span className="material-symbols-outlined absolute left-3 top-3 text-gray-400">
               search
@@ -1225,7 +1225,7 @@ function ProductsManagement({
         <select
           value={categoryFilter}
           onChange={(e) => setCategoryFilter(e.target.value)}
-          className="px-4 py-3 bg-white dark:bg-[#1a2332] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+          className="px-4 py-3 bg-[#1a2332] border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary"
         >
           {categories.map((cat) => (
             <option key={cat} value={cat}>
@@ -1247,11 +1247,11 @@ function ProductsManagement({
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
         </div>
       ) : filteredProducts.length === 0 ? (
-        <div className="text-center py-16 bg-white dark:bg-[#1a2332] rounded-lg">
+        <div className="text-center py-16 bg-[#1a2332] rounded-lg">
           <span className="material-symbols-outlined text-6xl text-gray-400 mb-4">
             inventory_2
           </span>
-          <p className="text-gray-500 dark:text-gray-400 text-xl mb-4">
+          <p className="text-gray-400 text-xl mb-4">
             No products found
           </p>
           <button
@@ -1266,10 +1266,10 @@ function ProductsManagement({
           {filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+              className="bg-[#1a2332] rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
             >
               {/* Product Image */}
-              <div className="relative h-64 bg-gray-200 dark:bg-gray-700">
+              <div className="relative h-64 bg-gray-700">
                 {product.images && product.images[0] ? (
                   <Image
                     src={product.images[0]}
@@ -1293,10 +1293,10 @@ function ProductsManagement({
 
               {/* Product Info */}
               <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1 line-clamp-1">
+                <h3 className="text-lg font-semibold text-white mb-1 line-clamp-1">
                   {product.name}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
+                <p className="text-sm text-gray-600 mb-3 line-clamp-2">
                   {product.description}
                 </p>
 
@@ -1305,11 +1305,11 @@ function ProductsManagement({
                   {product.hasVariants ? (
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
-                        <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-400 rounded text-xs font-medium">
+                        <span className="px-2 py-1 bg-blue-900/20 text-blue-400 rounded text-xs font-medium">
                           {product.variants?.length || 0} Variant
                           {product.variants?.length !== 1 ? "s" : ""}
                         </span>
-                        <span className="text-xs text-gray-600 dark:text-gray-400">
+                        <span className="text-xs text-gray-600">
                           {product.variants?.reduce(
                             (total: number, variant: any) =>
                               total + (variant.options?.length || 0),
@@ -1319,7 +1319,7 @@ function ProductsManagement({
                         </span>
                       </div>
                       {product.variants && product.variants.length > 0 && (
-                        <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+                        <div className="text-xs text-gray-600 space-y-1">
                           {product.variants
                             .slice(0, 2)
                             .map((variant: any, idx: number) => (
@@ -1351,7 +1351,7 @@ function ProductsManagement({
                       <span className="text-xl font-bold text-primary">
                         {formatPrice(product.price || 0)}
                       </span>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                      <span className="text-sm text-gray-600">
                         Stock: {product.stock}
                       </span>
                     </div>
@@ -1360,11 +1360,11 @@ function ProductsManagement({
 
                 {/* Category & Brand */}
                 <div className="flex flex-wrap items-center gap-2 mb-3 text-xs">
-                  <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded">
+                  <span className="px-2 py-1 bg-gray-800 text-gray-300 rounded">
                     {product.category}
                   </span>
                   {product.brand && (
-                    <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/20 text-purple-800 dark:text-purple-400 rounded flex items-center gap-1">
+                    <span className="px-2 py-1 bg-purple-900/20 text-purple-400 rounded flex items-center gap-1">
                       {brands.find((b) => b.id === product.brand)?.logo && (
                         <Image
                           src={brands.find((b) => b.id === product.brand)?.logo}
@@ -1384,7 +1384,7 @@ function ProductsManagement({
                 <div className="flex gap-2">
                   <button
                     onClick={() => openModal("view", product)}
-                    className="flex-1 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-[#0f1825] hover:bg-gray-200 dark:hover:bg-[#1a2332] rounded-lg transition-colors"
+                    className="flex-1 px-3 py-2 text-sm text-gray-300 bg-[#0f1825] hover:bg-[#1a2332] rounded-lg transition-colors"
                   >
                     View
                   </button>
@@ -1419,10 +1419,10 @@ function ProductsManagement({
             ></div>
 
             {/* Modal Content */}
-            <div className="relative inline-block w-full max-w-4xl transform overflow-hidden rounded-lg bg-white dark:bg-[#1a2332] text-left align-middle shadow-xl transition-all">
-              <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <div className="relative inline-block w-full max-w-4xl transform overflow-hidden rounded-lg bg-[#1a2332] text-left align-middle shadow-xl transition-all">
+              <div className="px-6 py-4 border-b border-gray-700">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  <h3 className="text-2xl font-bold text-white">
                     {modalMode === "create" && "Create New Product"}
                     {modalMode === "edit" && "Edit Product"}
                     {modalMode === "view" && "Product Details"}
@@ -1430,7 +1430,7 @@ function ProductsManagement({
                   <button
                     onClick={closeModal}
                     type="button"
-                    className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+                    className="text-gray-400 hover:text-gray-300"
                   >
                     <span className="material-symbols-outlined text-2xl">
                       close
@@ -1444,7 +1444,7 @@ function ProductsManagement({
                   <div className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
                           Product Name *
                         </label>
                         <input
@@ -1455,17 +1455,17 @@ function ProductsManagement({
                           }
                           disabled={modalMode === "view"}
                           required
-                          className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+                          className="w-full px-4 py-2 bg-[#0f1825] border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
                           Category *
                         </label>
                         <div className="relative">
                           {/* Custom Category Dropdown */}
                           <div
-                            className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer flex items-center justify-between"
+                            className="w-full px-4 py-2 bg-[#0f1825] border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer flex items-center justify-between"
                             onClick={() =>
                               setShowCategoryDropdown(!showCategoryDropdown)
                             }
@@ -1482,9 +1482,9 @@ function ProductsManagement({
 
                           {/* Dropdown Options */}
                           {showCategoryDropdown && (
-                            <div className="absolute z-10 w-full mt-1 bg-white dark:bg-[#1a2332] border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                            <div className="absolute z-10 w-full mt-1 bg-[#1a2332] border border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto">
                               <div
-                                className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#0f1825] cursor-pointer text-gray-900 dark:text-white"
+                                className="px-4 py-2 hover:bg-[#0f1825] cursor-pointer text-white"
                                 onClick={() => {
                                   setFormData({ ...formData, category: "" });
                                   setShowCategoryDropdown(false);
@@ -1495,7 +1495,7 @@ function ProductsManagement({
                               {availableCategories.map((category) => (
                                 <div
                                   key={category}
-                                  className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#0f1825] cursor-pointer text-gray-900 dark:text-white"
+                                  className="px-4 py-2 hover:bg-[#0f1825] cursor-pointer text-white"
                                   onClick={() => {
                                     setFormData({ ...formData, category });
                                     setShowCategoryDropdown(false);
@@ -1504,7 +1504,7 @@ function ProductsManagement({
                                   {category}
                                 </div>
                               ))}
-                              <div className="border-t border-gray-200 dark:border-gray-600 p-3">
+                              <div className="border-t border-gray-600 p-3">
                                 <div className="flex gap-2">
                                   <input
                                     type="text"
@@ -1513,7 +1513,7 @@ function ProductsManagement({
                                       setNewCategoryName(e.target.value)
                                     }
                                     placeholder="New category name"
-                                    className="flex-1 px-3 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="flex-1 px-3 py-2 bg-[#0f1825] border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                                     onKeyDown={(e) => {
                                       if (e.key === "Enter") {
                                         e.preventDefault();
@@ -1538,13 +1538,13 @@ function ProductsManagement({
 
                     {/* Brand Selection */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
                         Brand
                       </label>
                       <div className="relative">
                         {/* Custom Brand Dropdown */}
                         <div
-                          className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer flex items-center justify-between"
+                          className="w-full px-4 py-2 bg-[#0f1825] border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer flex items-center justify-between"
                           onClick={() =>
                             setShowBrandDropdown(!showBrandDropdown)
                           }
@@ -1578,9 +1578,9 @@ function ProductsManagement({
 
                         {/* Dropdown Options */}
                         {showBrandDropdown && (
-                          <div className="absolute z-10 w-full mt-1 bg-white dark:bg-[#1a2332] border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                          <div className="absolute z-10 w-full mt-1 bg-[#1a2332] border border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto">
                             <div
-                              className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#0f1825] cursor-pointer text-gray-900 dark:text-white"
+                              className="px-4 py-2 hover:bg-[#0f1825] cursor-pointer text-white"
                               onClick={() => {
                                 setFormData({ ...formData, brand: "" });
                                 setShowBrandDropdown(false);
@@ -1591,7 +1591,7 @@ function ProductsManagement({
                             {brands.map((brand) => (
                               <div
                                 key={brand.id}
-                                className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#0f1825] cursor-pointer text-gray-900 dark:text-white flex items-center gap-3"
+                                className="px-4 py-2 hover:bg-[#0f1825] cursor-pointer text-white flex items-center gap-3"
                                 onClick={() => {
                                   setFormData({ ...formData, brand: brand.id });
                                   setShowBrandDropdown(false);
@@ -1609,9 +1609,9 @@ function ProductsManagement({
                                 <span>{brand.name}</span>
                               </div>
                             ))}
-                            <div className="border-t border-gray-200 dark:border-gray-600">
+                            <div className="border-t border-gray-600">
                               <div
-                                className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#0f1825] cursor-pointer text-primary flex items-center gap-2"
+                                className="px-4 py-2 hover:bg-[#0f1825] cursor-pointer text-primary flex items-center gap-2"
                                 onClick={() => {
                                   setShowBrandDropdown(false);
                                   setShowNewBrandForm(true);
@@ -1629,13 +1629,13 @@ function ProductsManagement({
 
                       {/* New Brand Form */}
                       {showNewBrandForm && (
-                        <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4 bg-gray-50 dark:bg-[#0f1825]">
-                          <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                        <div className="border border-gray-600 rounded-lg p-4 bg-[#0f1825]">
+                          <h4 className="text-lg font-medium text-white mb-4">
                             Create New Brand
                           </h4>
                           <div className="space-y-4">
                             <div>
-                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                              <label className="block text-sm font-medium text-gray-300 mb-2">
                                 Brand Name *
                               </label>
                               <input
@@ -1649,11 +1649,11 @@ function ProductsManagement({
                                 }
                                 placeholder="Enter brand name"
                                 required
-                                className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full px-4 py-2 bg-[#0f1825] border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary"
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                              <label className="block text-sm font-medium text-gray-300 mb-2">
                                 Brand Logo
                               </label>
                               <div className="flex items-center gap-4">
@@ -1666,8 +1666,8 @@ function ProductsManagement({
                                     className="object-contain rounded"
                                   />
                                 )}
-                                <label className="flex items-center justify-center px-4 py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-primary transition-colors">
-                                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                                <label className="flex items-center justify-center px-4 py-2 border-2 border-dashed border-gray-600 rounded-lg cursor-pointer hover:border-primary transition-colors">
+                                  <span className="text-sm text-gray-400">
                                     {newBrandData.logo
                                       ? "Change logo"
                                       : "Upload logo"}
@@ -1710,7 +1710,7 @@ function ProductsManagement({
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
                         Description *
                       </label>
                       <textarea
@@ -1724,25 +1724,25 @@ function ProductsManagement({
                         disabled={modalMode === "view"}
                         required
                         rows={4}
-                        className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+                        className="w-full px-4 py-2 bg-[#0f1825] border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
                       />
                     </div>
 
                     {/* Product Type Toggle */}
                     {modalMode !== "view" && (
-                      <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                      <div className="border border-gray-600 rounded-lg p-4">
                         <div className="flex items-center justify-between mb-4">
                           <div>
-                            <h4 className="text-lg font-medium text-gray-900 dark:text-white">
+                            <h4 className="text-lg font-medium text-white">
                               Product Type
                             </h4>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                            <p className="text-sm text-gray-600">
                               Choose whether this product has multiple variants
                               or is a simple product
                             </p>
                           </div>
                           <label className="flex items-center gap-3 cursor-pointer">
-                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            <span className="text-sm font-medium text-gray-300">
                               Has Variants
                             </span>
                             <input
@@ -1761,7 +1761,7 @@ function ProductsManagement({
                       <>
                         <div className="grid md:grid-cols-3 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
                               Price (Rp) *
                             </label>
                             <input
@@ -1778,11 +1778,11 @@ function ProductsManagement({
                               disabled={modalMode === "view"}
                               required
                               placeholder="Enter price"
-                              className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+                              className="w-full px-4 py-2 bg-[#0f1825] border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
                               Stock *
                             </label>
                             <input
@@ -1799,7 +1799,7 @@ function ProductsManagement({
                               disabled={modalMode === "view"}
                               required
                               placeholder="Enter stock quantity"
-                              className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+                              className="w-full px-4 py-2 bg-[#0f1825] border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
                             />
                           </div>
                           <div className="flex items-end">
@@ -1816,7 +1816,7 @@ function ProductsManagement({
                                 disabled={modalMode === "view"}
                                 className="w-5 h-5 text-primary focus:ring-primary border-gray-300 rounded"
                               />
-                              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                              <span className="text-sm font-medium text-gray-300">
                                 Featured Product
                               </span>
                             </label>
@@ -1827,9 +1827,9 @@ function ProductsManagement({
 
                     {/* Variant Product Fields */}
                     {hasVariants && modalMode !== "view" && (
-                      <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                      <div className="border border-gray-600 rounded-lg p-4">
                         <div className="flex items-center justify-between mb-4">
-                          <h4 className="text-lg font-medium text-gray-900 dark:text-white">
+                          <h4 className="text-lg font-medium text-white">
                             Product Variants
                           </h4>
                           <button
@@ -1845,7 +1845,7 @@ function ProductsManagement({
                         </div>
 
                         {variants.length === 0 ? (
-                          <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                          <div className="text-center py-8 text-gray-400">
                             <span className="material-symbols-outlined text-4xl mb-2">
                               inventory_2
                             </span>
@@ -1859,11 +1859,11 @@ function ProductsManagement({
                             {variants.map((variant, variantIndex) => (
                               <div
                                 key={variant.id}
-                                className="border border-gray-200 dark:border-gray-600 rounded-lg p-4"
+                                className="border border-gray-600 rounded-lg p-4"
                               >
                                 <div className="flex items-center justify-between mb-4">
                                   <div className="flex-1 mr-4">
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">
                                       Variant Name *
                                     </label>
                                     <input
@@ -1878,13 +1878,13 @@ function ProductsManagement({
                                       }
                                       placeholder="e.g., Sizes, Colors, Style"
                                       required
-                                      className="w-full px-4 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                                      className="w-full px-4 py-2 bg-[#0f1825] border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary"
                                     />
                                   </div>
                                   <button
                                     type="button"
                                     onClick={() => removeVariant(variantIndex)}
-                                    className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                                    className="p-2 text-red-500 hover:bg-red-900/20 rounded-lg transition-colors"
                                   >
                                     <span className="material-symbols-outlined">
                                       delete
@@ -1894,7 +1894,7 @@ function ProductsManagement({
 
                                 <div className="mb-4">
                                   <div className="flex items-center justify-between mb-3">
-                                    <h5 className="text-md font-medium text-gray-900 dark:text-white">
+                                    <h5 className="text-md font-medium text-white">
                                       Variant Options
                                     </h5>
                                     <button
@@ -1916,11 +1916,11 @@ function ProductsManagement({
                                       (option: any, optionIndex: number) => (
                                         <div
                                           key={option.id}
-                                          className="border border-gray-200 dark:border-gray-600 rounded p-3"
+                                          className="border border-gray-600 rounded p-3"
                                         >
                                           <div className="grid md:grid-cols-4 gap-3 mb-3">
                                             <div>
-                                              <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                                              <label className="block text-xs font-medium text-gray-600 mb-1">
                                                 Option Name *
                                               </label>
                                               <input
@@ -1936,11 +1936,11 @@ function ProductsManagement({
                                                 }
                                                 placeholder="e.g., S, M, L"
                                                 required
-                                                className="w-full px-3 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                                                className="w-full px-3 py-2 bg-[#0f1825] border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
                                               />
                                             </div>
                                             <div>
-                                              <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                                              <label className="block text-xs font-medium text-gray-600 mb-1">
                                                 Price (Rp) *
                                               </label>
                                               <input
@@ -1958,16 +1958,16 @@ function ProductsManagement({
                                                 }
                                                 placeholder="Enter price"
                                                 required
-                                                className="w-full px-3 py-2 bg-white dark:bg-[#0f1825] border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                                                className="w-full px-3 py-2 bg-[#0f1825] border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-primary text-sm"
                                               />
                                             </div>
                                             <div className="md:col-span-2">
-                                              <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                                              <label className="block text-xs font-medium text-gray-600 mb-1">
                                                 Image (Optional)
                                               </label>
                                               <div className="flex gap-2">
-                                                <label className="flex-1 flex items-center justify-center px-3 py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded cursor-pointer hover:border-primary transition-colors">
-                                                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                                                <label className="flex-1 flex items-center justify-center px-3 py-2 border-2 border-dashed border-gray-600 rounded cursor-pointer hover:border-primary transition-colors">
+                                                  <span className="text-xs text-gray-400">
                                                     {variantImagePreviews[
                                                       `${variantIndex}-${optionIndex}`
                                                     ]?.length
@@ -2000,7 +2000,7 @@ function ProductsManagement({
                                                       optionIndex
                                                     )
                                                   }
-                                                  className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors"
+                                                  className="p-2 text-red-500 hover:bg-red-900/20 rounded transition-colors"
                                                 >
                                                   <span className="material-symbols-outlined text-sm">
                                                     delete
@@ -2075,7 +2075,7 @@ function ProductsManagement({
                           disabled={modalMode === "view"}
                           className="w-5 h-5 text-primary focus:ring-primary border-gray-300 rounded"
                         />
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <span className="text-sm font-medium text-gray-300">
                           Featured Product
                         </span>
                       </div>
@@ -2083,8 +2083,8 @@ function ProductsManagement({
 
                     {/* View Brand Information */}
                     {modalMode === "view" && selectedProduct?.brand && (
-                      <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
-                        <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                      <div className="border border-gray-600 rounded-lg p-4">
+                        <h4 className="text-lg font-medium text-white mb-4">
                           Brand Information
                         </h4>
                         <div className="flex items-center gap-3">
@@ -2103,7 +2103,7 @@ function ProductsManagement({
                             />
                           )}
                           <div>
-                            <p className="text-lg font-medium text-gray-900 dark:text-white">
+                            <p className="text-lg font-medium text-white">
                               {brands.find(
                                 (b) => b.id === selectedProduct.brand
                               )?.name || selectedProduct.brand}
@@ -2115,8 +2115,8 @@ function ProductsManagement({
 
                     {/* View Variant Information */}
                     {modalMode === "view" && selectedProduct?.hasVariants && (
-                      <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
-                        <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                      <div className="border border-gray-600 rounded-lg p-4">
+                        <h4 className="text-lg font-medium text-white mb-4">
                           Product Variants
                         </h4>
                         <div className="space-y-4">
@@ -2124,9 +2124,9 @@ function ProductsManagement({
                             (variant: any, variantIndex: number) => (
                               <div
                                 key={variant.id}
-                                className="border border-gray-200 dark:border-gray-600 rounded-lg p-4"
+                                className="border border-gray-600 rounded-lg p-4"
                               >
-                                <h5 className="text-md font-medium text-gray-900 dark:text-white mb-3">
+                                <h5 className="text-md font-medium text-white mb-3">
                                   {variant.name}
                                 </h5>
                                 <div className="grid gap-3">
@@ -2134,7 +2134,7 @@ function ProductsManagement({
                                     (option: any, optionIndex: number) => (
                                       <div
                                         key={option.id}
-                                        className="flex items-center justify-between bg-gray-50 dark:bg-[#0f1825] rounded p-3"
+                                        className="flex items-center justify-between bg-[#0f1825] rounded p-3"
                                       >
                                         <div className="flex items-center gap-3">
                                           {option.image && (
@@ -2147,7 +2147,7 @@ function ProductsManagement({
                                             />
                                           )}
                                           <div>
-                                            <span className="font-medium text-gray-900 dark:text-white">
+                                            <span className="font-medium text-white">
                                               {option.name}
                                             </span>
                                           </div>
@@ -2167,13 +2167,13 @@ function ProductsManagement({
                     )}
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
                         Product Images
                       </label>
 
                       {existingImages.length > 0 && (
                         <div className="mb-4">
-                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                          <p className="text-sm text-gray-600 mb-2">
                             Current Images:
                           </p>
                           <div className="grid grid-cols-4 gap-2">
@@ -2205,7 +2205,7 @@ function ProductsManagement({
 
                       {imagePreviews.length > 0 && (
                         <div className="mb-4">
-                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                          <p className="text-sm text-gray-600 mb-2">
                             New Images:
                           </p>
                           <div className="grid grid-cols-4 gap-2">
@@ -2232,15 +2232,15 @@ function ProductsManagement({
                       )}
 
                       {modalMode !== "view" && (
-                        <label className="flex items-center justify-center w-full px-4 py-6 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:border-primary transition-colors">
+                        <label className="flex items-center justify-center w-full px-4 py-6 border-2 border-dashed border-gray-600 rounded-lg cursor-pointer hover:border-primary transition-colors">
                           <div className="text-center">
                             <span className="material-symbols-outlined text-4xl text-gray-400 mb-2">
                               cloud_upload
                             </span>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                            <p className="text-sm text-gray-600">
                               Click to upload images
                             </p>
-                            <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                            <p className="text-xs text-gray-500 mt-1">
                               PNG, JPG up to 10MB
                             </p>
                           </div>
@@ -2257,11 +2257,11 @@ function ProductsManagement({
                   </div>
                 </div>
 
-                <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-3">
+                <div className="px-6 py-4 border-t border-gray-700 flex justify-end gap-3">
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="px-6 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-[#0f1825] hover:bg-gray-200 dark:hover:bg-[#1a2332] rounded-lg font-medium transition-colors"
+                    className="px-6 py-2 text-gray-300 bg-[#0f1825] hover:bg-[#1a2332] rounded-lg font-medium transition-colors"
                   >
                     {modalMode === "view" ? "Close" : "Cancel"}
                   </button>
@@ -2328,35 +2328,35 @@ function OrdersManagement({
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "completed":
-        return "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border-green-200 dark:border-green-700";
+        return "bg-green-900/30 text-green-800 border-green-200";
       case "processing":
-        return "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 border-blue-200 dark:border-blue-700";
+        return "bg-blue-900/30 text-blue-800 border-blue-200";
       case "shipped":
-        return "bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 border-purple-200 dark:border-purple-700";
+        return "bg-purple-900/30 text-purple-800 border-purple-200";
       default:
-        return "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 border-yellow-200 dark:border-yellow-700";
+        return "bg-yellow-900/30 text-yellow-800 border-yellow-200";
     }
   };
 
   const getPaymentStatusColor = (paymentStatus: string) => {
     switch (paymentStatus?.toLowerCase()) {
       case "paid":
-        return "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border-green-200 dark:border-green-700";
+        return "bg-green-900/30 text-green-800 border-green-200";
       case "pending":
-        return "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 border-yellow-200 dark:border-yellow-700";
+        return "bg-yellow-900/30 text-yellow-800 border-yellow-200";
       case "failed":
-        return "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 border-red-200 dark:border-red-700";
+        return "bg-red-900/30 text-red-800 border-red-200";
       case "refunded":
-        return "bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-300 border-gray-200 dark:border-gray-700";
+        return "bg-gray-900/30 text-gray-800 border-gray-700";
       default:
-        return "bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-300 border-gray-200 dark:border-gray-700";
+        return "bg-gray-900/30 text-gray-800 border-gray-700";
     }
   };
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+        <h2 className="text-xl font-semibold text-white">
           Order Management
         </h2>
       </div>
@@ -2368,33 +2368,33 @@ function OrdersManagement({
       )}
 
       {/* Desktop Table View */}
-      <div className="hidden md:block bg-white dark:bg-[#1a2332] rounded-lg shadow-sm overflow-hidden">
+      <div className="hidden md:block bg-[#1a2332] rounded-lg shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 dark:bg-[#0f1623] border-b border-gray-200 dark:border-white/10">
+            <thead className="bg-[#0f1623] border-b border-white/10">
               <tr>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Order ID
                 </th>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Customer
                 </th>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Product
                 </th>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Amount
                 </th>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Date
                 </th>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Status
                 </th>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Payment Status
                 </th>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Actions
                 </th>
               </tr>
@@ -2410,7 +2410,7 @@ function OrdersManagement({
                 <tr>
                   <td
                     colSpan={8}
-                    className="py-8 text-center text-gray-500 dark:text-gray-400"
+                    className="py-8 text-center text-gray-400"
                   >
                     No orders found
                   </td>
@@ -2419,28 +2419,28 @@ function OrdersManagement({
                 orders.map((order) => (
                   <tr
                     key={order.id}
-                    className="border-b border-gray-100 dark:border-white/5 hover:bg-gray-50 dark:hover:bg-white/5"
+                    className="border-b border-white/5 hover:bg-gray-50"
                   >
-                    <td className="py-4 px-6 text-sm font-medium text-gray-900 dark:text-white">
+                    <td className="py-4 px-6 text-sm font-medium text-white">
                       #{order.orderNumber || order.id.substring(0, 8)}
                     </td>
-                    <td className="py-4 px-6 text-sm text-gray-900 dark:text-white">
+                    <td className="py-4 px-6 text-sm text-white">
                       {order.email || "N/A"}
                     </td>
-                    <td className="py-4 px-6 text-sm text-gray-600 dark:text-gray-300">
+                    <td className="py-4 px-6 text-sm text-gray-300">
                       {order.items?.[0]?.name || "N/A"}
                     </td>
-                    <td className="py-4 px-6 text-sm font-medium text-gray-900 dark:text-white">
+                    <td className="py-4 px-6 text-sm font-medium text-white">
                       {formatPrice(order.total || 0)}
                     </td>
-                    <td className="py-4 px-6 text-sm text-gray-600 dark:text-gray-300">
+                    <td className="py-4 px-6 text-sm text-gray-300">
                       {formatDate(order.createdAt)}
                     </td>
                     <td className="py-4 px-6">
                       <select
                         defaultValue={order.status || "pending"}
                         disabled={order.paymentStatus !== "paid"}
-                        className={`px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm hover:border-gray-400 dark:hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 ${
+                        className={`px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-600 bg-gray-800 text-white shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 ${
                           order.paymentStatus === "paid"
                             ? "cursor-pointer"
                             : "cursor-not-allowed opacity-50"
@@ -2474,7 +2474,7 @@ function OrdersManagement({
                       </span>
                     </td>
                     <td className="py-4 px-6">
-                      <button className="p-1 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded">
+                      <button className="p-1 text-blue-400 hover:bg-blue-50 rounded">
                         <span className="material-symbols-outlined text-lg">
                           visibility
                         </span>
@@ -2495,11 +2495,11 @@ function OrdersManagement({
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
           </div>
         ) : orders.length === 0 ? (
-          <div className="text-center py-16 bg-white dark:bg-[#1a2332] rounded-lg">
+          <div className="text-center py-16 bg-[#1a2332] rounded-lg">
             <span className="material-symbols-outlined text-6xl text-gray-400 mb-4">
               shopping_bag
             </span>
-            <p className="text-gray-500 dark:text-gray-400 text-xl mb-4">
+            <p className="text-gray-400 text-xl mb-4">
               No orders found
             </p>
           </div>
@@ -2507,21 +2507,21 @@ function OrdersManagement({
           orders.map((order) => (
             <div
               key={order.id}
-              className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm p-4"
+              className="bg-[#1a2332] rounded-lg shadow-sm p-4"
             >
               <div className="flex justify-between items-start mb-3">
                 <div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-gray-400">
                     Order ID
                   </p>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  <p className="text-sm font-medium text-white">
                     #{order.orderNumber || order.id.substring(0, 8)}
                   </p>
                 </div>
                 <select
                   defaultValue={order.status || "pending"}
                   disabled={order.paymentStatus !== "paid"}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm hover:border-gray-400 dark:hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 ${
+                  className={`px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-600 bg-gray-800 text-white shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 ${
                     order.paymentStatus === "paid"
                       ? "cursor-pointer"
                       : "cursor-not-allowed opacity-50"
@@ -2544,23 +2544,23 @@ function OrdersManagement({
               </div>
               <div className="space-y-2 mb-3">
                 <div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-gray-400">
                     Customer
                   </p>
-                  <p className="text-sm text-gray-900 dark:text-white">
+                  <p className="text-sm text-white">
                     {order.email || "N/A"}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-gray-400">
                     Product
                   </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <p className="text-sm text-gray-300">
                     {order.items?.[0]?.name || "N/A"}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-gray-400">
                     Payment Status
                   </p>
                   <span
@@ -2575,24 +2575,24 @@ function OrdersManagement({
                   </span>
                 </div>
               </div>
-              <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-white/10">
+              <div className="flex justify-between items-center pt-3 border-t border-white/10">
                 <div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-gray-400">
                     Amount
                   </p>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  <p className="text-sm font-medium text-white">
                     {formatPrice(order.total || 0)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-gray-400">
                     Date
                   </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <p className="text-sm text-gray-300">
                     {formatDate(order.createdAt)}
                   </p>
                 </div>
-                <button className="p-2 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-lg transition-colors">
+                <button className="p-2 text-blue-400 bg-blue-900/20 hover:bg-blue-100 rounded-lg transition-colors">
                   <span className="material-symbols-outlined text-lg">
                     visibility
                   </span>
@@ -2675,7 +2675,7 @@ function CustomersManagement({
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+        <h2 className="text-xl font-semibold text-white">
           Customer Management
         </h2>
       </div>
@@ -2687,30 +2687,30 @@ function CustomersManagement({
       )}
 
       {/* Desktop Table View */}
-      <div className="hidden md:block bg-white dark:bg-[#1a2332] rounded-lg shadow-sm overflow-hidden">
+      <div className="hidden md:block bg-[#1a2332] rounded-lg shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 dark:bg-[#0f1623] border-b border-gray-200 dark:border-white/10">
+            <thead className="bg-[#0f1623] border-b border-white/10">
               <tr>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Customer
                 </th>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Email
                 </th>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Orders
                 </th>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Total Spent
                 </th>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Joined
                 </th>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Status
                 </th>
-                <th className="text-left py-3 px-6 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left py-3 px-6 text-sm font-medium text-gray-400">
                   Actions
                 </th>
               </tr>
@@ -2726,7 +2726,7 @@ function CustomersManagement({
                 <tr>
                   <td
                     colSpan={7}
-                    className="py-8 text-center text-gray-500 dark:text-gray-400"
+                    className="py-8 text-center text-gray-400"
                   >
                     No customers found
                   </td>
@@ -2737,7 +2737,7 @@ function CustomersManagement({
                   return (
                     <tr
                       key={customer.uid}
-                      className="border-b border-gray-100 dark:border-white/5 hover:bg-gray-50 dark:hover:bg-white/5"
+                      className="border-b border-white/5 hover:bg-gray-50"
                     >
                       <td className="py-4 px-6">
                         <div className="flex items-center gap-3">
@@ -2746,21 +2746,21 @@ function CustomersManagement({
                               .charAt(0)
                               .toUpperCase()}
                           </div>
-                          <span className="text-sm font-medium text-gray-900 dark:text-white">
+                          <span className="text-sm font-medium text-white">
                             {customer.displayName || "Anonymous"}
                           </span>
                         </div>
                       </td>
-                      <td className="py-4 px-6 text-sm text-gray-600 dark:text-gray-300">
+                      <td className="py-4 px-6 text-sm text-gray-300">
                         {customer.email}
                       </td>
-                      <td className="py-4 px-6 text-sm text-gray-900 dark:text-white">
+                      <td className="py-4 px-6 text-sm text-white">
                         {stats?.orderCount || 0}
                       </td>
-                      <td className="py-4 px-6 text-sm font-medium text-gray-900 dark:text-white">
+                      <td className="py-4 px-6 text-sm font-medium text-white">
                         {formatPrice(stats?.totalSpent || 0)}
                       </td>
-                      <td className="py-4 px-6 text-sm text-gray-600 dark:text-gray-300">
+                      <td className="py-4 px-6 text-sm text-gray-300">
                         {formatDate(customer.createdAt)}
                       </td>
                       <td className="py-4 px-6">
@@ -2768,7 +2768,7 @@ function CustomersManagement({
                           className={`px-2 py-1 text-xs font-medium rounded-full ${
                             (stats?.orderCount || 0) >= 5
                               ? "bg-primary/20 text-primary"
-                              : "bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400"
+                              : "bg-green-900/20 text-green-400"
                           }`}
                         >
                           {(stats?.orderCount || 0) >= 5 ? "VIP" : "Active"}
@@ -2776,12 +2776,12 @@ function CustomersManagement({
                       </td>
                       <td className="py-4 px-6">
                         <div className="flex items-center gap-2">
-                          <button className="p-1 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded">
+                          <button className="p-1 text-blue-400 hover:bg-blue-50 rounded">
                             <span className="material-symbols-outlined text-lg">
                               visibility
                             </span>
                           </button>
-                          <button className="p-1 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 rounded">
+                          <button className="p-1 text-gray-600 hover:bg-gray-50 rounded">
                             <span className="material-symbols-outlined text-lg">
                               mail
                             </span>
@@ -2804,11 +2804,11 @@ function CustomersManagement({
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
           </div>
         ) : customers.length === 0 ? (
-          <div className="text-center py-16 bg-white dark:bg-[#1a2332] rounded-lg">
+          <div className="text-center py-16 bg-[#1a2332] rounded-lg">
             <span className="material-symbols-outlined text-6xl text-gray-400 mb-4">
               group
             </span>
-            <p className="text-gray-500 dark:text-gray-400 text-xl mb-4">
+            <p className="text-gray-400 text-xl mb-4">
               No customers found
             </p>
           </div>
@@ -2818,7 +2818,7 @@ function CustomersManagement({
             return (
               <div
                 key={customer.uid}
-                className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm p-4"
+                className="bg-[#1a2332] rounded-lg shadow-sm p-4"
               >
                 <div className="flex items-start gap-3 mb-3">
                   <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary font-semibold text-lg shrink-0">
@@ -2827,10 +2827,10 @@ function CustomersManagement({
                       .toUpperCase()}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-1">
+                    <h3 className="text-sm font-medium text-white mb-1">
                       {customer.displayName || "Anonymous"}
                     </h3>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 truncate">
+                    <p className="text-xs text-gray-600 truncate">
                       {customer.email}
                     </p>
                   </div>
@@ -2838,7 +2838,7 @@ function CustomersManagement({
                     className={`px-2 py-1 text-xs font-medium rounded-full shrink-0 ${
                       (stats?.orderCount || 0) >= 5
                         ? "bg-primary/20 text-primary"
-                        : "bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400"
+                        : "bg-green-900/20 text-green-400"
                     }`}
                   >
                     {(stats?.orderCount || 0) >= 5 ? "VIP" : "Active"}
@@ -2846,38 +2846,38 @@ function CustomersManagement({
                 </div>
                 <div className="grid grid-cols-3 gap-3 mb-3 text-sm">
                   <div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-gray-400">
                       Orders
                     </p>
-                    <p className="text-gray-900 dark:text-white font-medium">
+                    <p className="text-white font-medium">
                       {stats?.orderCount || 0}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-gray-400">
                       Spent
                     </p>
-                    <p className="text-gray-900 dark:text-white font-medium">
+                    <p className="text-white font-medium">
                       {formatPrice(stats?.totalSpent || 0)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-gray-400">
                       Joined
                     </p>
-                    <p className="text-gray-900 dark:text-white font-medium">
+                    <p className="text-white font-medium">
                       {formatDate(customer.createdAt)}
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-2 pt-3 border-t border-gray-200 dark:border-white/10">
-                  <button className="flex-1 px-3 py-2 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-lg text-sm font-medium transition-colors">
+                <div className="flex gap-2 pt-3 border-t border-white/10">
+                  <button className="flex-1 px-3 py-2 text-blue-400 bg-blue-900/20 hover:bg-blue-100 rounded-lg text-sm font-medium transition-colors">
                     <span className="material-symbols-outlined text-base mr-1 align-middle">
                       visibility
                     </span>
                     View
                   </button>
-                  <button className="flex-1 px-3 py-2 text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm font-medium transition-colors">
+                  <button className="flex-1 px-3 py-2 text-gray-600 bg-gray-800 hover:bg-gray-100 rounded-lg text-sm font-medium transition-colors">
                     <span className="material-symbols-outlined text-base mr-1 align-middle">
                       mail
                     </span>
@@ -2967,10 +2967,10 @@ function ReviewsManagement() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+            <h2 className="text-xl font-semibold text-white">
               Review Management
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-sm">
+            <p className="text-gray-600 text-sm">
               Moderate and manage customer reviews
             </p>
           </div>
@@ -2983,12 +2983,12 @@ function ReviewsManagement() {
             placeholder="Search reviews..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-1 px-4 py-2 rounded-lg bg-white dark:bg-[#1a2332] border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="flex-1 px-4 py-2 rounded-lg bg-[#1a2332] border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="px-4 py-2 rounded-lg bg-white dark:bg-[#1a2332] border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+            className="px-4 py-2 rounded-lg bg-[#1a2332] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <option value="all">All Reviews</option>
             <option value="pending">Pending</option>
@@ -2999,26 +2999,26 @@ function ReviewsManagement() {
 
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="bg-white dark:bg-[#1a2332] p-4 rounded-lg">
-            <p className="text-gray-600 dark:text-gray-400 text-sm">Total</p>
-            <p className="text-gray-900 dark:text-white text-2xl font-bold">
+          <div className="bg-[#1a2332] p-4 rounded-lg">
+            <p className="text-gray-600 text-sm">Total</p>
+            <p className="text-white text-2xl font-bold">
               {reviews.length}
             </p>
           </div>
-          <div className="bg-white dark:bg-[#1a2332] p-4 rounded-lg">
-            <p className="text-gray-600 dark:text-gray-400 text-sm">Pending</p>
+          <div className="bg-[#1a2332] p-4 rounded-lg">
+            <p className="text-gray-600 text-sm">Pending</p>
             <p className="text-orange-600 text-2xl font-bold">
               {reviews.filter((r) => r.status === "pending").length}
             </p>
           </div>
-          <div className="bg-white dark:bg-[#1a2332] p-4 rounded-lg">
-            <p className="text-gray-600 dark:text-gray-400 text-sm">Approved</p>
+          <div className="bg-[#1a2332] p-4 rounded-lg">
+            <p className="text-gray-600 text-sm">Approved</p>
             <p className="text-green-600 text-2xl font-bold">
               {reviews.filter((r) => r.status === "approved").length}
             </p>
           </div>
-          <div className="bg-white dark:bg-[#1a2332] p-4 rounded-lg">
-            <p className="text-gray-600 dark:text-gray-400 text-sm">Rejected</p>
+          <div className="bg-[#1a2332] p-4 rounded-lg">
+            <p className="text-gray-600 text-sm">Rejected</p>
             <p className="text-red-600 text-2xl font-bold">
               {reviews.filter((r) => r.status === "rejected").length}
             </p>
@@ -3032,11 +3032,11 @@ function ReviewsManagement() {
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
         </div>
       ) : filteredReviews.length === 0 ? (
-        <div className="bg-white dark:bg-[#1a2332] rounded-lg p-8 text-center">
+        <div className="bg-[#1a2332] rounded-lg p-8 text-center">
           <span className="material-symbols-outlined text-6xl text-gray-400 mb-4">
             rate_review
           </span>
-          <p className="text-gray-500 dark:text-gray-400 text-xl">
+          <p className="text-gray-400 text-xl">
             No reviews found
           </p>
         </div>
@@ -3045,7 +3045,7 @@ function ReviewsManagement() {
           {filteredReviews.map((review) => (
             <div
               key={review.id}
-              className="bg-white dark:bg-[#1a2332] rounded-lg p-6 hover:shadow-md transition-shadow"
+              className="bg-[#1a2332] rounded-lg p-6 hover:shadow-md transition-shadow"
             >
               <div className="flex flex-col lg:flex-row lg:items-start gap-4">
                 {/* Review Info */}
@@ -3055,7 +3055,7 @@ function ReviewsManagement() {
                       {review.userName?.charAt(0) || "U"}
                     </div>
                     <div>
-                      <h4 className="text-gray-900 dark:text-white font-bold">
+                      <h4 className="text-white font-bold">
                         {review.userName || "Anonymous"}
                       </h4>
                       <div className="flex items-center gap-2">
@@ -3075,25 +3075,25 @@ function ReviewsManagement() {
                             </span>
                           ))}
                         </div>
-                        <span className="text-gray-500 dark:text-gray-400 text-xs">
+                        <span className="text-gray-400 text-xs">
                           {review.createdAt?.toDate?.()?.toLocaleDateString() ||
                             "Recently"}
                         </span>
                       </div>
                     </div>
                   </div>
-                  <p className="text-gray-700 dark:text-gray-300 mb-3">
+                  <p className="text-gray-300 mb-3">
                     {review.comment}
                   </p>
-                  <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center gap-4 text-xs text-gray-400">
                     <span>Product ID: {review.productId}</span>
                     <span
                       className={`px-2 py-1 rounded-full ${
                         review.status === "approved"
-                          ? "bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400"
+                          ? "bg-green-900/20 text-green-400"
                           : review.status === "rejected"
-                          ? "bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-400"
-                          : "bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-400"
+                          ? "bg-red-900/20 text-red-400"
+                          : "bg-yellow-900/20 text-yellow-400"
                       }`}
                     >
                       {review.status || "pending"}
@@ -3346,7 +3346,7 @@ function HomepageManagement() {
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-serif font-bold text-gray-900 dark:text-white">
+        <h2 className="text-2xl font-serif font-bold text-white">
           Homepage Management
         </h2>
         <button
@@ -3359,35 +3359,35 @@ function HomepageManagement() {
       </div>
 
       {/* Hero Section */}
-      <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+      <div className="bg-[#1a2332] rounded-lg shadow p-6">
+        <h3 className="text-lg font-semibold text-white mb-4">
           Hero Section
         </h3>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-300 mb-1">
               Title
             </label>
             <input
               type="text"
               value={homepageContent?.hero?.title || ""}
               onChange={(e) => updateHero("title", e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-[#0f1825] text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-300 mb-1">
               Subtitle
             </label>
             <input
               type="text"
               value={homepageContent?.hero?.subtitle || ""}
               onChange={(e) => updateHero("subtitle", e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-[#0f1825] text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-300 mb-1">
               Background Image
             </label>
             <div className="space-y-3">
@@ -3395,7 +3395,7 @@ function HomepageManagement() {
                 type="file"
                 accept="image/*"
                 onChange={handleHeroImageSelect}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-[#0f1825] text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90"
               />
               {(heroImagePreview || homepageContent?.hero?.backgroundImage) && (
                 <div className="relative">
@@ -3404,7 +3404,7 @@ function HomepageManagement() {
                       heroImagePreview || homepageContent?.hero?.backgroundImage
                     }
                     alt="Hero preview"
-                    className="w-full max-h-64 object-contain rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800"
+                    className="w-full max-h-64 object-contain rounded-lg border border-gray-600 bg-gray-800"
                   />
                   <button
                     onClick={() => {
@@ -3414,29 +3414,29 @@ function HomepageManagement() {
                     }}
                     className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm"
                   >
-                    ×
+                    ?
                   </button>
                 </div>
               )}
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-300 mb-1">
               Button Text
             </label>
             <input
               type="text"
               value={homepageContent?.hero?.shopNowText || ""}
               onChange={(e) => updateHero("shopNowText", e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-[#0f1825] text-white"
             />
           </div>
         </div>
       </div>
 
       {/* Collections */}
-      <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+      <div className="bg-[#1a2332] rounded-lg shadow p-6">
+        <h3 className="text-lg font-semibold text-white mb-4">
           Featured Collections
         </h3>
         <div className="space-y-6">
@@ -3444,14 +3444,14 @@ function HomepageManagement() {
             (collection: any, index: number) => (
               <div
                 key={collection.id}
-                className="border border-gray-200 dark:border-gray-600 rounded-lg p-4"
+                className="border border-gray-600 rounded-lg p-4"
               >
-                <h4 className="font-medium text-gray-900 dark:text-white mb-3">
+                <h4 className="font-medium text-white mb-3">
                   Collection {index + 1}
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
                       Title
                     </label>
                     <input
@@ -3460,11 +3460,11 @@ function HomepageManagement() {
                       onChange={(e) =>
                         updateCollection(index, "title", e.target.value)
                       }
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-[#0f1825] text-white"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
                       Subtitle
                     </label>
                     <input
@@ -3473,11 +3473,11 @@ function HomepageManagement() {
                       onChange={(e) =>
                         updateCollection(index, "subtitle", e.target.value)
                       }
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+                      className="w-full px-3 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-[#0f1825] text-white"
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-gray-300 mb-1">
                       Background Image
                     </label>
                     <div className="space-y-3">
@@ -3485,7 +3485,7 @@ function HomepageManagement() {
                         type="file"
                         accept="image/*"
                         onChange={(e) => handleCollectionImageSelect(index, e)}
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90"
+                        className="w-full px-3 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-[#0f1825] text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90"
                       />
                       {(collectionImagePreviews[index] ||
                         collection.backgroundImage) && (
@@ -3496,7 +3496,7 @@ function HomepageManagement() {
                               collection.backgroundImage
                             }
                             alt={`Collection ${index + 1} preview`}
-                            className="w-full max-h-48 object-contain rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800"
+                            className="w-full max-h-48 object-contain rounded-lg border border-gray-600 bg-gray-800"
                           />
                           <button
                             onClick={() => {
@@ -3510,7 +3510,7 @@ function HomepageManagement() {
                             }}
                             className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm"
                           >
-                            ×
+                            ?
                           </button>
                         </div>
                       )}
@@ -3524,53 +3524,53 @@ function HomepageManagement() {
       </div>
 
       {/* Craft Section */}
-      <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+      <div className="bg-[#1a2332] rounded-lg shadow p-6">
+        <h3 className="text-lg font-semibold text-white mb-4">
           Craft Section
         </h3>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-300 mb-1">
               Title
             </label>
             <input
               type="text"
               value={homepageContent?.craft?.title || ""}
               onChange={(e) => updateCraft("title", e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-[#0f1825] text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-300 mb-1">
               Description
             </label>
             <textarea
               value={homepageContent?.craft?.description || ""}
               onChange={(e) => updateCraft("description", e.target.value)}
               rows={4}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-[#0f1825] text-white"
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-gray-300 mb-1">
                 Button Text
               </label>
               <input
                 type="text"
                 value={homepageContent?.craft?.buttonText || ""}
                 onChange={(e) => updateCraft("buttonText", e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-[#0f1825] text-white"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-gray-300 mb-1">
                 Button Link
               </label>
               <select
                 value={homepageContent?.craft?.buttonLink || ""}
                 onChange={(e) => updateCraft("buttonLink", e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-[#0f1825] text-white"
               >
                 <option value="">Select a page...</option>
                 {availablePages.map((page) => (
@@ -3612,7 +3612,7 @@ function CurrencyManagement() {
 
         // Remove any broken USD entries (with bad flag)
         ratesArray = ratesArray.filter((r: any) => {
-          if (r.code === "USD" && (!r.flag || r.flag.includes("�"))) {
+          if (r.code === "USD" && (!r.flag || r.flag.includes("?"))) {
             return false;
           }
           return true;
@@ -3627,7 +3627,7 @@ function CurrencyManagement() {
             name: "Indonesian Rupiah",
             symbol: "Rp",
             rate: 1,
-            flag: "🇮🇩",
+            flag: "????",
           });
         } else {
           // Move IDR to the beginning if it exists but not at start
@@ -3647,7 +3647,7 @@ function CurrencyManagement() {
             name: "United States Dollar",
             symbol: "$",
             rate: 0.000064,
-            flag: "🇺🇸",
+            flag: "????",
           });
         }
 
@@ -3665,49 +3665,49 @@ function CurrencyManagement() {
               name: "Indonesian Rupiah",
               symbol: "Rp",
               rate: 1,
-              flag: "🇮🇩",
+              flag: "????",
             },
             {
               code: "USD",
               name: "United States Dollar",
               symbol: "$",
               rate: 0.000064,
-              flag: "🇺🇸",
+              flag: "????",
             },
             {
               code: "EUR",
               name: "Euro",
-              symbol: "€",
+              symbol: "?",
               rate: 0.00006,
-              flag: "🇪🇺",
+              flag: "????",
             },
             {
               code: "GBP",
               name: "British Pound",
-              symbol: "£",
+              symbol: "?",
               rate: 0.000053,
-              flag: "🇬🇧",
+              flag: "????",
             },
             {
               code: "JPY",
               name: "Japanese Yen",
-              symbol: "¥",
+              symbol: "?",
               rate: 0.0103,
-              flag: "🇯🇵",
+              flag: "????",
             },
             {
               code: "AUD",
               name: "Australian Dollar",
               symbol: "A$",
               rate: 0.000098,
-              flag: "🇦🇺",
+              flag: "????",
             },
             {
               code: "USD",
               name: "United States Dollar",
               symbol: "$",
               rate: 0.000064,
-              flag: "��",
+              flag: "??",
             },
           ],
           lastUpdated: new Date(),
@@ -3888,23 +3888,23 @@ function CurrencyManagement() {
   // Helper functions for currency symbols and flags
   const getCurrencySymbol = (code: string): string => {
     const symbols: { [key: string]: string } = {
-      EUR: "€",
-      GBP: "£",
-      JPY: "¥",
+      EUR: "?",
+      GBP: "?",
+      JPY: "?",
       AUD: "A$",
       CAD: "C$",
       CHF: "Fr",
-      CNY: "¥",
+      CNY: "?",
       SEK: "kr",
       NZD: "NZ$",
       MXN: "$",
       SGD: "S$",
       HKD: "HK$",
       NOK: "kr",
-      KRW: "₩",
-      TRY: "₺",
-      RUB: "₽",
-      INR: "₹",
+      KRW: "?",
+      TRY: "?",
+      RUB: "?",
+      INR: "?",
       BRL: "R$",
       ZAR: "R",
       // Add more as needed
@@ -3914,26 +3914,26 @@ function CurrencyManagement() {
 
   const getCurrencyFlag = (code: string): string => {
     const flags: { [key: string]: string } = {
-      EUR: "🇪🇺",
-      GBP: "🇬🇧",
-      JPY: "🇯🇵",
-      AUD: "🇦🇺",
-      CAD: "🇨🇦",
-      CHF: "🇨🇭",
-      CNY: "🇨🇳",
-      SEK: "🇸🇪",
-      NZD: "🇳🇿",
-      MXN: "🇲🇽",
-      SGD: "🇸🇬",
-      HKD: "🇭🇰",
-      NOK: "🇳🇴",
-      KRW: "🇰🇷",
-      TRY: "🇹🇷",
-      RUB: "🇷🇺",
-      INR: "🇮🇳",
-      BRL: "🇧🇷",
-      ZAR: "🇿🇦",
-      IDR: "🇮🇩",
+      EUR: "????",
+      GBP: "????",
+      JPY: "????",
+      AUD: "????",
+      CAD: "????",
+      CHF: "????",
+      CNY: "????",
+      SEK: "????",
+      NZD: "????",
+      MXN: "????",
+      SGD: "????",
+      HKD: "????",
+      NOK: "????",
+      KRW: "????",
+      TRY: "????",
+      RUB: "????",
+      INR: "????",
+      BRL: "????",
+      ZAR: "????",
+      IDR: "????",
       // Add more as needed
     };
     return flags[code] || getCurrencySymbol(code);
@@ -3958,10 +3958,10 @@ function CurrencyManagement() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-serif font-bold text-gray-900 dark:text-white">
+          <h2 className="text-2xl font-serif font-bold text-white">
             Currency Management
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">
+          <p className="text-gray-600 mt-1">
             Manage currency exchange rates for international pricing
           </p>
         </div>
@@ -3998,19 +3998,19 @@ function CurrencyManagement() {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow-sm border border-gray-200 dark:border-white/10">
+      <div className="bg-[#1a2332] rounded-lg shadow-sm border border-white/10">
         <div className="p-6">
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="text-lg font-semibold text-white mb-2">
               Base Currency
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-gray-600">
               All rates are relative to IDR (Indonesian Rupiah)
             </p>
           </div>
 
           <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-7 gap-4 font-medium text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-white/10 pb-2">
+            <div className="grid grid-cols-1 md:grid-cols-7 gap-4 font-medium text-gray-300 border-b border-white/10 pb-2">
               <div>Flag</div>
               <div>Code</div>
               <div>Name</div>
@@ -4026,11 +4026,11 @@ function CurrencyManagement() {
                 className="grid grid-cols-1 md:grid-cols-7 gap-4 items-center py-2"
               >
                 <div className="text-2xl">{rate.flag}</div>
-                <div className="font-mono font-medium text-gray-900 dark:text-white">
+                <div className="font-mono font-medium text-white">
                   {rate.code}
                 </div>
-                <div className="text-gray-900 dark:text-white">{rate.name}</div>
-                <div className="text-gray-900 dark:text-white font-mono">
+                <div className="text-white">{rate.name}</div>
+                <div className="text-white font-mono">
                   {rate.symbol}
                 </div>
                 <div>
@@ -4045,10 +4045,10 @@ function CurrencyManagement() {
                         parseFloat(e.target.value)
                       )
                     }
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white"
+                    className="w-full px-3 py-2 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-[#0f1825] text-white"
                   />
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">
+                <div className="text-sm text-gray-600">
                   {rate.code === "IDR"
                     ? `${rate.symbol}${Math.round(100 * rate.rate)
                         .toString()
@@ -4069,11 +4069,11 @@ function CurrencyManagement() {
             ))}
           </div>
 
-          <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-            <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">
+          <div className="mt-6 p-4 bg-blue-900/20 rounded-lg">
+            <h4 className="text-sm font-medium text-blue-100 mb-2">
               Currency Detection
             </h4>
-            <p className="text-sm text-blue-800 dark:text-blue-200">
+            <p className="text-sm text-blue-200">
               Users from Indonesia will automatically see prices in IDR. Users
               from other countries will see prices in USD by default, but can
               manually switch currencies.
@@ -4085,10 +4085,10 @@ function CurrencyManagement() {
       {/* Add Currency Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-hidden">
-            <div className="p-6 border-b border-gray-200 dark:border-white/10">
+          <div className="bg-[#1a2332] rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-hidden">
+            <div className="p-6 border-b border-white/10">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-lg font-semibold text-white">
                   Add Currency
                 </h3>
                 <button
@@ -4097,9 +4097,9 @@ function CurrencyManagement() {
                     setAvailableCurrencies([]);
                     setCurrencySearch("");
                   }}
-                  className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                  className="text-gray-400 hover:text-gray-600"
                 >
-                  ✕
+                  ?
                 </button>
               </div>
             </div>
@@ -4108,7 +4108,7 @@ function CurrencyManagement() {
               {fetchingCurrencies ? (
                 <div className="flex items-center justify-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-                  <span className="ml-3 text-gray-600 dark:text-gray-400">
+                  <span className="ml-3 text-gray-600">
                     Fetching supported currencies...
                   </span>
                 </div>
@@ -4121,11 +4121,11 @@ function CurrencyManagement() {
                       placeholder="Search currencies by code or name..."
                       value={currencySearch}
                       onChange={(e) => setCurrencySearch(e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-[#0f1825] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                      className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-[#0f1825] text-white placeholder-gray-400"
                     />
                   </div>
 
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-gray-600">
                     Select a currency to add to your supported currencies list:
                     {currencySearch && (
                       <span className="ml-2 text-primary font-medium">
@@ -4139,17 +4139,17 @@ function CurrencyManagement() {
                       {filteredCurrencies.map((currency) => (
                         <div
                           key={currency.code}
-                          className="flex items-center justify-between p-3 border border-gray-200 dark:border-white/10 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5"
+                          className="flex items-center justify-between p-3 border border-white/10 rounded-lg hover:bg-gray-50"
                         >
                           <div className="flex items-center gap-3">
                             <span className="text-2xl">
                               {getCurrencyFlag(currency.code)}
                             </span>
                             <div>
-                              <div className="font-medium text-gray-900 dark:text-white">
+                              <div className="font-medium text-white">
                                 {currency.code}
                               </div>
-                              <div className="text-sm text-gray-600 dark:text-gray-400">
+                              <div className="text-sm text-gray-600">
                                 {currency.name}
                               </div>
                             </div>
@@ -4167,7 +4167,7 @@ function CurrencyManagement() {
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-gray-600 dark:text-gray-400">
+                      <p className="text-gray-600">
                         {currencySearch
                           ? `No currencies found matching "${currencySearch}"`
                           : "No additional currencies available"}
@@ -4177,11 +4177,11 @@ function CurrencyManagement() {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-gray-600">
                     No additional currencies available or failed to fetch
                     currencies.
                   </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
+                  <p className="text-sm text-gray-500 mt-2">
                     Make sure your ExchangeRate API key is configured correctly.
                   </p>
                 </div>
@@ -4193,3 +4193,13 @@ function CurrencyManagement() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
