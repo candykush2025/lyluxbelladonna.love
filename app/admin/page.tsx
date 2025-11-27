@@ -1771,7 +1771,9 @@ function ProductsManagement({
                               onChange={(e) =>
                                 setFormData({
                                   ...formData,
-                                  price: e.target.value ? Number(e.target.value) : 0,
+                                  price: e.target.value
+                                    ? Number(e.target.value)
+                                    : 0,
                                 })
                               }
                               disabled={modalMode === "view"}
@@ -1790,7 +1792,9 @@ function ProductsManagement({
                               onChange={(e) =>
                                 setFormData({
                                   ...formData,
-                                  stock: e.target.value ? Number(e.target.value) : 0,
+                                  stock: e.target.value
+                                    ? Number(e.target.value)
+                                    : 0,
                                 })
                               }
                               disabled={modalMode === "view"}
@@ -1949,7 +1953,9 @@ function ProductsManagement({
                                                     variantIndex,
                                                     optionIndex,
                                                     "price",
-                                                    e.target.value ? Number(e.target.value) : 0
+                                                    e.target.value
+                                                      ? Number(e.target.value)
+                                                      : 0
                                                   )
                                                 }
                                                 placeholder="Enter price"
