@@ -1765,8 +1765,7 @@ function ProductsManagement({
                               Price (Rp) *
                             </label>
                             <input
-                              type="number"
-                              step="0.01"
+                              type="text"
                               value={formData.price || ""}
                               onChange={(e) =>
                                 setFormData({
@@ -1787,7 +1786,7 @@ function ProductsManagement({
                               Stock *
                             </label>
                             <input
-                              type="number"
+                              type="text"
                               value={formData.stock || ""}
                               onChange={(e) =>
                                 setFormData({
@@ -1945,8 +1944,7 @@ function ProductsManagement({
                                                 Price (Rp) *
                                               </label>
                                               <input
-                                                type="number"
-                                                step="0.01"
+                                                type="text"
                                                 value={option.price || ""}
                                                 onChange={(e) =>
                                                   updateVariantOption(
