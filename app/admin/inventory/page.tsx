@@ -179,12 +179,12 @@ export default function AdminInventory() {
                 placeholder="Search by name or SKU..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="flex-1 px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-cream placeholder-cream/50 focus:outline-none focus:border-gold"
+                className="flex-1 px-4 py-2 rounded-lg bg-[#1a2332]/10 border border-white/20 text-cream placeholder-cream/50 focus:outline-none focus:border-gold"
               />
               <select
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
-                className="px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
+                className="px-4 py-2 rounded-lg bg-[#1a2332]/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
               >
                 <option value="all">All Products</option>
                 <option value="in-stock">In Stock</option>
@@ -194,7 +194,7 @@ export default function AdminInventory() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
+                className="px-4 py-2 rounded-lg bg-[#1a2332]/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
               >
                 <option value="stock">Sort by: Stock</option>
                 <option value="name">Sort by: Name</option>
@@ -215,7 +215,7 @@ export default function AdminInventory() {
           ) : (
             <>
               {/* Desktop Table */}
-              <div className="hidden md:block bg-white/5 rounded-xl overflow-hidden">
+              <div className="hidden md:block bg-[#1a2332]/5 rounded-xl overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead className="bg-white/10 border-b border-white/20">
@@ -339,7 +339,7 @@ export default function AdminInventory() {
                                     delete newEditingStock[product.id];
                                     setEditingStock(newEditingStock);
                                   }}
-                                  className="px-3 py-1 bg-white/10 hover:bg-white/20 text-cream rounded text-sm font-medium"
+                                  className="px-3 py-1 bg-[#1a2332]/10 hover:bg-white/20 text-cream rounded text-sm font-medium"
                                 >
                                   Cancel
                                 </button>
@@ -457,7 +457,7 @@ export default function AdminInventory() {
                                 delete newEditingStock[product.id];
                                 setEditingStock(newEditingStock);
                               }}
-                              className="px-3 py-1 bg-white/10 hover:bg-white/20 text-cream rounded text-sm font-medium"
+                              className="px-3 py-1 bg-[#1a2332]/10 hover:bg-white/20 text-cream rounded text-sm font-medium"
                             >
                               Cancel
                             </button>
@@ -488,3 +488,4 @@ export default function AdminInventory() {
     </div>
   );
 }
+

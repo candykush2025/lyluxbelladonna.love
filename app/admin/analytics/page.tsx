@@ -186,7 +186,7 @@ export default function AdminAnalytics() {
                 <select
                   value={timeRange}
                   onChange={(e) => setTimeRange(e.target.value as any)}
-                  className="px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
+                  className="px-4 py-2 rounded-lg bg-[#1a2332]/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
                 >
                   <option value="7days">Last 7 Days</option>
                   <option value="30days">Last 30 Days</option>
@@ -195,7 +195,7 @@ export default function AdminAnalytics() {
                 </select>
                 <Link
                   href="/admin"
-                  className="px-4 py-2 rounded-lg bg-white/10 text-cream hover:bg-white/20 transition-colors font-medium"
+                  className="px-4 py-2 rounded-lg bg-[#1a2332]/10 text-cream hover:bg-white/20 transition-colors font-medium"
                 >
                   ← Back
                 </Link>
@@ -325,7 +325,7 @@ export default function AdminAnalytics() {
                       {topProducts.map((product, index) => (
                         <div
                           key={product.id}
-                          className="flex items-center justify-between p-3 bg-white/5 rounded-lg"
+                          className="flex items-center justify-between p-3 bg-[#1a2332]/5 rounded-lg"
                         >
                           <div className="flex items-center gap-3">
                             <div className="bg-gold text-navy w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
@@ -370,7 +370,7 @@ export default function AdminAnalytics() {
                               ${cat.revenue.toFixed(0)}
                             </p>
                           </div>
-                          <div className="w-full bg-white/10 rounded-full h-2">
+                          <div className="w-full bg-[#1a2332]/10 rounded-full h-2">
                             <div
                               className="bg-gold h-2 rounded-full transition-all"
                               style={{
@@ -490,3 +490,4 @@ export default function AdminAnalytics() {
     </div>
   );
 }
+

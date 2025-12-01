@@ -168,9 +168,9 @@ export default function AccountAddresses() {
   return (
     <ProtectedRoute>
       <div className="relative flex min-h-screen flex-col">
-        <header className="flex items-center gap-4 border-b border-[#e0e0e0] dark:border-[#304a6e] bg-white dark:bg-[#0a192f] px-6 py-4 lg:px-10">
+        <header className="flex items-center gap-4 border-b border-[#e0e0e0] bg-[#1a2332] px-6 py-4 lg:px-10">
           <Link
-            className="flex items-center gap-4 text-[#0a192f] dark:text-[#f5f5dc]"
+            className="flex items-center gap-4 text-[#0a192f]"
             href="/"
           >
             <div className="size-8 text-primary">
@@ -194,25 +194,25 @@ export default function AccountAddresses() {
                 </defs>
               </svg>
             </div>
-            <h2 className="text-[#0a192f] dark:text-[#f5f5dc] text-xl font-bold leading-tight tracking-[-0.015em]">
+            <h2 className="text-[#0a192f] text-xl font-bold leading-tight tracking-[-0.015em]">
               Lylux Belladonna
             </h2>
           </Link>
           <div className="ml-auto flex items-center gap-4">
             <Link
-              className="text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] hover:text-primary transition-colors"
+              className="text-sm font-medium text-[#0a192f] hover:text-primary transition-colors"
               href="/products"
             >
               Shop
             </Link>
             <Link
-              className="text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] hover:text-primary transition-colors"
+              className="text-sm font-medium text-[#0a192f] hover:text-primary transition-colors"
               href="/about"
             >
               About
             </Link>
             <Link
-              className="text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] hover:text-primary transition-colors"
+              className="text-sm font-medium text-[#0a192f] hover:text-primary transition-colors"
               href="/contact"
             >
               Contact
@@ -224,17 +224,17 @@ export default function AccountAddresses() {
                   backgroundImage: `url("https://via.placeholder.com/32")`,
                 }}
               ></div>
-              <span className="text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc]">
+              <span className="text-sm font-medium text-[#0a192f]">
                 {userProfile?.displayName || "User"}
               </span>
             </div>
           </div>
         </header>
         <div className="flex flex-1">
-          <aside className="w-64 bg-white dark:bg-[#172a46] border-r border-[#e0e0e0] dark:border-[#304a6e] p-6">
+          <aside className="w-64 bg-[#1a2332] border-r border-[#e0e0e0] p-6">
             <nav className="space-y-2">
               <Link
-                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/50 dark:hover:bg-[#172a46]/50 transition-colors"
+                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/50 transition-colors"
                 href="/account"
               >
                 <span className="material-symbols-outlined text-xl">
@@ -245,7 +245,7 @@ export default function AccountAddresses() {
                 </p>
               </Link>
               <Link
-                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/50 dark:hover:bg-[#172a46]/50 transition-colors"
+                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/50 transition-colors"
                 href="/account/orders"
               >
                 <span className="material-symbols-outlined text-xl">
@@ -256,7 +256,7 @@ export default function AccountAddresses() {
                 </p>
               </Link>
               <Link
-                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/50 dark:hover:bg-[#172a46]/50 transition-colors"
+                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/50 transition-colors"
                 href="/account/details"
               >
                 <span className="material-symbols-outlined text-xl">
@@ -279,7 +279,7 @@ export default function AccountAddresses() {
             <div className="mt-8">
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/50 dark:hover:bg-[#172a46]/50 transition-colors w-full text-left"
+                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/50 transition-colors w-full text-left"
               >
                 <span className="material-symbols-outlined text-xl">
                   logout
@@ -288,22 +288,22 @@ export default function AccountAddresses() {
               </button>
             </div>
           </aside>
-          <main className="flex-1 p-4 sm:p-6 lg:p-10 bg-[#f5f5dc] dark:bg-[#0a192f]">
+          <main className="flex-1 p-4 sm:p-6 lg:p-10 bg-[#f5f5dc]">
             <div className="max-w-4xl mx-auto">
               <div className="flex flex-wrap justify-between gap-3 p-4 mb-6">
-                <h1 className="text-[#0a192f] dark:text-[#f5f5dc] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">
+                <h1 className="text-[#0a192f] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">
                   Saved Addresses
                 </h1>
               </div>
 
               {loading ? (
-                <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
-                  <div className="text-center text-[#5c5c5c] dark:text-[#a8b2d1]">
+                <div className="bg-white p-6 rounded-xl shadow-sm">
+                  <div className="text-center text-[#5c5c5c]">
                     Loading addresses...
                   </div>
                 </div>
               ) : error ? (
-                <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
+                <div className="bg-white p-6 rounded-xl shadow-sm">
                   <div className="text-center text-red-500">{error}</div>
                 </div>
               ) : (
@@ -315,11 +315,11 @@ export default function AccountAddresses() {
                         editingAddress === index ? (
                           <div
                             key={index}
-                            className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm"
+                            className="bg-white p-6 rounded-xl shadow-sm"
                           >
                             <div className="space-y-4">
                               <div>
-                                <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                   Address Type
                                 </label>
                                 <select
@@ -330,14 +330,14 @@ export default function AccountAddresses() {
                                       type: e.target.value,
                                     }))
                                   }
-                                  className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                  className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                 >
                                   <option value="Shipping">Shipping</option>
                                   <option value="Billing">Billing</option>
                                 </select>
                               </div>
                               <div>
-                                <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                   Full Name
                                 </label>
                                 <input
@@ -349,11 +349,11 @@ export default function AccountAddresses() {
                                       name: e.target.value,
                                     }))
                                   }
-                                  className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                  className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                 />
                               </div>
                               <div>
-                                <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                   Street Address
                                 </label>
                                 <input
@@ -365,12 +365,12 @@ export default function AccountAddresses() {
                                       street: e.target.value,
                                     }))
                                   }
-                                  className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                  className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                 />
                               </div>
                               <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                  <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                  <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                     City
                                   </label>
                                   <input
@@ -382,11 +382,11 @@ export default function AccountAddresses() {
                                         city: e.target.value,
                                       }))
                                     }
-                                    className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                   />
                                 </div>
                                 <div>
-                                  <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                  <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                     State
                                   </label>
                                   <input
@@ -398,13 +398,13 @@ export default function AccountAddresses() {
                                         state: e.target.value,
                                       }))
                                     }
-                                    className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                   />
                                 </div>
                               </div>
                               <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                  <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                  <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                     ZIP Code
                                   </label>
                                   <input
@@ -416,11 +416,11 @@ export default function AccountAddresses() {
                                         zipCode: e.target.value,
                                       }))
                                     }
-                                    className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                   />
                                 </div>
                                 <div>
-                                  <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                  <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                     Country
                                   </label>
                                   <input
@@ -432,7 +432,7 @@ export default function AccountAddresses() {
                                         country: e.target.value,
                                       }))
                                     }
-                                    className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                   />
                                 </div>
                               </div>
@@ -446,7 +446,7 @@ export default function AccountAddresses() {
                                 </button>
                                 <button
                                   onClick={handleCancelAddressEdit}
-                                  className="flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 border border-[#e0e0e0] dark:border-[#304a6e] text-[#5c5c5c] dark:text-[#a8b2d1] text-sm font-bold leading-normal hover:bg-[#f5f5f5] dark:hover:bg-[#1a2332] transition-colors"
+                                  className="flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 border border-[#e0e0e0] text-[#5c5c5c] text-sm font-bold leading-normal hover:bg-[#f5f5f5] transition-colors"
                                 >
                                   Cancel
                                 </button>
@@ -456,13 +456,13 @@ export default function AccountAddresses() {
                         ) : (
                           <div
                             key={index}
-                            className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm flex flex-col justify-between"
+                            className="bg-white p-6 rounded-xl shadow-sm flex flex-col justify-between"
                           >
                             <div className="mb-4">
                               <p className="text-primary text-sm font-semibold uppercase tracking-wider mb-2">
                                 {address.type || "Shipping"}
                               </p>
-                              <p className="text-[#0a192f] dark:text-[#f5f5dc] leading-relaxed">
+                              <p className="text-[#0a192f] leading-relaxed">
                                 {address.name || userDetails.displayName}
                                 <br />
                                 {address.street}
@@ -482,7 +482,7 @@ export default function AccountAddresses() {
                               </button>
                               <button
                                 onClick={() => handleDeleteAddress(index)}
-                                className="text-sm font-bold text-[#5c5c5c] dark:text-[#a8b2d1] hover:underline"
+                                className="text-sm font-bold text-[#5c5c5c] hover:underline"
                               >
                                 Delete
                               </button>
@@ -491,17 +491,17 @@ export default function AccountAddresses() {
                         )
                     )
                   ) : (
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm flex flex-col justify-center items-center border-2 border-dashed border-[#e0e0e0] dark:border-[#304a6e] h-full min-h-40 col-span-2">
-                      <div className="text-center text-[#5c5c5c] dark:text-[#a8b2d1]">
+                    <div className="bg-white p-6 rounded-xl shadow-sm flex flex-col justify-center items-center border-2 border-dashed border-[#e0e0e0] h-full min-h-40 col-span-2">
+                      <div className="text-center text-[#5c5c5c]">
                         No addresses saved yet
                       </div>
                     </div>
                   )}
                   {addingAddress ? (
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
                       <div className="space-y-4">
                         <div>
-                          <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                          <label className="block text-sm font-medium text-[#0a192f] mb-2">
                             Address Type
                           </label>
                           <select
@@ -512,14 +512,14 @@ export default function AccountAddresses() {
                                 type: e.target.value,
                               }))
                             }
-                            className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                            className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                           >
                             <option value="Shipping">Shipping</option>
                             <option value="Billing">Billing</option>
                           </select>
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                          <label className="block text-sm font-medium text-[#0a192f] mb-2">
                             Full Name
                           </label>
                           <input
@@ -531,11 +531,11 @@ export default function AccountAddresses() {
                                 name: e.target.value,
                               }))
                             }
-                            className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                            className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                          <label className="block text-sm font-medium text-[#0a192f] mb-2">
                             Street Address
                           </label>
                           <input
@@ -547,12 +547,12 @@ export default function AccountAddresses() {
                                 street: e.target.value,
                               }))
                             }
-                            className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                            className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                           />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                            <label className="block text-sm font-medium text-[#0a192f] mb-2">
                               City
                             </label>
                             <input
@@ -564,11 +564,11 @@ export default function AccountAddresses() {
                                   city: e.target.value,
                                 }))
                               }
-                              className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                              className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                            <label className="block text-sm font-medium text-[#0a192f] mb-2">
                               State
                             </label>
                             <input
@@ -580,13 +580,13 @@ export default function AccountAddresses() {
                                   state: e.target.value,
                                 }))
                               }
-                              className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                              className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                             />
                           </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                            <label className="block text-sm font-medium text-[#0a192f] mb-2">
                               ZIP Code
                             </label>
                             <input
@@ -598,11 +598,11 @@ export default function AccountAddresses() {
                                   zipCode: e.target.value,
                                 }))
                               }
-                              className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                              className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                            <label className="block text-sm font-medium text-[#0a192f] mb-2">
                               Country
                             </label>
                             <input
@@ -614,7 +614,7 @@ export default function AccountAddresses() {
                                   country: e.target.value,
                                 }))
                               }
-                              className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                              className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                             />
                           </div>
                         </div>
@@ -628,7 +628,7 @@ export default function AccountAddresses() {
                           </button>
                           <button
                             onClick={handleCancelAddressEdit}
-                            className="flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 border border-[#e0e0e0] dark:border-[#304a6e] text-[#5c5c5c] dark:text-[#a8b2d1] text-sm font-bold leading-normal hover:bg-[#f5f5f5] dark:hover:bg-[#1a2332] transition-colors"
+                            className="flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 border border-[#e0e0e0] text-[#5c5c5c] text-sm font-bold leading-normal hover:bg-[#f5f5f5] transition-colors"
                           >
                             Cancel
                           </button>
@@ -636,10 +636,10 @@ export default function AccountAddresses() {
                       </div>
                     </div>
                   ) : (
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm flex flex-col justify-center items-center border-2 border-dashed border-[#e0e0e0] dark:border-[#304a6e] h-full min-h-40">
+                    <div className="bg-white p-6 rounded-xl shadow-sm flex flex-col justify-center items-center border-2 border-dashed border-[#e0e0e0] h-full min-h-40">
                       <button
                         onClick={handleAddAddress}
-                        className="flex flex-col items-center gap-2 text-[#5c5c5c] dark:text-[#a8b2d1] hover:text-primary dark:hover:text-primary transition-colors"
+                        className="flex flex-col items-center gap-2 text-[#5c5c5c] hover:text-primary transition-colors"
                       >
                         <span className="material-symbols-outlined text-4xl">
                           add_circle
@@ -659,3 +659,6 @@ export default function AccountAddresses() {
     </ProtectedRoute>
   );
 }
+
+
+

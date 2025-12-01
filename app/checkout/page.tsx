@@ -1044,7 +1044,7 @@ export default function CheckoutPage() {
                       onChange={(e) =>
                         handleShippingChange("fullName", e.target.value)
                       }
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                      className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                       placeholder="John Doe"
                       required
                     />
@@ -1060,7 +1060,7 @@ export default function CheckoutPage() {
                         onChange={(e) =>
                           handleShippingChange("email", e.target.value)
                         }
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                        className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                         placeholder="john@example.com"
                         required
                       />
@@ -1075,7 +1075,7 @@ export default function CheckoutPage() {
                         onChange={(e) =>
                           handleShippingChange("phone", e.target.value)
                         }
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                        className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                         placeholder="+1 (555) 000-0000"
                         required
                       />
@@ -1091,7 +1091,7 @@ export default function CheckoutPage() {
                       onChange={(e) =>
                         handleShippingChange("address", e.target.value)
                       }
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                      className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                       placeholder="123 Main St, Apt 4B"
                       required
                     />
@@ -1107,7 +1107,7 @@ export default function CheckoutPage() {
                         onChange={(e) =>
                           handleShippingChange("city", e.target.value)
                         }
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                        className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                         placeholder="New York"
                         required
                       />
@@ -1122,7 +1122,7 @@ export default function CheckoutPage() {
                         onChange={(e) =>
                           handleShippingChange("state", e.target.value)
                         }
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                        className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                         placeholder="NY"
                         required
                       />
@@ -1137,7 +1137,7 @@ export default function CheckoutPage() {
                         onChange={(e) =>
                           handleShippingChange("zipCode", e.target.value)
                         }
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                        className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                         placeholder="10001"
                         required
                       />
@@ -1153,7 +1153,7 @@ export default function CheckoutPage() {
                       onChange={(e) =>
                         handleShippingChange("country", e.target.value)
                       }
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                      className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                       required
                     />
                   </div>
@@ -1173,7 +1173,7 @@ export default function CheckoutPage() {
                       onChange={(e) =>
                         handleBillingChange("sameAsShipping", e.target.checked)
                       }
-                      className="w-4 h-4 rounded border-white/20 bg-white/10 text-primary focus:ring-primary"
+                      className="w-4 h-4 rounded border-white/20 bg-[#1a2332]/10 text-primary focus:ring-primary"
                     />
                     <span>Same as shipping address</span>
                   </label>
@@ -1190,7 +1190,7 @@ export default function CheckoutPage() {
                         onChange={(e) =>
                           handleBillingChange("fullName", e.target.value)
                         }
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                        className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                         placeholder="John Doe"
                         required
                       />
@@ -1206,7 +1206,7 @@ export default function CheckoutPage() {
                           onChange={(e) =>
                             handleBillingChange("email", e.target.value)
                           }
-                          className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                          className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                           placeholder="john@example.com"
                           required
                         />
@@ -1221,7 +1221,7 @@ export default function CheckoutPage() {
                           onChange={(e) =>
                             handleBillingChange("phone", e.target.value)
                           }
-                          className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                          className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                           placeholder="+1 (555) 000-0000"
                           required
                         />
@@ -1237,7 +1237,7 @@ export default function CheckoutPage() {
                         onChange={(e) =>
                           handleBillingChange("address", e.target.value)
                         }
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                        className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                         placeholder="123 Main St, Apt 4B"
                         required
                       />
@@ -1253,7 +1253,7 @@ export default function CheckoutPage() {
                           onChange={(e) =>
                             handleBillingChange("city", e.target.value)
                           }
-                          className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                          className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                           placeholder="New York"
                           required
                         />
@@ -1268,7 +1268,7 @@ export default function CheckoutPage() {
                           onChange={(e) =>
                             handleBillingChange("state", e.target.value)
                           }
-                          className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                          className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                           placeholder="NY"
                           required
                         />
@@ -1283,7 +1283,7 @@ export default function CheckoutPage() {
                           onChange={(e) =>
                             handleBillingChange("zipCode", e.target.value)
                           }
-                          className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                          className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                           placeholder="10001"
                           required
                         />
@@ -1299,7 +1299,7 @@ export default function CheckoutPage() {
                         onChange={(e) =>
                           handleBillingChange("country", e.target.value)
                         }
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                        className="w-full bg-[#1a2332]/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                         required
                       />
                     </div>
@@ -1313,7 +1313,7 @@ export default function CheckoutPage() {
                   Payment Method
                 </h2>
                 <div className="space-y-3">
-                  <label className="flex items-center gap-3 p-4 bg-white/5 rounded-lg cursor-pointer hover:bg-white/10 transition-colors">
+                  <label className="flex items-center gap-3 p-4 bg-[#1a2332]/5 rounded-lg cursor-pointer hover:bg-white/10 transition-colors">
                     <input
                       type="radio"
                       name="payment"
@@ -1326,7 +1326,7 @@ export default function CheckoutPage() {
                       Credit/Debit Card
                     </span>
                   </label>
-                  <label className="flex items-center gap-3 p-4 bg-white/5 rounded-lg cursor-pointer hover:bg-white/10 transition-colors">
+                  <label className="flex items-center gap-3 p-4 bg-[#1a2332]/5 rounded-lg cursor-pointer hover:bg-white/10 transition-colors">
                     <input
                       type="radio"
                       name="payment"
@@ -1337,7 +1337,7 @@ export default function CheckoutPage() {
                     />
                     <span className="text-white font-medium">PayPal</span>
                   </label>
-                  <label className="flex items-center gap-3 p-4 bg-white/5 rounded-lg cursor-pointer hover:bg-white/10 transition-colors">
+                  <label className="flex items-center gap-3 p-4 bg-[#1a2332]/5 rounded-lg cursor-pointer hover:bg-white/10 transition-colors">
                     <input
                       type="radio"
                       name="payment"
@@ -1350,7 +1350,7 @@ export default function CheckoutPage() {
                       Bank Transfer
                     </span>
                   </label>
-                  <label className="flex items-center gap-3 p-4 bg-white/5 rounded-lg cursor-pointer hover:bg-white/10 transition-colors">
+                  <label className="flex items-center gap-3 p-4 bg-[#1a2332]/5 rounded-lg cursor-pointer hover:bg-white/10 transition-colors">
                     <input
                       type="radio"
                       name="payment"
@@ -1544,8 +1544,8 @@ export default function CheckoutPage() {
                         disabled={isDisabled}
                         className={`p-4 rounded-lg border-2 transition-all ${
                           isDisabled
-                            ? "border-white/20 bg-white/5 opacity-50 cursor-not-allowed"
-                            : "border-white/20 bg-white/5 hover:border-primary hover:bg-white/10 cursor-pointer"
+                            ? "border-white/20 bg-[#1a2332]/5 opacity-50 cursor-not-allowed"
+                            : "border-white/20 bg-[#1a2332]/5 hover:border-primary hover:bg-white/10 cursor-pointer"
                         }`}
                       >
                         <div className="text-center">
@@ -1726,7 +1726,7 @@ export default function CheckoutPage() {
             {/* QR Code and Payment Address */}
             <div className="text-center mb-6">
               <div className="bg-white/10 p-4 rounded-lg border border-white/20 inline-block mb-4">
-                <div className="w-48 h-48 mx-auto bg-white/5 flex items-center justify-center rounded-lg">
+                <div className="w-48 h-48 mx-auto bg-[#1a2332]/5 flex items-center justify-center rounded-lg">
                   <img
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${paymentDetails.pay_address}`}
                     alt="Payment QR Code"
@@ -1766,7 +1766,7 @@ export default function CheckoutPage() {
             <div className="flex gap-4">
               <button
                 onClick={handleCryptoCancellation}
-                className="flex-1 px-4 py-3 bg-white/10 border border-white/20 text-white rounded-lg hover:bg-white/20"
+                className="flex-1 px-4 py-3 bg-[#1a2332]/10 border border-white/20 text-white rounded-lg hover:bg-white/20"
               >
                 Cancel Payment
               </button>
@@ -1788,3 +1788,5 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+

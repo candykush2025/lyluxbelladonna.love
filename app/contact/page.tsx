@@ -58,21 +58,21 @@ export default function ContactPage() {
                   <label className="block text-white mb-2">Name</label>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 rounded-lg bg-white/10 text-white border border-white/20 focus:border-primary outline-none"
+                    className="w-full px-4 py-3 rounded-lg bg-[#1a2332]/10 text-white border border-white/20 focus:border-primary outline-none"
                   />
                 </div>
                 <div>
                   <label className="block text-white mb-2">Email</label>
                   <input
                     type="email"
-                    className="w-full px-4 py-3 rounded-lg bg-white/10 text-white border border-white/20 focus:border-primary outline-none"
+                    className="w-full px-4 py-3 rounded-lg bg-[#1a2332]/10 text-white border border-white/20 focus:border-primary outline-none"
                   />
                 </div>
                 <div>
                   <label className="block text-white mb-2">Message</label>
                   <textarea
                     rows={4}
-                    className="w-full px-4 py-3 rounded-lg bg-white/10 text-white border border-white/20 focus:border-primary outline-none"
+                    className="w-full px-4 py-3 rounded-lg bg-[#1a2332]/10 text-white border border-white/20 focus:border-primary outline-none"
                   ></textarea>
                 </div>
                 <button
@@ -90,3 +90,5 @@ export default function ContactPage() {
     </div>
   );
 }
+
+

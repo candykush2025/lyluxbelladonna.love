@@ -87,14 +87,14 @@ export default function Header() {
           </nav>
           <div className="flex gap-2">
             <CurrencySelector />
-            <button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-white/10 text-white hover:bg-white/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+            <button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-[#1a2332]/10 text-white hover:bg-white/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
               <span className="material-symbols-outlined text-xl">search</span>
             </button>
             {user ? (
               <>
                 <Link
                   href="/wishlist"
-                  className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-white/10 text-white hover:bg-white/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+                  className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-[#1a2332]/10 text-white hover:bg-white/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
                   title="Wishlist"
                 >
                   <span className="material-symbols-outlined text-xl">
@@ -103,7 +103,7 @@ export default function Header() {
                 </Link>
                 <Link
                   href="/account"
-                  className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-white/10 text-white hover:bg-white/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+                  className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-[#1a2332]/10 text-white hover:bg-white/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
                   title="My Profile"
                 >
                   <span className="material-symbols-outlined text-xl">
@@ -112,7 +112,7 @@ export default function Header() {
                 </Link>
                 <Link
                   href="/cart"
-                  className="relative flex max-w-[480px] cursor-pointer items-center justify-center rounded-full h-10 bg-white/10 text-white hover:bg-white/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+                  className="relative flex max-w-[480px] cursor-pointer items-center justify-center rounded-full h-10 bg-[#1a2332]/10 text-white hover:bg-white/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
                 >
                   <span className="material-symbols-outlined text-xl">
                     shopping_bag
@@ -139,7 +139,7 @@ export default function Header() {
               <>
                 <Link
                   href="/login"
-                  className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-white/10 text-white hover:bg-white/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+                  className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-[#1a2332]/10 text-white hover:bg-white/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
                   title="Login"
                 >
                   <span className="material-symbols-outlined text-xl">
@@ -148,7 +148,7 @@ export default function Header() {
                 </Link>
                 <Link
                   href="/cart"
-                  className="relative flex max-w-[480px] cursor-pointer items-center justify-center rounded-full h-10 bg-white/10 text-white hover:bg-white/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+                  className="relative flex max-w-[480px] cursor-pointer items-center justify-center rounded-full h-10 bg-[#1a2332]/10 text-white hover:bg-white/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
                 >
                   <span className="material-symbols-outlined text-xl">
                     shopping_bag
@@ -166,7 +166,7 @@ export default function Header() {
         <button
           ref={hamburgerButtonRef}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="lg:hidden flex items-center justify-center rounded-full h-10 w-10 bg-white/10 text-white hover:bg-white/20 transition-colors"
+          className="lg:hidden flex items-center justify-center rounded-full h-10 w-10 bg-[#1a2332]/10 text-white hover:bg-white/20 transition-colors"
         >
           <span className="material-symbols-outlined text-2xl">
             {isMobileMenuOpen ? "close" : "menu"}
@@ -234,7 +234,7 @@ export default function Header() {
 
             {/* User Actions */}
             <div className="flex flex-col gap-2 pt-4 border-t border-white/20">
-              <button className="flex items-center justify-start gap-3 rounded-lg h-12 bg-white/10 text-white hover:bg-white/20 active:bg-white/30 transition-all duration-200 px-4 text-lg font-medium">
+              <button className="flex items-center justify-start gap-3 rounded-lg h-12 bg-[#1a2332]/10 text-white hover:bg-white/20 active:bg-white/30 transition-all duration-200 px-4 text-lg font-medium">
                 <span className="material-symbols-outlined text-xl">
                   search
                 </span>
@@ -245,7 +245,7 @@ export default function Header() {
                 <>
                   <Link
                     href="/wishlist"
-                    className="flex items-center justify-start gap-3 rounded-lg h-12 bg-white/10 text-white hover:bg-white/20 active:bg-white/30 transition-all duration-200 px-4 text-lg font-medium"
+                    className="flex items-center justify-start gap-3 rounded-lg h-12 bg-[#1a2332]/10 text-white hover:bg-white/20 active:bg-white/30 transition-all duration-200 px-4 text-lg font-medium"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <span className="material-symbols-outlined text-xl">
@@ -255,7 +255,7 @@ export default function Header() {
                   </Link>
                   <Link
                     href="/account"
-                    className="flex items-center justify-start gap-3 rounded-lg h-12 bg-white/10 text-white hover:bg-white/20 active:bg-white/30 transition-all duration-200 px-4 text-lg font-medium"
+                    className="flex items-center justify-start gap-3 rounded-lg h-12 bg-[#1a2332]/10 text-white hover:bg-white/20 active:bg-white/30 transition-all duration-200 px-4 text-lg font-medium"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <span className="material-symbols-outlined text-xl">
@@ -265,7 +265,7 @@ export default function Header() {
                   </Link>
                   <Link
                     href="/cart"
-                    className="flex items-center justify-start gap-3 rounded-lg h-12 bg-white/10 text-white hover:bg-white/20 active:bg-white/30 transition-all duration-200 px-4 text-lg font-medium relative"
+                    className="flex items-center justify-start gap-3 rounded-lg h-12 bg-[#1a2332]/10 text-white hover:bg-white/20 active:bg-white/30 transition-all duration-200 px-4 text-lg font-medium relative"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <span className="material-symbols-outlined text-xl">
@@ -295,7 +295,7 @@ export default function Header() {
                 <>
                   <Link
                     href="/login"
-                    className="flex items-center justify-start gap-3 rounded-lg h-12 bg-white/10 text-white hover:bg-white/20 active:bg-white/30 transition-all duration-200 px-4 text-lg font-medium"
+                    className="flex items-center justify-start gap-3 rounded-lg h-12 bg-[#1a2332]/10 text-white hover:bg-white/20 active:bg-white/30 transition-all duration-200 px-4 text-lg font-medium"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <span className="material-symbols-outlined text-xl">
@@ -305,7 +305,7 @@ export default function Header() {
                   </Link>
                   <Link
                     href="/cart"
-                    className="flex items-center justify-start gap-3 rounded-lg h-12 bg-white/10 text-white hover:bg-white/20 active:bg-white/30 transition-all duration-200 px-4 text-lg font-medium relative"
+                    className="flex items-center justify-start gap-3 rounded-lg h-12 bg-[#1a2332]/10 text-white hover:bg-white/20 active:bg-white/30 transition-all duration-200 px-4 text-lg font-medium relative"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <span className="material-symbols-outlined text-xl">
@@ -327,3 +327,5 @@ export default function Header() {
     </header>
   );
 }
+
+

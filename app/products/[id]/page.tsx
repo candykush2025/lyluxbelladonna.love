@@ -340,7 +340,7 @@ export default function ProductDetail({
   }
 
   return (
-    <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden bg-[#F8F8F8] dark:bg-[#0A192F]">
+    <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden bg-background-dark">
       <Header />
       <main className="px-4 sm:px-10 lg:px-20 py-10 flex flex-1 justify-center">
         <div className="layout-content-container flex flex-col w-full max-w-7xl">
@@ -499,7 +499,7 @@ export default function ProductDetail({
                           style={{
                             backgroundImage: option.image
                               ? `url("${option.image}")`
-                              : "linear-gradient(45deg, #f3f4f6 25%, transparent 25%), linear-gradient(-45deg, #f3f4f6 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f3f4f6 75%), linear-gradient(-45deg, transparent 75%, #f3f4f6 75%)",
+                              : "linear-gradient(45deg, #374151 25%, transparent 25%), linear-gradient(-45deg, #374151 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #374151 75%), linear-gradient(-45deg, transparent 75%, #374151 75%)",
                             backgroundSize: option.image
                               ? "cover"
                               : "20px 20px",
@@ -536,8 +536,8 @@ export default function ProductDetail({
 
                           {/* Option name overlay for non-image variants */}
                           {!option.image && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-white/90 rounded-lg">
-                              <span className="text-navy text-sm font-medium">
+                            <div className="absolute inset-0 flex items-center justify-center bg-[#1a2332]/95 rounded-lg">
+                              <span className="text-gold text-sm font-medium">
                                 {option.name}
                               </span>
                             </div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -20,10 +20,16 @@ import {
   getCustomers,
   getBrands,
   createBrand,
+  updateBrand,
+  deleteBrand,
   getHomepageContent,
   updateHomepageContent,
   getCurrencyRates,
   updateCurrencyRates,
+  getVariantTemplates,
+  createVariantTemplate,
+  deleteVariantTemplate,
+  VariantTemplate,
 } from "@/lib/firestore";
 import { uploadImages, deleteImages } from "@/lib/storage";
 
@@ -355,14 +361,10 @@ function DashboardOverview({
   }, []);
 
   const getStatusColor = (status: string, paymentStatus: string) => {
-    if (paymentStatus === "paid")
-      return "bg-green-900/20 text-green-400";
-    if (status === "processing")
-      return "bg-blue-900/20 text-blue-400";
-    if (status === "shipped")
-      return "bg-purple-900/20 text-purple-400";
-    if (status === "completed")
-      return "bg-green-900/20 text-green-400";
+    if (paymentStatus === "paid") return "bg-green-900/20 text-green-400";
+    if (status === "processing") return "bg-blue-900/20 text-blue-400";
+    if (status === "shipped") return "bg-purple-900/20 text-purple-400";
+    if (status === "completed") return "bg-green-900/20 text-green-400";
     return "bg-yellow-900/20 text-yellow-400";
   };
 
@@ -390,10 +392,7 @@ function DashboardOverview({
           <div className="h-6 bg-gray-700 rounded w-32 mb-4"></div>
           <div className="space-y-3">
             {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="h-12 bg-gray-700 rounded"
-              ></div>
+              <div key={i} className="h-12 bg-gray-700 rounded"></div>
             ))}
           </div>
         </div>
@@ -408,9 +407,7 @@ function DashboardOverview({
         <div className="bg-[#1a2332] rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-400">
-                Total Revenue
-              </p>
+              <p className="text-sm text-gray-400">Total Revenue</p>
               <p className="text-2xl font-bold text-white mt-1">
                 {formatPrice(stats.totalRevenue)}
               </p>
@@ -421,17 +418,13 @@ function DashboardOverview({
               </span>
             </div>
           </div>
-          <p className="text-xs text-green-400 mt-2">
-            From completed orders
-          </p>
+          <p className="text-xs text-green-400 mt-2">From completed orders</p>
         </div>
 
         <div className="bg-[#1a2332] rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-400">
-                Total Orders
-              </p>
+              <p className="text-sm text-gray-400">Total Orders</p>
               <p className="text-2xl font-bold text-white mt-1">
                 {stats.totalOrders}
               </p>
@@ -442,17 +435,13 @@ function DashboardOverview({
               </span>
             </div>
           </div>
-          <p className="text-xs text-blue-400 mt-2">
-            All time orders
-          </p>
+          <p className="text-xs text-blue-400 mt-2">All time orders</p>
         </div>
 
         <div className="bg-[#1a2332] rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-400">
-                Total Customers
-              </p>
+              <p className="text-sm text-gray-400">Total Customers</p>
               <p className="text-2xl font-bold text-white mt-1">
                 {stats.totalCustomers}
               </p>
@@ -463,17 +452,13 @@ function DashboardOverview({
               </span>
             </div>
           </div>
-          <p className="text-xs text-purple-400 mt-2">
-            Registered users
-          </p>
+          <p className="text-xs text-purple-400 mt-2">Registered users</p>
         </div>
 
         <div className="bg-[#1a2332] rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-400">
-                Products
-              </p>
+              <p className="text-sm text-gray-400">Products</p>
               <p className="text-2xl font-bold text-white mt-1">
                 {stats.totalProducts}
               </p>
@@ -484,9 +469,7 @@ function DashboardOverview({
               </span>
             </div>
           </div>
-          <p className="text-xs text-gray-400 mt-2">
-            Active listings
-          </p>
+          <p className="text-xs text-gray-400 mt-2">Active listings</p>
         </div>
 
         <Link
@@ -495,9 +478,7 @@ function DashboardOverview({
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-400">
-                Reviews
-              </p>
+              <p className="text-sm text-gray-400">Reviews</p>
               <p className="text-2xl font-bold text-white mt-1">
                 {stats.totalReviews}
               </p>
@@ -508,9 +489,7 @@ function DashboardOverview({
               </span>
             </div>
           </div>
-          <p className="text-xs text-gray-400 mt-2">
-            Manage customer reviews
-          </p>
+          <p className="text-xs text-gray-400 mt-2">Manage customer reviews</p>
         </Link>
 
         <Link
@@ -519,12 +498,8 @@ function DashboardOverview({
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-400">
-                Inventory
-              </p>
-              <p className="text-2xl font-bold text-white mt-1">
-                Manage Stock
-              </p>
+              <p className="text-sm text-gray-400">Inventory</p>
+              <p className="text-2xl font-bold text-white mt-1">Manage Stock</p>
             </div>
             <div className="w-12 h-12 bg-indigo-900/20 rounded-full flex items-center justify-center">
               <span className="material-symbols-outlined text-indigo-400">
@@ -543,12 +518,8 @@ function DashboardOverview({
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-400">
-                Analytics
-              </p>
-              <p className="text-2xl font-bold text-white mt-1">
-                View Reports
-              </p>
+              <p className="text-sm text-gray-400">Analytics</p>
+              <p className="text-2xl font-bold text-white mt-1">View Reports</p>
             </div>
             <div className="w-12 h-12 bg-teal-900/20 rounded-full flex items-center justify-center">
               <span className="material-symbols-outlined text-teal-400">
@@ -564,9 +535,7 @@ function DashboardOverview({
 
       {/* Recent Orders */}
       <div className="bg-[#1a2332] rounded-lg shadow-sm p-6">
-        <h2 className="text-lg font-semibold text-white mb-4">
-          Recent Orders
-        </h2>
+        <h2 className="text-lg font-semibold text-white mb-4">Recent Orders</h2>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="border-b border-white/10">
@@ -591,10 +560,7 @@ function DashboardOverview({
             <tbody>
               {recentOrders.length > 0 ? (
                 recentOrders.map((order: any) => (
-                  <tr
-                    key={order.id}
-                    className="border-b border-white/5"
-                  >
+                  <tr key={order.id} className="border-b border-white/5">
                     <td className="py-3 px-4 text-sm text-white">
                       #{order.orderNumber || order.id.slice(-8)}
                     </td>
@@ -692,10 +658,24 @@ function ProductsManagement({
     [key: string]: string[];
   }>({});
 
+  // Variant Templates state
+  const [variantTemplates, setVariantTemplates] = useState<VariantTemplate[]>(
+    []
+  );
+  const [showVariantTemplateDropdown, setShowVariantTemplateDropdown] =
+    useState(false);
+  const [showSaveTemplateModal, setShowSaveTemplateModal] = useState(false);
+  const [saveTemplateVariantIndex, setSaveTemplateVariantIndex] = useState<
+    number | null
+  >(null);
+  const [newTemplateName, setNewTemplateName] = useState("");
+
   // Brand state
   const [brands, setBrands] = useState<any[]>([]);
   const [showNewBrandForm, setShowNewBrandForm] = useState(false);
   const [showBrandDropdown, setShowBrandDropdown] = useState(false);
+  const [savingBrand, setSavingBrand] = useState(false);
+  const [editingBrand, setEditingBrand] = useState<any>(null);
   const [newBrandData, setNewBrandData] = useState({
     name: "",
     logo: null as File | null,
@@ -711,6 +691,7 @@ function ProductsManagement({
     fetchProducts();
     fetchBrands();
     fetchCategories();
+    fetchVariantTemplates();
   }, []);
 
   useEffect(() => {
@@ -727,6 +708,15 @@ function ProductsManagement({
       setError("Failed to load products");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchVariantTemplates = async () => {
+    try {
+      const templates = await getVariantTemplates();
+      setVariantTemplates(templates);
+    } catch (err) {
+      console.error("Error fetching variant templates:", err);
     }
   };
 
@@ -962,6 +952,89 @@ function ProductsManagement({
     });
   };
 
+  // Variant Template management functions
+  const applyVariantTemplate = (template: VariantTemplate) => {
+    // Create a new variant from the template
+    const newVariant = {
+      id: `variant-${Date.now()}`,
+      name: template.name,
+      options: template.options.map((opt, idx) => ({
+        id: `option-${Date.now()}-${idx}`,
+        name: opt.name,
+        price: opt.price,
+        image: "", // Images are not copied from template
+      })),
+    };
+    setVariants([...variants, newVariant]);
+    setShowVariantTemplateDropdown(false);
+    addToast(`Applied variant template: ${template.name}`, "success");
+  };
+
+  const openSaveTemplateModal = (variantIndex: number) => {
+    setSaveTemplateVariantIndex(variantIndex);
+    setNewTemplateName(variants[variantIndex]?.name || "");
+    setShowSaveTemplateModal(true);
+  };
+
+  const saveVariantAsTemplate = async () => {
+    if (saveTemplateVariantIndex === null) return;
+
+    const variant = variants[saveTemplateVariantIndex];
+    if (!variant || !newTemplateName.trim()) {
+      addToast("Please enter a template name", "error");
+      return;
+    }
+
+    if (!variant.options || variant.options.length === 0) {
+      addToast("Variant must have at least one option", "error");
+      return;
+    }
+
+    try {
+      const templateData = {
+        name: newTemplateName.trim(),
+        options: variant.options.map((opt: any) => ({
+          id: `option-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          name: opt.name,
+          price: opt.price || 0,
+        })),
+      };
+
+      await createVariantTemplate(templateData);
+      await fetchVariantTemplates();
+
+      setShowSaveTemplateModal(false);
+      setSaveTemplateVariantIndex(null);
+      setNewTemplateName("");
+      addToast(`Variant saved as template: ${templateData.name}`, "success");
+    } catch (err) {
+      console.error("Error saving variant template:", err);
+      addToast("Failed to save variant template", "error");
+    }
+  };
+
+  const handleDeleteTemplate = async (
+    templateId: string,
+    templateName: string
+  ) => {
+    if (
+      !confirm(
+        `Are you sure you want to delete the template "${templateName}"?`
+      )
+    ) {
+      return;
+    }
+
+    try {
+      await deleteVariantTemplate(templateId);
+      await fetchVariantTemplates();
+      addToast(`Template deleted: ${templateName}`, "success");
+    } catch (err) {
+      console.error("Error deleting variant template:", err);
+      addToast("Failed to delete template", "error");
+    }
+  };
+
   // Brand management functions
   const fetchBrands = async () => {
     try {
@@ -994,6 +1067,9 @@ function ProductsManagement({
       return;
     }
 
+    if (savingBrand) return; // Prevent double-click
+    setSavingBrand(true);
+
     try {
       let logoUrl = "";
       if (newBrandData.logo) {
@@ -1021,7 +1097,105 @@ function ProductsManagement({
     } catch (err) {
       console.error("Error creating brand:", err);
       addToast("Failed to create brand. Please try again.", "error");
+    } finally {
+      setSavingBrand(false);
     }
+  };
+
+  // Update existing brand
+  const handleUpdateBrand = async () => {
+    if (!editingBrand || !newBrandData.name.trim()) {
+      addToast("Please enter a brand name", "error");
+      return;
+    }
+
+    if (savingBrand) return;
+    setSavingBrand(true);
+
+    try {
+      let logoUrl = editingBrand.logo || "";
+      if (newBrandData.logo) {
+        // Upload new logo
+        const uploadedUrls = await uploadImages(
+          [newBrandData.logo],
+          `brands/${Date.now()}`
+        );
+        logoUrl = uploadedUrls[0];
+        // Delete old logo if exists
+        if (editingBrand.logo) {
+          try {
+            await deleteImages([editingBrand.logo]);
+          } catch (err) {
+            console.error("Error deleting old brand logo:", err);
+          }
+        }
+      }
+
+      await updateBrand(editingBrand.id, {
+        name: newBrandData.name,
+        logo: logoUrl,
+        updatedAt: new Date(),
+      });
+
+      setBrands((prev) =>
+        prev.map((b) =>
+          b.id === editingBrand.id
+            ? { ...b, name: newBrandData.name, logo: logoUrl }
+            : b
+        )
+      );
+      setShowNewBrandForm(false);
+      setEditingBrand(null);
+      setNewBrandData({ name: "", logo: null, logoPreview: "" });
+      addToast("Brand updated successfully!", "success");
+    } catch (err) {
+      console.error("Error updating brand:", err);
+      addToast("Failed to update brand. Please try again.", "error");
+    } finally {
+      setSavingBrand(false);
+    }
+  };
+
+  // Delete brand
+  const handleDeleteBrand = async (brandId: string, brandLogo?: string) => {
+    if (!confirm("Are you sure you want to delete this brand?")) return;
+
+    try {
+      await deleteBrand(brandId);
+      
+      // Delete logo from storage if exists
+      if (brandLogo) {
+        try {
+          await deleteImages([brandLogo]);
+        } catch (err) {
+          console.error("Error deleting brand logo:", err);
+        }
+      }
+
+      setBrands((prev) => prev.filter((b) => b.id !== brandId));
+      
+      // If the deleted brand was selected, clear selection
+      if (formData.brand === brandId) {
+        setFormData((prev) => ({ ...prev, brand: "" }));
+      }
+      
+      addToast("Brand deleted successfully!", "success");
+    } catch (err) {
+      console.error("Error deleting brand:", err);
+      addToast("Failed to delete brand. Please try again.", "error");
+    }
+  };
+
+  // Start editing a brand
+  const startEditBrand = (brand: any) => {
+    setEditingBrand(brand);
+    setNewBrandData({
+      name: brand.name,
+      logo: null,
+      logoPreview: brand.logo || "",
+    });
+    setShowBrandDropdown(false);
+    setShowNewBrandForm(true);
   };
 
   // Category management functions
@@ -1195,9 +1369,7 @@ function ProductsManagement({
     <div className="space-y-6">
       {/* Filters and Search */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-xl font-semibold text-white">
-          Product Management
-        </h2>
+        <h2 className="text-xl font-semibold text-white">Product Management</h2>
         <button
           onClick={() => openModal("create")}
           className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white font-medium rounded-lg hover:bg-opacity-90 transition-colors"
@@ -1251,9 +1423,7 @@ function ProductsManagement({
           <span className="material-symbols-outlined text-6xl text-gray-400 mb-4">
             inventory_2
           </span>
-          <p className="text-gray-400 text-xl mb-4">
-            No products found
-          </p>
+          <p className="text-gray-400 text-xl mb-4">No products found</p>
           <button
             onClick={() => openModal("create")}
             className="px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-opacity-90 transition-colors"
@@ -1414,7 +1584,7 @@ function ProductsManagement({
           <div className="flex min-h-screen items-center justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             {/* Backdrop */}
             <div
-              className="fixed inset-0 bg-gray-500/75 transition-opacity"
+              className="fixed inset-0 bg-[#0f1825]0/75 transition-opacity"
               onClick={closeModal}
             ></div>
 
@@ -1591,22 +1761,51 @@ function ProductsManagement({
                             {brands.map((brand) => (
                               <div
                                 key={brand.id}
-                                className="px-4 py-2 hover:bg-[#0f1825] cursor-pointer text-white flex items-center gap-3"
-                                onClick={() => {
-                                  setFormData({ ...formData, brand: brand.id });
-                                  setShowBrandDropdown(false);
-                                }}
+                                className="px-4 py-2 hover:bg-[#0f1825] text-white flex items-center gap-3 group"
                               >
-                                {brand.logo && (
-                                  <Image
-                                    src={brand.logo}
-                                    alt={brand.name}
-                                    width={24}
-                                    height={24}
-                                    className="object-contain rounded"
-                                  />
-                                )}
-                                <span>{brand.name}</span>
+                                <div
+                                  className="flex-1 flex items-center gap-3 cursor-pointer"
+                                  onClick={() => {
+                                    setFormData({ ...formData, brand: brand.id });
+                                    setShowBrandDropdown(false);
+                                  }}
+                                >
+                                  {brand.logo && (
+                                    <Image
+                                      src={brand.logo}
+                                      alt={brand.name}
+                                      width={24}
+                                      height={24}
+                                      className="object-contain rounded"
+                                    />
+                                  )}
+                                  <span>{brand.name}</span>
+                                </div>
+                                {/* Edit/Delete buttons */}
+                                <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      startEditBrand(brand);
+                                    }}
+                                    className="p-1 hover:bg-blue-500/20 rounded text-blue-400 hover:text-blue-300"
+                                    title="Edit brand"
+                                  >
+                                    <span className="material-symbols-outlined text-sm">edit</span>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleDeleteBrand(brand.id, brand.logo);
+                                    }}
+                                    className="p-1 hover:bg-red-500/20 rounded text-red-400 hover:text-red-300"
+                                    title="Delete brand"
+                                  >
+                                    <span className="material-symbols-outlined text-sm">delete</span>
+                                  </button>
+                                </div>
                               </div>
                             ))}
                             <div className="border-t border-gray-600">
@@ -1614,6 +1813,8 @@ function ProductsManagement({
                                 className="px-4 py-2 hover:bg-[#0f1825] cursor-pointer text-primary flex items-center gap-2"
                                 onClick={() => {
                                   setShowBrandDropdown(false);
+                                  setEditingBrand(null);
+                                  setNewBrandData({ name: "", logo: null, logoPreview: "" });
                                   setShowNewBrandForm(true);
                                 }}
                               >
@@ -1631,7 +1832,7 @@ function ProductsManagement({
                       {showNewBrandForm && (
                         <div className="border border-gray-600 rounded-lg p-4 bg-[#0f1825]">
                           <h4 className="text-lg font-medium text-white mb-4">
-                            Create New Brand
+                            {editingBrand ? "Edit Brand" : "Create New Brand"}
                           </h4>
                           <div className="space-y-4">
                             <div>
@@ -1649,7 +1850,8 @@ function ProductsManagement({
                                 }
                                 placeholder="Enter brand name"
                                 required
-                                className="w-full px-4 py-2 bg-[#0f1825] border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                                disabled={savingBrand}
+                                className="w-full px-4 py-2 bg-[#0f1825] border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
                               />
                             </div>
                             <div>
@@ -1666,9 +1868,9 @@ function ProductsManagement({
                                     className="object-contain rounded"
                                   />
                                 )}
-                                <label className="flex items-center justify-center px-4 py-2 border-2 border-dashed border-gray-600 rounded-lg cursor-pointer hover:border-primary transition-colors">
+                                <label className={`flex items-center justify-center px-4 py-2 border-2 border-dashed border-gray-600 rounded-lg cursor-pointer hover:border-primary transition-colors ${savingBrand ? "opacity-50 pointer-events-none" : ""}`}>
                                   <span className="text-sm text-gray-400">
-                                    {newBrandData.logo
+                                    {newBrandData.logo || newBrandData.logoPreview
                                       ? "Change logo"
                                       : "Upload logo"}
                                   </span>
@@ -1677,6 +1879,7 @@ function ProductsManagement({
                                     accept="image/*"
                                     onChange={handleBrandLogoSelect}
                                     className="hidden"
+                                    disabled={savingBrand}
                                   />
                                 </label>
                               </div>
@@ -1684,22 +1887,30 @@ function ProductsManagement({
                             <div className="flex gap-2">
                               <button
                                 type="button"
-                                onClick={createNewBrand}
-                                className="px-4 py-2 bg-primary text-white text-sm font-medium rounded hover:bg-opacity-90 transition-colors"
+                                onClick={editingBrand ? handleUpdateBrand : createNewBrand}
+                                disabled={savingBrand}
+                                className="px-4 py-2 bg-primary text-white text-sm font-medium rounded hover:bg-opacity-90 transition-colors disabled:opacity-50 flex items-center gap-2"
                               >
-                                Create Brand
+                                {savingBrand && (
+                                  <span className="material-symbols-outlined animate-spin text-sm">progress_activity</span>
+                                )}
+                                {savingBrand
+                                  ? (editingBrand ? "Updating..." : "Creating...")
+                                  : (editingBrand ? "Update Brand" : "Create Brand")}
                               </button>
                               <button
                                 type="button"
                                 onClick={() => {
                                   setShowNewBrandForm(false);
+                                  setEditingBrand(null);
                                   setNewBrandData({
                                     name: "",
                                     logo: null,
                                     logoPreview: "",
                                   });
                                 }}
-                                className="px-4 py-2 bg-gray-500 text-white text-sm font-medium rounded hover:bg-gray-600 transition-colors"
+                                disabled={savingBrand}
+                                className="px-4 py-2 bg-gray-700 text-white text-sm font-medium rounded hover:bg-gray-600 transition-colors disabled:opacity-50"
                               >
                                 Cancel
                               </button>
@@ -1832,16 +2043,96 @@ function ProductsManagement({
                           <h4 className="text-lg font-medium text-white">
                             Product Variants
                           </h4>
-                          <button
-                            type="button"
-                            onClick={addVariant}
-                            className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-opacity-90 transition-colors"
-                          >
-                            <span className="material-symbols-outlined text-sm mr-1">
-                              add
-                            </span>
-                            Add Variant
-                          </button>
+                          <div className="flex items-center gap-2">
+                            {/* Use Saved Template Dropdown */}
+                            <div className="relative">
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setShowVariantTemplateDropdown(
+                                    !showVariantTemplateDropdown
+                                  )
+                                }
+                                className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-1"
+                              >
+                                <span className="material-symbols-outlined text-sm">
+                                  content_paste
+                                </span>
+                                Use Template
+                              </button>
+                              {showVariantTemplateDropdown && (
+                                <div className="absolute right-0 mt-2 w-72 bg-[#1a2332] border border-gray-600 rounded-lg shadow-xl z-50">
+                                  <div className="p-3 border-b border-gray-600">
+                                    <h5 className="text-sm font-medium text-white">
+                                      Saved Variant Templates
+                                    </h5>
+                                  </div>
+                                  <div className="max-h-64 overflow-y-auto">
+                                    {variantTemplates.length === 0 ? (
+                                      <div className="p-4 text-center text-gray-400 text-sm">
+                                        No saved templates yet.
+                                        <br />
+                                        Save a variant to create a template.
+                                      </div>
+                                    ) : (
+                                      variantTemplates.map((template) => (
+                                        <div
+                                          key={template.id}
+                                          className="flex items-center justify-between p-3 hover:bg-[#0f1825] border-b border-gray-700 last:border-b-0"
+                                        >
+                                          <button
+                                            type="button"
+                                            onClick={() =>
+                                              applyVariantTemplate(template)
+                                            }
+                                            className="flex-1 text-left"
+                                          >
+                                            <div className="text-white font-medium text-sm">
+                                              {template.name}
+                                            </div>
+                                            <div className="text-gray-400 text-xs">
+                                              {template.options.length} option
+                                              {template.options.length !== 1
+                                                ? "s"
+                                                : ""}{" "}
+                                              •{" "}
+                                              {template.options
+                                                .map((o) => o.name)
+                                                .join(", ")}
+                                            </div>
+                                          </button>
+                                          <button
+                                            type="button"
+                                            onClick={() =>
+                                              handleDeleteTemplate(
+                                                template.id!,
+                                                template.name
+                                              )
+                                            }
+                                            className="p-1 text-red-400 hover:text-red-300 hover:bg-red-900/20 rounded transition-colors ml-2"
+                                          >
+                                            <span className="material-symbols-outlined text-sm">
+                                              delete
+                                            </span>
+                                          </button>
+                                        </div>
+                                      ))
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                            <button
+                              type="button"
+                              onClick={addVariant}
+                              className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-opacity-90 transition-colors"
+                            >
+                              <span className="material-symbols-outlined text-sm mr-1">
+                                add
+                              </span>
+                              Add Variant
+                            </button>
+                          </div>
                         </div>
 
                         {variants.length === 0 ? (
@@ -1850,8 +2141,8 @@ function ProductsManagement({
                               inventory_2
                             </span>
                             <p>
-                              No variants added yet. Click "Add Variant" to get
-                              started.
+                              No variants added yet. Click "Add Variant" or use
+                              a saved template to get started.
                             </p>
                           </div>
                         ) : (
@@ -1881,6 +2172,19 @@ function ProductsManagement({
                                       className="w-full px-4 py-2 bg-[#0f1825] border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary"
                                     />
                                   </div>
+                                  {/* Save as Template Button */}
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      openSaveTemplateModal(variantIndex)
+                                    }
+                                    className="p-2 text-blue-400 hover:bg-blue-900/20 rounded-lg transition-colors mr-2"
+                                    title="Save as Template"
+                                  >
+                                    <span className="material-symbols-outlined">
+                                      save
+                                    </span>
+                                  </button>
                                   <button
                                     type="button"
                                     onClick={() => removeVariant(variantIndex)}
@@ -2284,6 +2588,84 @@ function ProductsManagement({
           </div>
         </div>
       )}
+
+      {/* Save Variant Template Modal */}
+      {showSaveTemplateModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[60]">
+          <div className="bg-[#1a2332] rounded-xl shadow-2xl w-full max-w-md mx-4">
+            <div className="px-6 py-4 border-b border-gray-700 flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-white">
+                Save as Template
+              </h3>
+              <button
+                onClick={() => {
+                  setShowSaveTemplateModal(false);
+                  setSaveTemplateVariantIndex(null);
+                  setNewTemplateName("");
+                }}
+                className="p-1 text-gray-400 hover:text-white transition-colors"
+              >
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+            <div className="p-6">
+              <p className="text-gray-400 text-sm mb-4">
+                Save this variant configuration as a reusable template. You can
+                apply it to other products later.
+              </p>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Template Name *
+                </label>
+                <input
+                  type="text"
+                  value={newTemplateName}
+                  onChange={(e) => setNewTemplateName(e.target.value)}
+                  placeholder="e.g., Clothing Sizes, Color Options"
+                  className="w-full px-4 py-2 bg-[#0f1825] border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+              {saveTemplateVariantIndex !== null &&
+                variants[saveTemplateVariantIndex] && (
+                  <div className="mb-4 p-3 bg-[#0f1825] rounded-lg">
+                    <div className="text-sm text-gray-300 mb-2">Preview:</div>
+                    <div className="text-white font-medium">
+                      {variants[saveTemplateVariantIndex].name ||
+                        "Unnamed Variant"}
+                    </div>
+                    <div className="text-gray-400 text-xs mt-1">
+                      Options:{" "}
+                      {variants[saveTemplateVariantIndex].options
+                        ?.map((o: any) => o.name)
+                        .filter(Boolean)
+                        .join(", ") || "None"}
+                    </div>
+                  </div>
+                )}
+            </div>
+            <div className="px-6 py-4 border-t border-gray-700 flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowSaveTemplateModal(false);
+                  setSaveTemplateVariantIndex(null);
+                  setNewTemplateName("");
+                }}
+                className="px-6 py-2 text-gray-300 bg-[#0f1825] hover:bg-[#1a2332] rounded-lg font-medium transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={saveVariantAsTemplate}
+                className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Save Template
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -2356,9 +2738,7 @@ function OrdersManagement({
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-xl font-semibold text-white">
-          Order Management
-        </h2>
+        <h2 className="text-xl font-semibold text-white">Order Management</h2>
       </div>
 
       {error && (
@@ -2408,10 +2788,7 @@ function OrdersManagement({
                 </tr>
               ) : orders.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={8}
-                    className="py-8 text-center text-gray-400"
-                  >
+                  <td colSpan={8} className="py-8 text-center text-gray-400">
                     No orders found
                   </td>
                 </tr>
@@ -2499,9 +2876,7 @@ function OrdersManagement({
             <span className="material-symbols-outlined text-6xl text-gray-400 mb-4">
               shopping_bag
             </span>
-            <p className="text-gray-400 text-xl mb-4">
-              No orders found
-            </p>
+            <p className="text-gray-400 text-xl mb-4">No orders found</p>
           </div>
         ) : (
           orders.map((order) => (
@@ -2511,9 +2886,7 @@ function OrdersManagement({
             >
               <div className="flex justify-between items-start mb-3">
                 <div>
-                  <p className="text-xs text-gray-400">
-                    Order ID
-                  </p>
+                  <p className="text-xs text-gray-400">Order ID</p>
                   <p className="text-sm font-medium text-white">
                     #{order.orderNumber || order.id.substring(0, 8)}
                   </p>
@@ -2544,25 +2917,17 @@ function OrdersManagement({
               </div>
               <div className="space-y-2 mb-3">
                 <div>
-                  <p className="text-xs text-gray-400">
-                    Customer
-                  </p>
-                  <p className="text-sm text-white">
-                    {order.email || "N/A"}
-                  </p>
+                  <p className="text-xs text-gray-400">Customer</p>
+                  <p className="text-sm text-white">{order.email || "N/A"}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400">
-                    Product
-                  </p>
+                  <p className="text-xs text-gray-400">Product</p>
                   <p className="text-sm text-gray-300">
                     {order.items?.[0]?.name || "N/A"}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400">
-                    Payment Status
-                  </p>
+                  <p className="text-xs text-gray-400">Payment Status</p>
                   <span
                     className={`px-2 py-1 text-xs font-medium rounded-lg border ${getPaymentStatusColor(
                       order.paymentStatus || "pending"
@@ -2577,17 +2942,13 @@ function OrdersManagement({
               </div>
               <div className="flex justify-between items-center pt-3 border-t border-white/10">
                 <div>
-                  <p className="text-xs text-gray-400">
-                    Amount
-                  </p>
+                  <p className="text-xs text-gray-400">Amount</p>
                   <p className="text-sm font-medium text-white">
                     {formatPrice(order.total || 0)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400">
-                    Date
-                  </p>
+                  <p className="text-xs text-gray-400">Date</p>
                   <p className="text-sm text-gray-300">
                     {formatDate(order.createdAt)}
                   </p>
@@ -2724,10 +3085,7 @@ function CustomersManagement({
                 </tr>
               ) : customers.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={7}
-                    className="py-8 text-center text-gray-400"
-                  >
+                  <td colSpan={7} className="py-8 text-center text-gray-400">
                     No customers found
                   </td>
                 </tr>
@@ -2808,9 +3166,7 @@ function CustomersManagement({
             <span className="material-symbols-outlined text-6xl text-gray-400 mb-4">
               group
             </span>
-            <p className="text-gray-400 text-xl mb-4">
-              No customers found
-            </p>
+            <p className="text-gray-400 text-xl mb-4">No customers found</p>
           </div>
         ) : (
           customers.map((customer) => {
@@ -2846,25 +3202,19 @@ function CustomersManagement({
                 </div>
                 <div className="grid grid-cols-3 gap-3 mb-3 text-sm">
                   <div>
-                    <p className="text-xs text-gray-400">
-                      Orders
-                    </p>
+                    <p className="text-xs text-gray-400">Orders</p>
                     <p className="text-white font-medium">
                       {stats?.orderCount || 0}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400">
-                      Spent
-                    </p>
+                    <p className="text-xs text-gray-400">Spent</p>
                     <p className="text-white font-medium">
                       {formatPrice(stats?.totalSpent || 0)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400">
-                      Joined
-                    </p>
+                    <p className="text-xs text-gray-400">Joined</p>
                     <p className="text-white font-medium">
                       {formatDate(customer.createdAt)}
                     </p>
@@ -3001,9 +3351,7 @@ function ReviewsManagement() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div className="bg-[#1a2332] p-4 rounded-lg">
             <p className="text-gray-600 text-sm">Total</p>
-            <p className="text-white text-2xl font-bold">
-              {reviews.length}
-            </p>
+            <p className="text-white text-2xl font-bold">{reviews.length}</p>
           </div>
           <div className="bg-[#1a2332] p-4 rounded-lg">
             <p className="text-gray-600 text-sm">Pending</p>
@@ -3036,9 +3384,7 @@ function ReviewsManagement() {
           <span className="material-symbols-outlined text-6xl text-gray-400 mb-4">
             rate_review
           </span>
-          <p className="text-gray-400 text-xl">
-            No reviews found
-          </p>
+          <p className="text-gray-400 text-xl">No reviews found</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -3082,9 +3428,7 @@ function ReviewsManagement() {
                       </div>
                     </div>
                   </div>
-                  <p className="text-gray-300 mb-3">
-                    {review.comment}
-                  </p>
+                  <p className="text-gray-300 mb-3">{review.comment}</p>
                   <div className="flex items-center gap-4 text-xs text-gray-400">
                     <span>Product ID: {review.productId}</span>
                     <span
@@ -3360,9 +3704,7 @@ function HomepageManagement() {
 
       {/* Hero Section */}
       <div className="bg-[#1a2332] rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">
-          Hero Section
-        </h3>
+        <h3 className="text-lg font-semibold text-white mb-4">Hero Section</h3>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">
@@ -3525,9 +3867,7 @@ function HomepageManagement() {
 
       {/* Craft Section */}
       <div className="bg-[#1a2332] rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">
-          Craft Section
-        </h3>
+        <h3 className="text-lg font-semibold text-white mb-4">Craft Section</h3>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">
@@ -4030,9 +4370,7 @@ function CurrencyManagement() {
                   {rate.code}
                 </div>
                 <div className="text-white">{rate.name}</div>
-                <div className="text-white font-mono">
-                  {rate.symbol}
-                </div>
+                <div className="text-white font-mono">{rate.symbol}</div>
                 <div>
                   <input
                     type="number"
@@ -4193,13 +4531,3 @@ function CurrencyManagement() {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-

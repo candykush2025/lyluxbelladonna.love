@@ -189,7 +189,7 @@ export default function CartPage() {
                               onClick={() =>
                                 handleQuantityChange(item, item.quantity, -1)
                               }
-                              className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 text-white"
+                              className="w-8 h-8 rounded-full bg-[#1a2332]/10 flex items-center justify-center hover:bg-white/20 text-white"
                             >
                               -
                             </button>
@@ -200,7 +200,7 @@ export default function CartPage() {
                               onClick={() =>
                                 handleQuantityChange(item, item.quantity, 1)
                               }
-                              className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 text-white"
+                              className="w-8 h-8 rounded-full bg-[#1a2332]/10 flex items-center justify-center hover:bg-white/20 text-white"
                             >
                               +
                             </button>
@@ -263,3 +263,5 @@ export default function CartPage() {
     </div>
   );
 }
+
+

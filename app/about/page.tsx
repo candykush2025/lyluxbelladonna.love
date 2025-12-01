@@ -35,10 +35,10 @@ export default function AboutPage() {
               {/* Founder's Vision */}
               <section className="py-16 sm:py-24 px-6 md:px-10 lg:px-20 max-w-5xl mx-auto">
                 <div className="text-center">
-                  <h2 className="font-serif text-4xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+                  <h2 className="font-serif text-4xl font-bold leading-tight tracking-tight text-gray-900">
                     The Founder&apos;s Vision
                   </h2>
-                  <p className="mt-4 text-base leading-relaxed text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
+                  <p className="mt-4 text-base leading-relaxed text-gray-700 max-w-3xl mx-auto">
                     Lylux Belladonna was born from a singular vision: to create
                     pieces that are not just worn, but experienced. Our founder
                     envisioned a world where fashion transcends trends,
@@ -51,10 +51,10 @@ export default function AboutPage() {
               {/* Heritage Timeline */}
               <section className="py-16 sm:py-24 px-6 md:px-10 lg:px-20 max-w-7xl mx-auto">
                 <div className="text-center mb-12">
-                  <h2 className="font-serif text-4xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+                  <h2 className="font-serif text-4xl font-bold leading-tight tracking-tight text-gray-900">
                     Our Heritage
                   </h2>
-                  <p className="mt-4 text-base leading-relaxed text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
+                  <p className="mt-4 text-base leading-relaxed text-gray-700 max-w-3xl mx-auto">
                     A journey through time, marked by innovation, dedication,
                     and an unwavering commitment to beauty.
                   </p>
@@ -64,28 +64,28 @@ export default function AboutPage() {
                   <div className="absolute left-4 top-0 h-full w-px bg-primary/30 md:hidden"></div>
 
                   <div className="relative pl-12 md:pl-0 md:col-start-1 text-left md:text-right md:pr-10">
-                    <div className="absolute left-4 md:left-auto md:right-[-10px] top-1 h-5 w-5 rounded-full bg-primary ring-4 ring-background-light dark:ring-background-dark"></div>
+                    <div className="absolute left-4 md:left-auto md:right-[-10px] top-1 h-5 w-5 rounded-full bg-primary ring-4 ring-background-light"></div>
                     <h3 className="text-primary font-bold text-xl font-serif">
                       1982
                     </h3>
-                    <p className="mt-2 text-gray-700 dark:text-gray-300">
+                    <p className="mt-2 text-gray-700">
                       The Dream Begins
                     </p>
-                    <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">
+                    <p className="text-sm mt-1 text-gray-600">
                       Our founder opens the first atelier in a small, Parisian
                       studio, laying the foundation for a new era of luxury.
                     </p>
                   </div>
 
                   <div className="relative pl-12 md:pl-0 md:col-start-2 text-left md:pl-10 md:mt-24">
-                    <div className="absolute left-4 md:left-[-10px] top-1 h-5 w-5 rounded-full bg-primary ring-4 ring-background-light dark:ring-background-dark"></div>
+                    <div className="absolute left-4 md:left-[-10px] top-1 h-5 w-5 rounded-full bg-primary ring-4 ring-background-light"></div>
                     <h3 className="text-primary font-bold text-xl font-serif">
                       1995
                     </h3>
-                    <p className="mt-2 text-gray-700 dark:text-gray-300">
+                    <p className="mt-2 text-gray-700">
                       Global Recognition
                     </p>
-                    <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">
+                    <p className="text-sm mt-1 text-gray-600">
                       Lylux Belladonna graces the international stage,
                       celebrated for its innovative designs and impeccable
                       quality.
@@ -93,14 +93,14 @@ export default function AboutPage() {
                   </div>
 
                   <div className="relative pl-12 md:pl-0 md:col-start-3 text-left md:text-right md:pr-10 md:mt-8">
-                    <div className="absolute left-4 md:left-auto md:right-[-10px] top-1 h-5 w-5 rounded-full bg-primary ring-4 ring-background-light dark:ring-background-dark"></div>
+                    <div className="absolute left-4 md:left-auto md:right-[-10px] top-1 h-5 w-5 rounded-full bg-primary ring-4 ring-background-light"></div>
                     <h3 className="text-primary font-bold text-xl font-serif">
                       2010
                     </h3>
-                    <p className="mt-2 text-gray-700 dark:text-gray-300">
+                    <p className="mt-2 text-gray-700">
                       A Sustainable Pledge
                     </p>
-                    <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">
+                    <p className="text-sm mt-1 text-gray-600">
                       We pioneer sustainable practices in luxury fashion,
                       committing to ethical sourcing and environmental
                       stewardship.
@@ -108,14 +108,14 @@ export default function AboutPage() {
                   </div>
 
                   <div className="relative pl-12 md:pl-0 md:col-start-4 text-left md:pl-10 md:mt-32">
-                    <div className="absolute left-4 md:left-[-10px] top-1 h-5 w-5 rounded-full bg-primary ring-4 ring-background-light dark:ring-background-dark"></div>
+                    <div className="absolute left-4 md:left-[-10px] top-1 h-5 w-5 rounded-full bg-primary ring-4 ring-background-light"></div>
                     <h3 className="text-primary font-bold text-xl font-serif">
                       Today
                     </h3>
-                    <p className="mt-2 text-gray-700 dark:text-gray-300">
+                    <p className="mt-2 text-gray-700">
                       The Future of Elegance
                     </p>
-                    <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">
+                    <p className="text-sm mt-1 text-gray-600">
                       Continuing to innovate while honoring our heritage, we
                       redefine what it means to wear art.
                     </p>
@@ -167,7 +167,7 @@ export default function AboutPage() {
               {/* Quote */}
               <section className="py-16 sm:py-24 px-6 md:px-10 lg:px-20 max-w-5xl mx-auto">
                 <div className="text-center">
-                  <p className="font-serif text-3xl md:text-4xl text-gray-800 dark:text-gray-200 leading-snug">
+                  <p className="font-serif text-3xl md:text-4xl text-gray-800 leading-snug">
                     &quot;Fashion is not something that exists in dresses only.
                     Fashion is in the sky, in the street; fashion has to do with
                     ideas, the way we live, what is happening.&quot;
@@ -181,10 +181,10 @@ export default function AboutPage() {
               {/* Philosophy */}
               <section className="py-16 sm:py-24 px-6 md:px-10 lg:px-20 max-w-7xl mx-auto">
                 <div className="text-center mb-12">
-                  <h2 className="font-serif text-4xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+                  <h2 className="font-serif text-4xl font-bold leading-tight tracking-tight text-gray-900">
                     Our Philosophy
                   </h2>
-                  <p className="mt-4 text-base leading-relaxed text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
+                  <p className="mt-4 text-base leading-relaxed text-gray-700 max-w-3xl mx-auto">
                     The pillars that define our identity and guide our craft.
                   </p>
                 </div>
@@ -195,10 +195,10 @@ export default function AboutPage() {
                         diamond
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                    <h3 className="text-xl font-bold text-gray-900">
                       Unmatched Craftsmanship
                     </h3>
-                    <p className="mt-2 text-gray-600 dark:text-gray-400">
+                    <p className="mt-2 text-gray-600">
                       Every piece is a testament to the skill of our artisans,
                       blending traditional techniques with contemporary design.
                     </p>
@@ -209,10 +209,10 @@ export default function AboutPage() {
                         eco
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                    <h3 className="text-xl font-bold text-gray-900">
                       Conscious Luxury
                     </h3>
-                    <p className="mt-2 text-gray-600 dark:text-gray-400">
+                    <p className="mt-2 text-gray-600">
                       We are committed to sustainability, from ethically sourced
                       materials to mindful production processes.
                     </p>
@@ -223,10 +223,10 @@ export default function AboutPage() {
                         auto_awesome
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                    <h3 className="text-xl font-bold text-gray-900">
                       Timeless Innovation
                     </h3>
-                    <p className="mt-2 text-gray-600 dark:text-gray-400">
+                    <p className="mt-2 text-gray-600">
                       We create designs that transcend seasons, celebrating
                       enduring style and forward-thinking creativity.
                     </p>
@@ -238,10 +238,10 @@ export default function AboutPage() {
               <section className="py-16 sm:py-24 px-6 md:px-10 lg:px-20 text-center">
                 <div className="flex flex-col gap-6 items-center">
                   <div className="flex flex-col gap-2">
-                    <h2 className="font-serif text-4xl font-bold text-gray-900 dark:text-white">
+                    <h2 className="font-serif text-4xl font-bold text-gray-900">
                       Explore Our World
                     </h2>
-                    <p className="text-base text-gray-700 dark:text-gray-300">
+                    <p className="text-base text-gray-700">
                       Continue the journey and discover the collections that
                       define our legacy.
                     </p>
@@ -262,3 +262,5 @@ export default function AboutPage() {
     </div>
   );
 }
+
+

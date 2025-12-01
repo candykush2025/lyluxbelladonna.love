@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import Header from "@/components/Header";
@@ -187,7 +187,7 @@ export default function ProductsPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search products..."
-                  className="w-full px-4 py-3 pl-12 rounded-lg bg-white/5 border border-white/20 text-cream placeholder-cream/50 focus:outline-none focus:border-gold transition-colors"
+                  className="w-full px-4 py-3 pl-12 rounded-lg bg-[#1a2332]/5 border border-white/20 text-cream placeholder-cream/50 focus:outline-none focus:border-gold transition-colors"
                 />
                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-cream/50">
                   search
@@ -227,7 +227,7 @@ export default function ProductsPage() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setShowFilters(!showFilters)}
-                    className="flex items-center gap-2 cursor-pointer rounded-lg h-10 px-4 text-cream bg-white/5 hover:bg-white/10 transition-colors text-sm font-bold relative"
+                    className="flex items-center gap-2 cursor-pointer rounded-lg h-10 px-4 text-cream bg-[#1a2332]/5 hover:bg-white/10 transition-colors text-sm font-bold relative"
                   >
                     <span className="material-symbols-outlined text-base">
                       filter_list
@@ -247,12 +247,12 @@ export default function ProductsPage() {
                       Clear all
                     </button>
                   )}
-                  <div className="flex gap-1 p-1 rounded-lg bg-white/5">
+                  <div className="flex gap-1 p-1 rounded-lg bg-[#1a2332]/5">
                     <button
                       onClick={() => setViewMode("grid")}
                       className={`p-1.5 rounded-md ${
                         viewMode === "grid"
-                          ? "text-cream bg-white/10"
+                          ? "text-cream bg-[#1a2332]/10"
                           : "text-cream/70 hover:text-cream"
                       }`}
                     >
@@ -264,7 +264,7 @@ export default function ProductsPage() {
                       onClick={() => setViewMode("list")}
                       className={`p-1.5 rounded-md ${
                         viewMode === "list"
-                          ? "text-cream bg-white/10"
+                          ? "text-cream bg-[#1a2332]/10"
                           : "text-cream/70 hover:text-cream"
                       }`}
                     >
@@ -377,19 +377,19 @@ export default function ProductsPage() {
                       <div className="flex gap-2">
                         <button
                           onClick={() => setPriceRange([0, 500])}
-                          className="px-3 py-1.5 rounded-lg bg-white/10 text-cream hover:bg-white/20 text-xs"
+                          className="px-3 py-1.5 rounded-lg bg-[#1a2332]/10 text-cream hover:bg-white/20 text-xs"
                         >
                           Under $500
                         </button>
                         <button
                           onClick={() => setPriceRange([500, 1500])}
-                          className="px-3 py-1.5 rounded-lg bg-white/10 text-cream hover:bg-white/20 text-xs"
+                          className="px-3 py-1.5 rounded-lg bg-[#1a2332]/10 text-cream hover:bg-white/20 text-xs"
                         >
                           $500 - $1500
                         </button>
                         <button
                           onClick={() => setPriceRange([1500, 10000])}
-                          className="px-3 py-1.5 rounded-lg bg-white/10 text-cream hover:bg-white/20 text-xs"
+                          className="px-3 py-1.5 rounded-lg bg-[#1a2332]/10 text-cream hover:bg-white/20 text-xs"
                         >
                           Over $1500
                         </button>
@@ -539,7 +539,7 @@ export default function ProductsPage() {
                     <Link
                       key={product.id}
                       href={`/products/${product.id}`}
-                      className="group relative bg-cover bg-center flex flex-col rounded-lg justify-end aspect-[3/4] overflow-hidden cursor-pointer"
+                      className="group relative bg-contain bg-center bg-no-repeat flex flex-col rounded-lg justify-end aspect-[3/4] overflow-hidden cursor-pointer bg-[#1a2332]"
                       style={{
                         backgroundImage: `url("${product.images[0]}")`,
                       }}
@@ -583,3 +583,5 @@ export default function ProductsPage() {
     </div>
   );
 }
+
+

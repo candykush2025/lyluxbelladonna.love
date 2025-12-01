@@ -441,7 +441,7 @@ export default function ProfilePage() {
                           }
                           placeholder="e.g., Home, Work, Billing"
                           required
-                          className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
+                          className="w-full px-4 py-3 rounded-lg bg-[#1a2332]/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
                         />
                       </div>
                       <div>
@@ -458,7 +458,7 @@ export default function ProfilePage() {
                             })
                           }
                           required
-                          className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
+                          className="w-full px-4 py-3 rounded-lg bg-[#1a2332]/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
                         />
                       </div>
                       <div>
@@ -475,7 +475,7 @@ export default function ProfilePage() {
                             })
                           }
                           required
-                          className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
+                          className="w-full px-4 py-3 rounded-lg bg-[#1a2332]/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-4">
@@ -493,7 +493,7 @@ export default function ProfilePage() {
                               })
                             }
                             required
-                            className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
+                            className="w-full px-4 py-3 rounded-lg bg-[#1a2332]/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
                           />
                         </div>
                         <div>
@@ -510,7 +510,7 @@ export default function ProfilePage() {
                               })
                             }
                             required
-                            className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
+                            className="w-full px-4 py-3 rounded-lg bg-[#1a2332]/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
                           />
                         </div>
                       </div>
@@ -529,7 +529,7 @@ export default function ProfilePage() {
                               })
                             }
                             required
-                            className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
+                            className="w-full px-4 py-3 rounded-lg bg-[#1a2332]/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
                           />
                         </div>
                         <div>
@@ -546,7 +546,7 @@ export default function ProfilePage() {
                               })
                             }
                             required
-                            className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
+                            className="w-full px-4 py-3 rounded-lg bg-[#1a2332]/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
                           />
                         </div>
                       </div>
@@ -564,7 +564,7 @@ export default function ProfilePage() {
                             })
                           }
                           required
-                          className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
+                          className="w-full px-4 py-3 rounded-lg bg-[#1a2332]/10 border border-white/20 text-cream focus:outline-none focus:border-gold"
                         />
                       </div>
                       <div>
@@ -599,7 +599,7 @@ export default function ProfilePage() {
                             setShowAddressForm(false);
                             setEditingAddress(null);
                           }}
-                          className="px-6 py-3 rounded-lg bg-white/10 text-cream hover:bg-white/20 font-medium"
+                          className="px-6 py-3 rounded-lg bg-[#1a2332]/10 text-cream hover:bg-white/20 font-medium"
                         >
                           Cancel
                         </button>
@@ -677,3 +677,5 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+

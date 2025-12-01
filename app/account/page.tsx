@@ -289,10 +289,10 @@ export default function Account() {
   return (
     <ProtectedRoute>
       <div className="relative flex min-h-screen flex-col">
-        <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e0e0e0] dark:border-[#304a6e] px-6 md:px-10 py-3 sticky top-0 bg-[#f5f5dc]/80 dark:bg-[#0a192f]/80 backdrop-blur-sm z-50">
+        <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e0e0e0] px-6 md:px-10 py-3 sticky top-0 bg-[#f5f5dc]/80 backdrop-blur-sm z-50">
           <div className="flex items-center gap-8">
             <Link
-              className="flex items-center gap-4 text-[#0a192f] dark:text-[#f5f5dc]"
+              className="flex items-center gap-4 text-[#0a192f]"
               href="/"
             >
               <div className="size-6 text-primary">
@@ -316,31 +316,31 @@ export default function Account() {
                   </defs>
                 </svg>
               </div>
-              <h2 className="text-[#0a192f] dark:text-[#f5f5dc] text-lg font-bold leading-tight tracking-[-0.015em]">
+              <h2 className="text-[#0a192f] text-lg font-bold leading-tight tracking-[-0.015em]">
                 Lylux Belladonna
               </h2>
             </Link>
             <nav className="hidden md:flex items-center gap-9">
               <Link
-                className="text-[#0a192f] dark:text-[#f5f5dc] text-sm font-medium leading-normal hover:text-primary transition-colors"
+                className="text-[#0a192f] text-sm font-medium leading-normal hover:text-primary transition-colors"
                 href="/products"
               >
                 New Arrivals
               </Link>
               <Link
-                className="text-[#0a192f] dark:text-[#f5f5dc] text-sm font-medium leading-normal hover:text-primary transition-colors"
+                className="text-[#0a192f] text-sm font-medium leading-normal hover:text-primary transition-colors"
                 href="/products"
               >
                 Collections
               </Link>
               <Link
-                className="text-[#0a192f] dark:text-[#f5f5dc] text-sm font-medium leading-normal hover:text-primary transition-colors"
+                className="text-[#0a192f] text-sm font-medium leading-normal hover:text-primary transition-colors"
                 href="/products"
               >
                 Bags
               </Link>
               <Link
-                className="text-[#0a192f] dark:text-[#f5f5dc] text-sm font-medium leading-normal hover:text-primary transition-colors"
+                className="text-[#0a192f] text-sm font-medium leading-normal hover:text-primary transition-colors"
                 href="/products"
               >
                 Accessories
@@ -351,7 +351,7 @@ export default function Account() {
             <div className="hidden sm:flex gap-2">
               <Link
                 href="/cart"
-                className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0"
+                className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-[#1a2332] text-[#0a192f] hover:bg-primary/10 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0"
               >
                 <span className="material-symbols-outlined text-xl">
                   shopping_bag
@@ -359,14 +359,14 @@ export default function Account() {
               </Link>
               <Link
                 href="/wishlist"
-                className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0"
+                className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-[#1a2332] text-[#0a192f] hover:bg-primary/10 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0"
               >
                 <span className="material-symbols-outlined text-xl">
                   favorite
                 </span>
               </Link>
             </div>
-            <button className="flex md:hidden max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0">
+            <button className="flex md:hidden max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-[#1a2332] text-[#0a192f] hover:bg-primary/10 transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0">
               <span className="material-symbols-outlined">menu</span>
             </button>
             <div
@@ -378,14 +378,14 @@ export default function Account() {
           </div>
         </header>
         <div className="flex flex-1">
-          <aside className="w-64 min-h-full flex-col justify-between p-4 hidden lg:flex sticky top-[65px] self-start border-r border-[#e0e0e0] dark:border-[#304a6e]">
+          <aside className="w-64 min-h-full flex-col justify-between p-4 hidden lg:flex sticky top-[65px] self-start border-r border-[#e0e0e0]">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
                 <button
                   className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
                     activeTab === "dashboard"
-                      ? "bg-white dark:bg-[#172a46] text-primary"
-                      : "hover:bg-white/50 dark:hover:bg-[#172a46]/50"
+                      ? "bg-white text-primary"
+                      : "hover:bg-white/50"
                   }`}
                   onClick={() => setActiveTab("dashboard")}
                 >
@@ -399,8 +399,8 @@ export default function Account() {
                 <button
                   className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
                     activeTab === "orders"
-                      ? "bg-white dark:bg-[#172a46] text-primary"
-                      : "hover:bg-white/50 dark:hover:bg-[#172a46]/50"
+                      ? "bg-white text-primary"
+                      : "hover:bg-white/50"
                   }`}
                   onClick={() => setActiveTab("orders")}
                 >
@@ -414,8 +414,8 @@ export default function Account() {
                 <button
                   className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
                     activeTab === "details"
-                      ? "bg-white dark:bg-[#172a46] text-primary"
-                      : "hover:bg-white/50 dark:hover:bg-[#172a46]/50"
+                      ? "bg-white text-primary"
+                      : "hover:bg-white/50"
                   }`}
                   onClick={() => setActiveTab("details")}
                 >
@@ -429,8 +429,8 @@ export default function Account() {
                 <button
                   className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
                     activeTab === "addresses"
-                      ? "bg-white dark:bg-[#172a46] text-primary"
-                      : "hover:bg-white/50 dark:hover:bg-[#172a46]/50"
+                      ? "bg-white text-primary"
+                      : "hover:bg-white/50"
                   }`}
                   onClick={() => setActiveTab("addresses")}
                 >
@@ -446,7 +446,7 @@ export default function Account() {
             <div className="mt-8">
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/50 dark:hover:bg-[#172a46]/50 transition-colors w-full text-left"
+                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/50 transition-colors w-full text-left"
               >
                 <span className="material-symbols-outlined text-xl">
                   logout
@@ -455,12 +455,12 @@ export default function Account() {
               </button>
             </div>
           </aside>
-          <main className="flex-1 p-4 sm:p-6 lg:p-10 bg-[#f5f5dc] dark:bg-[#0a192f]">
+          <main className="flex-1 p-4 sm:p-6 lg:p-10 bg-[#f5f5dc]">
             <div className="max-w-5xl mx-auto">
               {activeTab === "dashboard" && (
                 <>
                   <div className="flex flex-wrap justify-between gap-3 p-4 mb-6">
-                    <h1 className="text-[#0a192f] dark:text-[#f5f5dc] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">
+                    <h1 className="text-[#0a192f] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">
                       Welcome back,{" "}
                       {userDetails?.displayName ||
                         userProfile?.displayName ||
@@ -470,7 +470,7 @@ export default function Account() {
 
                   {/* Account Summary Cards */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
                       <div className="flex items-center gap-4">
                         <div className="size-12 bg-primary/10 rounded-lg flex items-center justify-center">
                           <span className="material-symbols-outlined text-primary">
@@ -478,17 +478,17 @@ export default function Account() {
                           </span>
                         </div>
                         <div>
-                          <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm">
+                          <p className="text-[#5c5c5c] text-sm">
                             Total Orders
                           </p>
-                          <p className="text-[#0a192f] dark:text-[#f5f5dc] text-2xl font-bold">
+                          <p className="text-[#0a192f] text-2xl font-bold">
                             {orders.length}
                           </p>
                         </div>
                       </div>
                     </div>
 
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
                       <div className="flex items-center gap-4">
                         <div className="size-12 bg-primary/10 rounded-lg flex items-center justify-center">
                           <span className="material-symbols-outlined text-primary">
@@ -496,17 +496,17 @@ export default function Account() {
                           </span>
                         </div>
                         <div>
-                          <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm">
+                          <p className="text-[#5c5c5c] text-sm">
                             Saved Addresses
                           </p>
-                          <p className="text-[#0a192f] dark:text-[#f5f5dc] text-2xl font-bold">
+                          <p className="text-[#0a192f] text-2xl font-bold">
                             {userDetails?.profile?.addresses?.length || 0}
                           </p>
                         </div>
                       </div>
                     </div>
 
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
                       <div className="flex items-center gap-4">
                         <div className="size-12 bg-primary/10 rounded-lg flex items-center justify-center">
                           <span className="material-symbols-outlined text-primary">
@@ -514,10 +514,10 @@ export default function Account() {
                           </span>
                         </div>
                         <div>
-                          <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm">
+                          <p className="text-[#5c5c5c] text-sm">
                             Member Since
                           </p>
-                          <p className="text-[#0a192f] dark:text-[#f5f5dc] text-lg font-bold">
+                          <p className="text-[#0a192f] text-lg font-bold">
                             {user?.metadata?.creationTime
                               ? new Date(
                                   user.metadata.creationTime
@@ -532,7 +532,7 @@ export default function Account() {
                   {/* Recent Orders */}
                   <div className="mb-8">
                     <div className="flex items-center justify-between mb-6">
-                      <h2 className="text-[#0a192f] dark:text-[#f5f5dc] text-[22px] font-bold leading-tight tracking-[-0.015em]">
+                      <h2 className="text-[#0a192f] text-[22px] font-bold leading-tight tracking-[-0.015em]">
                         Recent Orders
                       </h2>
                       <button
@@ -544,18 +544,18 @@ export default function Account() {
                     </div>
 
                     {loading ? (
-                      <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
-                        <div className="text-center text-[#5c5c5c] dark:text-[#a8b2d1]">
+                      <div className="bg-white p-6 rounded-xl shadow-sm">
+                        <div className="text-center text-[#5c5c5c]">
                           Loading orders...
                         </div>
                       </div>
                     ) : error ? (
-                      <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
+                      <div className="bg-white p-6 rounded-xl shadow-sm">
                         <div className="text-center text-red-500">{error}</div>
                       </div>
                     ) : orders.length === 0 ? (
-                      <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
-                        <div className="text-center text-[#5c5c5c] dark:text-[#a8b2d1]">
+                      <div className="bg-white p-6 rounded-xl shadow-sm">
+                        <div className="text-center text-[#5c5c5c]">
                           No orders found
                         </div>
                       </div>
@@ -564,7 +564,7 @@ export default function Account() {
                         {orders.slice(0, 2).map((order: any) => (
                           <div
                             key={order.id}
-                            className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm"
+                            className="bg-white p-6 rounded-xl shadow-sm"
                           >
                             <div className="flex items-start gap-4">
                               <div
@@ -580,10 +580,10 @@ export default function Account() {
                                 <p className="text-primary text-sm font-medium leading-normal mb-1">
                                   {order.status || "Processing"}
                                 </p>
-                                <p className="text-[#0a192f] dark:text-[#f5f5dc] text-lg font-bold leading-tight mb-1">
+                                <p className="text-[#0a192f] text-lg font-bold leading-tight mb-1">
                                   {order.items?.[0]?.name || "Order Item"}
                                 </p>
-                                <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm font-normal leading-normal mb-3">
+                                <p className="text-[#5c5c5c] text-sm font-normal leading-normal mb-3">
                                   Order #{order.orderNumber || order.id}
                                 </p>
                                 <button className="text-primary text-sm font-bold hover:underline">
@@ -599,13 +599,13 @@ export default function Account() {
 
                   {/* Quick Actions */}
                   <div>
-                    <h2 className="text-[#0a192f] dark:text-[#f5f5dc] text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">
+                    <h2 className="text-[#0a192f] text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">
                       Quick Actions
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                       <Link
                         href="/account/details"
-                        className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow group"
+                        className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow group"
                       >
                         <div className="flex items-center gap-4 mb-4">
                           <div className="size-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -613,18 +613,18 @@ export default function Account() {
                               person
                             </span>
                           </div>
-                          <h3 className="text-[#0a192f] dark:text-[#f5f5dc] text-lg font-bold">
+                          <h3 className="text-[#0a192f] text-lg font-bold">
                             My Details
                           </h3>
                         </div>
-                        <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm">
+                        <p className="text-[#5c5c5c] text-sm">
                           Update your personal information and contact details
                         </p>
                       </Link>
 
                       <Link
                         href="/account/addresses"
-                        className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow group"
+                        className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow group"
                       >
                         <div className="flex items-center gap-4 mb-4">
                           <div className="size-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -632,18 +632,18 @@ export default function Account() {
                               location_on
                             </span>
                           </div>
-                          <h3 className="text-[#0a192f] dark:text-[#f5f5dc] text-lg font-bold">
+                          <h3 className="text-[#0a192f] text-lg font-bold">
                             Saved Addresses
                           </h3>
                         </div>
-                        <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm">
+                        <p className="text-[#5c5c5c] text-sm">
                           Manage your shipping and billing addresses
                         </p>
                       </Link>
 
                       <Link
                         href="/products"
-                        className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow group"
+                        className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow group"
                       >
                         <div className="flex items-center gap-4 mb-4">
                           <div className="size-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -651,11 +651,11 @@ export default function Account() {
                               shopping_bag
                             </span>
                           </div>
-                          <h3 className="text-[#0a192f] dark:text-[#f5f5dc] text-lg font-bold">
+                          <h3 className="text-[#0a192f] text-lg font-bold">
                             Continue Shopping
                           </h3>
                         </div>
-                        <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm">
+                        <p className="text-[#5c5c5c] text-sm">
                           Browse our latest collections and new arrivals
                         </p>
                       </Link>
@@ -667,24 +667,24 @@ export default function Account() {
               {activeTab === "orders" && (
                 <div>
                   <div className="flex flex-wrap justify-between gap-3 p-4 mb-6">
-                    <h1 className="text-[#0a192f] dark:text-[#f5f5dc] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">
+                    <h1 className="text-[#0a192f] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">
                       Order History
                     </h1>
                   </div>
 
                   {loading ? (
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
-                      <div className="text-center text-[#5c5c5c] dark:text-[#a8b2d1]">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
+                      <div className="text-center text-[#5c5c5c]">
                         Loading orders...
                       </div>
                     </div>
                   ) : error ? (
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
                       <div className="text-center text-red-500">{error}</div>
                     </div>
                   ) : orders.length === 0 ? (
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
-                      <div className="text-center text-[#5c5c5c] dark:text-[#a8b2d1]">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
+                      <div className="text-center text-[#5c5c5c]">
                         No orders found
                       </div>
                     </div>
@@ -693,7 +693,7 @@ export default function Account() {
                       {orders.map((order: any) => (
                         <div
                           key={order.id}
-                          className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm"
+                          className="bg-white p-6 rounded-xl shadow-sm"
                         >
                           <div className="flex flex-col sm:flex-row items-stretch justify-between gap-6">
                             <div
@@ -710,14 +710,14 @@ export default function Account() {
                                 <p className="text-primary text-sm font-medium leading-normal">
                                   {order.status || "Processing"}
                                 </p>
-                                <p className="text-[#0a192f] dark:text-[#f5f5dc] text-lg font-bold leading-tight">
+                                <p className="text-[#0a192f] text-lg font-bold leading-tight">
                                   {order.items?.[0]?.name || "Order Item"}
                                 </p>
-                                <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm font-normal leading-normal">
+                                <p className="text-[#5c5c5c] text-sm font-normal leading-normal">
                                   Order #{order.orderNumber || order.id}
                                 </p>
                                 {order.items && order.items.length > 1 && (
-                                  <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm font-normal leading-normal">
+                                  <p className="text-[#5c5c5c] text-sm font-normal leading-normal">
                                     +{order.items.length - 1} more item
                                     {order.items.length - 1 > 1 ? "s" : ""}
                                   </p>
@@ -743,7 +743,7 @@ export default function Account() {
                                 {/* View order button */}
                                 <Link
                                   href={`/order-confirmation/${order.id}`}
-                                  className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f5f5dc] dark:bg-[#304a6e] text-[#0a192f] dark:text-[#f5f5dc] text-sm font-bold leading-normal w-fit hover:bg-[#e8e8d1] dark:hover:bg-[#3a5a7e] transition-colors"
+                                  className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f5f5dc] text-[#0a192f] text-sm font-bold leading-normal w-fit hover:bg-[#e8e8d1] transition-colors"
                                 >
                                   <span>View Order</span>
                                 </Link>
@@ -760,28 +760,28 @@ export default function Account() {
               {activeTab === "details" && (
                 <div>
                   <div className="flex flex-wrap justify-between gap-3 p-4 mb-6">
-                    <h1 className="text-[#0a192f] dark:text-[#f5f5dc] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">
+                    <h1 className="text-[#0a192f] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">
                       My Details
                     </h1>
                   </div>
 
                   {loading ? (
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
-                      <div className="text-center text-[#5c5c5c] dark:text-[#a8b2d1]">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
+                      <div className="text-center text-[#5c5c5c]">
                         Loading user details...
                       </div>
                     </div>
                   ) : error ? (
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
                       <div className="text-center text-red-500">{error}</div>
                     </div>
                   ) : (
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
                       <div className="flex flex-col h-full justify-between">
                         {editingDetails ? (
                           <div className="space-y-4">
                             <div>
-                              <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                              <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                 Full Name
                               </label>
                               <input
@@ -793,11 +793,11 @@ export default function Account() {
                                     displayName: e.target.value,
                                   }))
                                 }
-                                className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                              <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                 Phone Number
                               </label>
                               <input
@@ -809,11 +809,11 @@ export default function Account() {
                                     phone: e.target.value,
                                   }))
                                 }
-                                className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                              <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                 Date of Birth
                               </label>
                               <input
@@ -825,11 +825,11 @@ export default function Account() {
                                     dateOfBirth: e.target.value,
                                   }))
                                 }
-                                className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                              <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                 Gender
                               </label>
                               <select
@@ -840,7 +840,7 @@ export default function Account() {
                                     gender: e.target.value,
                                   }))
                                 }
-                                className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                               >
                                 <option value="">Prefer not to say</option>
                                 <option value="Male">Male</option>
@@ -850,7 +850,7 @@ export default function Account() {
                               </select>
                             </div>
                             <div>
-                              <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                              <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                 Preferred Language
                               </label>
                               <select
@@ -861,7 +861,7 @@ export default function Account() {
                                     preferredLanguage: e.target.value,
                                   }))
                                 }
-                                className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                               >
                                 <option value="English">English</option>
                                 <option value="Spanish">Spanish</option>
@@ -874,7 +874,7 @@ export default function Account() {
                               </select>
                             </div>
                             <div>
-                              <label className="flex items-center gap-2 text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc]">
+                              <label className="flex items-center gap-2 text-sm font-medium text-[#0a192f]">
                                 <input
                                   type="checkbox"
                                   checked={editForm.newsletter}
@@ -884,11 +884,11 @@ export default function Account() {
                                       newsletter: e.target.checked,
                                     }))
                                   }
-                                  className="rounded border-[#e0e0e0] dark:border-[#304a6e] text-primary focus:ring-primary"
+                                  className="rounded border-[#e0e0e0] text-primary focus:ring-primary"
                                 />
                                 Subscribe to newsletter
                               </label>
-                              <p className="text-xs text-[#5c5c5c] dark:text-[#a8b2d1] mt-1">
+                              <p className="text-xs text-[#5c5c5c] mt-1">
                                 Receive updates about new products and special
                                 offers
                               </p>
@@ -903,7 +903,7 @@ export default function Account() {
                               </button>
                               <button
                                 onClick={handleCancelEdit}
-                                className="flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 border border-[#e0e0e0] dark:border-[#304a6e] text-[#5c5c5c] dark:text-[#a8b2d1] text-sm font-bold leading-normal hover:bg-[#f5f5f5] dark:hover:bg-[#1a2332] transition-colors"
+                                className="flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 border border-[#e0e0e0] text-[#5c5c5c] text-sm font-bold leading-normal hover:bg-[#f5f5f5] transition-colors"
                               >
                                 Cancel
                               </button>
@@ -922,23 +922,23 @@ export default function Account() {
                                 }}
                               ></div>
                               <div className="flex flex-col">
-                                <h3 className="text-[#0a192f] dark:text-[#f5f5dc] text-base font-medium leading-normal">
+                                <h3 className="text-[#0a192f] text-base font-medium leading-normal">
                                   {userDetails?.displayName ||
                                     userProfile?.displayName ||
                                     "User"}
                                 </h3>
-                                <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm font-normal leading-normal">
+                                <p className="text-[#5c5c5c] text-sm font-normal leading-normal">
                                   {userDetails?.email ||
                                     userProfile?.email ||
                                     ""}
                                 </p>
                                 {userDetails?.profile?.phone && (
-                                  <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm font-normal leading-normal">
+                                  <p className="text-[#5c5c5c] text-sm font-normal leading-normal">
                                     {userDetails.profile.phone}
                                   </p>
                                 )}
                                 {userDetails?.profile?.dateOfBirth && (
-                                  <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm font-normal leading-normal">
+                                  <p className="text-[#5c5c5c] text-sm font-normal leading-normal">
                                     Born:{" "}
                                     {new Date(
                                       userDetails.profile.dateOfBirth
@@ -946,18 +946,18 @@ export default function Account() {
                                   </p>
                                 )}
                                 {userDetails?.profile?.gender && (
-                                  <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm font-normal leading-normal">
+                                  <p className="text-[#5c5c5c] text-sm font-normal leading-normal">
                                     Gender: {userDetails.profile.gender}
                                   </p>
                                 )}
                                 {userDetails?.profile?.preferredLanguage && (
-                                  <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm font-normal leading-normal">
+                                  <p className="text-[#5c5c5c] text-sm font-normal leading-normal">
                                     Language:{" "}
                                     {userDetails.profile.preferredLanguage}
                                   </p>
                                 )}
                                 {userDetails?.profile?.newsletter && (
-                                  <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm font-normal leading-normal">
+                                  <p className="text-[#5c5c5c] text-sm font-normal leading-normal">
                                     📧 Subscribed to newsletter
                                   </p>
                                 )}
@@ -980,7 +980,7 @@ export default function Account() {
               {activeTab === "addresses" && (
                 <div>
                   <div className="flex flex-wrap justify-between gap-3 p-4 mb-6">
-                    <h1 className="text-[#0a192f] dark:text-[#f5f5dc] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">
+                    <h1 className="text-[#0a192f] text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">
                       Saved Addresses
                     </h1>
                     <button
@@ -995,13 +995,13 @@ export default function Account() {
                   </div>
 
                   {loading ? (
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
-                      <div className="text-center text-[#5c5c5c] dark:text-[#a8b2d1]">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
+                      <div className="text-center text-[#5c5c5c]">
                         Loading addresses...
                       </div>
                     </div>
                   ) : error ? (
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
                       <div className="text-center text-red-500">{error}</div>
                     </div>
                   ) : (
@@ -1014,11 +1014,11 @@ export default function Account() {
                               editingAddress === index ? (
                                 <div
                                   key={index}
-                                  className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm"
+                                  className="bg-white p-6 rounded-xl shadow-sm"
                                 >
                                   <div className="space-y-4">
                                     <div>
-                                      <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                      <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                         Address Type
                                       </label>
                                       <select
@@ -1029,7 +1029,7 @@ export default function Account() {
                                             type: e.target.value,
                                           }))
                                         }
-                                        className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                        className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                       >
                                         <option value="Shipping">
                                           Shipping
@@ -1038,7 +1038,7 @@ export default function Account() {
                                       </select>
                                     </div>
                                     <div>
-                                      <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                      <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                         Full Name
                                       </label>
                                       <input
@@ -1050,11 +1050,11 @@ export default function Account() {
                                             name: e.target.value,
                                           }))
                                         }
-                                        className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                        className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                       />
                                     </div>
                                     <div>
-                                      <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                      <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                         Phone Number
                                       </label>
                                       <input
@@ -1066,11 +1066,11 @@ export default function Account() {
                                             phone: e.target.value,
                                           }))
                                         }
-                                        className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                        className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                       />
                                     </div>
                                     <div>
-                                      <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                      <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                         Street Address
                                       </label>
                                       <input
@@ -1082,12 +1082,12 @@ export default function Account() {
                                             street: e.target.value,
                                           }))
                                         }
-                                        className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                        className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                       />
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                       <div>
-                                        <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                        <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                           City
                                         </label>
                                         <input
@@ -1099,11 +1099,11 @@ export default function Account() {
                                               city: e.target.value,
                                             }))
                                           }
-                                          className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                          className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                         />
                                       </div>
                                       <div>
-                                        <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                        <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                           State
                                         </label>
                                         <input
@@ -1115,13 +1115,13 @@ export default function Account() {
                                               state: e.target.value,
                                             }))
                                           }
-                                          className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                          className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                         />
                                       </div>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                       <div>
-                                        <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                        <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                           ZIP Code
                                         </label>
                                         <input
@@ -1133,11 +1133,11 @@ export default function Account() {
                                               zipCode: e.target.value,
                                             }))
                                           }
-                                          className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                          className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                         />
                                       </div>
                                       <div>
-                                        <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                                        <label className="block text-sm font-medium text-[#0a192f] mb-2">
                                           Country
                                         </label>
                                         <input
@@ -1149,7 +1149,7 @@ export default function Account() {
                                               country: e.target.value,
                                             }))
                                           }
-                                          className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                                          className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                                         />
                                       </div>
                                     </div>
@@ -1163,7 +1163,7 @@ export default function Account() {
                                       </button>
                                       <button
                                         onClick={handleCancelAddressEdit}
-                                        className="flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 border border-[#e0e0e0] dark:border-[#304a6e] text-[#5c5c5c] dark:text-[#a8b2d1] text-sm font-bold leading-normal hover:bg-[#f5f5f5] dark:hover:bg-[#1a2332] transition-colors"
+                                        className="flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 border border-[#e0e0e0] text-[#5c5c5c] text-sm font-bold leading-normal hover:bg-[#f5f5f5] transition-colors"
                                       >
                                         Cancel
                                       </button>
@@ -1173,13 +1173,13 @@ export default function Account() {
                               ) : (
                                 <div
                                   key={index}
-                                  className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm flex flex-col justify-between"
+                                  className="bg-white p-6 rounded-xl shadow-sm flex flex-col justify-between"
                                 >
                                   <div className="mb-4">
                                     <p className="text-primary text-sm font-semibold uppercase tracking-wider mb-2">
                                       {address.type || "Shipping"}
                                     </p>
-                                    <p className="text-[#0a192f] dark:text-[#f5f5dc] leading-relaxed">
+                                    <p className="text-[#0a192f] leading-relaxed">
                                       {address.name || userDetails.displayName}
                                       {address.phone && (
                                         <>
@@ -1205,7 +1205,7 @@ export default function Account() {
                                     </button>
                                     <button
                                       onClick={() => handleDeleteAddress(index)}
-                                      className="text-sm font-bold text-[#5c5c5c] dark:text-[#a8b2d1] hover:underline"
+                                      className="text-sm font-bold text-[#5c5c5c] hover:underline"
                                     >
                                       Delete
                                     </button>
@@ -1215,10 +1215,10 @@ export default function Account() {
                           )}
                         </>
                       ) : (
-                        <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm flex flex-col justify-center items-center border-2 border-dashed border-[#e0e0e0] dark:border-[#304a6e] h-full min-h-40 col-span-2">
+                        <div className="bg-white p-6 rounded-xl shadow-sm flex flex-col justify-center items-center border-2 border-dashed border-[#e0e0e0] h-full min-h-40 col-span-2">
                           <button
                             onClick={handleAddAddress}
-                            className="flex flex-col items-center gap-2 text-[#5c5c5c] dark:text-[#a8b2d1] hover:text-primary dark:hover:text-primary transition-colors"
+                            className="flex flex-col items-center gap-2 text-[#5c5c5c] hover:text-primary transition-colors"
                           >
                             <span className="material-symbols-outlined text-4xl">
                               add_circle
@@ -1233,10 +1233,10 @@ export default function Account() {
                   )}
 
                   {addingAddress && (
-                    <div className="bg-white dark:bg-[#172a46] p-6 rounded-xl shadow-sm">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
                       <div className="space-y-4">
                         <div>
-                          <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                          <label className="block text-sm font-medium text-[#0a192f] mb-2">
                             Address Type
                           </label>
                           <select
@@ -1247,14 +1247,14 @@ export default function Account() {
                                 type: e.target.value,
                               }))
                             }
-                            className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                            className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                           >
                             <option value="Shipping">Shipping</option>
                             <option value="Billing">Billing</option>
                           </select>
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                          <label className="block text-sm font-medium text-[#0a192f] mb-2">
                             Full Name
                           </label>
                           <input
@@ -1266,11 +1266,11 @@ export default function Account() {
                                 name: e.target.value,
                               }))
                             }
-                            className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                            className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                          <label className="block text-sm font-medium text-[#0a192f] mb-2">
                             Phone Number
                           </label>
                           <input
@@ -1282,11 +1282,11 @@ export default function Account() {
                                 phone: e.target.value,
                               }))
                             }
-                            className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                            className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                          <label className="block text-sm font-medium text-[#0a192f] mb-2">
                             Street Address
                           </label>
                           <input
@@ -1298,12 +1298,12 @@ export default function Account() {
                                 street: e.target.value,
                               }))
                             }
-                            className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                            className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                           />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                            <label className="block text-sm font-medium text-[#0a192f] mb-2">
                               City
                             </label>
                             <input
@@ -1315,11 +1315,11 @@ export default function Account() {
                                   city: e.target.value,
                                 }))
                               }
-                              className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                              className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                            <label className="block text-sm font-medium text-[#0a192f] mb-2">
                               State
                             </label>
                             <input
@@ -1331,13 +1331,13 @@ export default function Account() {
                                   state: e.target.value,
                                 }))
                               }
-                              className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                              className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                             />
                           </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                            <label className="block text-sm font-medium text-[#0a192f] mb-2">
                               ZIP Code
                             </label>
                             <input
@@ -1349,11 +1349,11 @@ export default function Account() {
                                   zipCode: e.target.value,
                                 }))
                               }
-                              className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                              className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-[#0a192f] dark:text-[#f5f5dc] mb-2">
+                            <label className="block text-sm font-medium text-[#0a192f] mb-2">
                               Country
                             </label>
                             <input
@@ -1365,7 +1365,7 @@ export default function Account() {
                                   country: e.target.value,
                                 }))
                               }
-                              className="w-full px-3 py-2 border border-[#e0e0e0] dark:border-[#304a6e] rounded-lg bg-white dark:bg-[#172a46] text-[#0a192f] dark:text-[#f5f5dc] focus:outline-none focus:ring-2 focus:ring-primary"
+                              className="w-full px-3 py-2 border border-[#e0e0e0] rounded-lg bg-[#1a2332] text-[#0a192f] focus:outline-none focus:ring-2 focus:ring-primary"
                             />
                           </div>
                         </div>
@@ -1379,7 +1379,7 @@ export default function Account() {
                           </button>
                           <button
                             onClick={() => setAddingAddress(false)}
-                            className="flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 border border-[#e0e0e0] dark:border-[#304a6e] text-[#5c5c5c] dark:text-[#a8b2d1] text-sm font-bold leading-normal hover:bg-[#f5f5f5] dark:hover:bg-[#1a2332] transition-colors"
+                            className="flex-1 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 border border-[#e0e0e0] text-[#5c5c5c] text-sm font-bold leading-normal hover:bg-[#f5f5f5] transition-colors"
                           >
                             Cancel
                           </button>
@@ -1392,11 +1392,11 @@ export default function Account() {
             </div>
           </main>
         </div>
-        <footer className="w-full bg-white dark:bg-[#172a46] border-t border-[#e0e0e0] dark:border-[#304a6e] py-12 px-6 md:px-10 mt-auto">
+        <footer className="w-full bg-[#1a2332] border-t border-[#e0e0e0] py-12 px-6 md:px-10 mt-auto">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="md:col-span-1">
               <Link
-                className="flex items-center gap-4 text-[#0a192f] dark:text-[#f5f5dc] mb-4"
+                className="flex items-center gap-4 text-[#0a192f] mb-4"
                 href="/"
               >
                 <div className="size-8 text-primary">
@@ -1420,23 +1420,23 @@ export default function Account() {
                     </defs>
                   </svg>
                 </div>
-                <h2 className="text-[#0a192f] dark:text-[#f5f5dc] text-xl font-bold leading-tight tracking-[-0.015em]">
+                <h2 className="text-[#0a192f] text-xl font-bold leading-tight tracking-[-0.015em]">
                   Lylux Belladonna
                 </h2>
               </Link>
-              <p className="text-[#5c5c5c] dark:text-[#a8b2d1] text-sm">
+              <p className="text-[#5c5c5c] text-sm">
                 Exquisite fashion for the discerning individual.
               </p>
             </div>
             <div className="md:col-span-3 grid grid-cols-2 sm:grid-cols-4 gap-8">
               <div>
-                <h3 className="font-bold text-[#0a192f] dark:text-[#f5f5dc] mb-4">
+                <h3 className="font-bold text-[#0a192f] mb-4">
                   Shop
                 </h3>
                 <ul className="space-y-2">
                   <li>
                     <Link
-                      className="text-sm text-[#5c5c5c] dark:text-[#a8b2d1] hover:text-primary transition-colors"
+                      className="text-sm text-[#5c5c5c] hover:text-primary transition-colors"
                       href="/products"
                     >
                       New Arrivals
@@ -1444,7 +1444,7 @@ export default function Account() {
                   </li>
                   <li>
                     <Link
-                      className="text-sm text-[#5c5c5c] dark:text-[#a8b2d1] hover:text-primary transition-colors"
+                      className="text-sm text-[#5c5c5c] hover:text-primary transition-colors"
                       href="/products"
                     >
                       Collections
@@ -1452,7 +1452,7 @@ export default function Account() {
                   </li>
                   <li>
                     <Link
-                      className="text-sm text-[#5c5c5c] dark:text-[#a8b2d1] hover:text-primary transition-colors"
+                      className="text-sm text-[#5c5c5c] hover:text-primary transition-colors"
                       href="/products"
                     >
                       Bags
@@ -1460,7 +1460,7 @@ export default function Account() {
                   </li>
                   <li>
                     <Link
-                      className="text-sm text-[#5c5c5c] dark:text-[#a8b2d1] hover:text-primary transition-colors"
+                      className="text-sm text-[#5c5c5c] hover:text-primary transition-colors"
                       href="/products"
                     >
                       Accessories
@@ -1469,13 +1469,13 @@ export default function Account() {
                 </ul>
               </div>
               <div>
-                <h3 className="font-bold text-[#0a192f] dark:text-[#f5f5dc] mb-4">
+                <h3 className="font-bold text-[#0a192f] mb-4">
                   About
                 </h3>
                 <ul className="space-y-2">
                   <li>
                     <Link
-                      className="text-sm text-[#5c5c5c] dark:text-[#a8b2d1] hover:text-primary transition-colors"
+                      className="text-sm text-[#5c5c5c] hover:text-primary transition-colors"
                       href="/about"
                     >
                       Our Story
@@ -1483,7 +1483,7 @@ export default function Account() {
                   </li>
                   <li>
                     <Link
-                      className="text-sm text-[#5c5c5c] dark:text-[#a8b2d1] hover:text-primary transition-colors"
+                      className="text-sm text-[#5c5c5c] hover:text-primary transition-colors"
                       href="/about"
                     >
                       Careers
@@ -1491,7 +1491,7 @@ export default function Account() {
                   </li>
                   <li>
                     <Link
-                      className="text-sm text-[#5c5c5c] dark:text-[#a8b2d1] hover:text-primary transition-colors"
+                      className="text-sm text-[#5c5c5c] hover:text-primary transition-colors"
                       href="/about"
                     >
                       Press
@@ -1500,13 +1500,13 @@ export default function Account() {
                 </ul>
               </div>
               <div>
-                <h3 className="font-bold text-[#0a192f] dark:text-[#f5f5dc] mb-4">
+                <h3 className="font-bold text-[#0a192f] mb-4">
                   Support
                 </h3>
                 <ul className="space-y-2">
                   <li>
                     <Link
-                      className="text-sm text-[#5c5c5c] dark:text-[#a8b2d1] hover:text-primary transition-colors"
+                      className="text-sm text-[#5c5c5c] hover:text-primary transition-colors"
                       href="/contact"
                     >
                       Contact Us
@@ -1514,7 +1514,7 @@ export default function Account() {
                   </li>
                   <li>
                     <Link
-                      className="text-sm text-[#5c5c5c] dark:text-[#a8b2d1] hover:text-primary transition-colors"
+                      className="text-sm text-[#5c5c5c] hover:text-primary transition-colors"
                       href="/contact"
                     >
                       FAQ
@@ -1522,7 +1522,7 @@ export default function Account() {
                   </li>
                   <li>
                     <Link
-                      className="text-sm text-[#5c5c5c] dark:text-[#a8b2d1] hover:text-primary transition-colors"
+                      className="text-sm text-[#5c5c5c] hover:text-primary transition-colors"
                       href="/contact"
                     >
                       Shipping &amp; Returns
@@ -1531,12 +1531,12 @@ export default function Account() {
                 </ul>
               </div>
               <div>
-                <h3 className="font-bold text-[#0a192f] dark:text-[#f5f5dc] mb-4">
+                <h3 className="font-bold text-[#0a192f] mb-4">
                   Follow Us
                 </h3>
                 <div className="flex items-center gap-4">
                   <a
-                    className="text-[#5c5c5c] dark:text-[#a8b2d1] hover:text-primary transition-colors"
+                    className="text-[#5c5c5c] hover:text-primary transition-colors"
                     href="#"
                   >
                     <svg
@@ -1549,7 +1549,7 @@ export default function Account() {
                     </svg>
                   </a>
                   <a
-                    className="text-[#5c5c5c] dark:text-[#a8b2d1] hover:text-primary transition-colors"
+                    className="text-[#5c5c5c] hover:text-primary transition-colors"
                     href="#"
                   >
                     <svg
@@ -1565,7 +1565,7 @@ export default function Account() {
               </div>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-[#e0e0e0] dark:border-[#304a6e] text-center text-sm text-[#5c5c5c] dark:text-[#a8b2d1]">
+          <div className="mt-8 pt-8 border-t border-[#e0e0e0] text-center text-sm text-[#5c5c5c]">
             <p>© 2024 Lylux Belladonna. All Rights Reserved.</p>
           </div>
         </footer>
@@ -1573,3 +1573,6 @@ export default function Account() {
     </ProtectedRoute>
   );
 }
+
+
+

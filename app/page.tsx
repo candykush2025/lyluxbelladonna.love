@@ -172,7 +172,7 @@ export default function Home() {
                             className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-64 group cursor-pointer"
                           >
                             <div
-                              className="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col transition-transform group-hover:scale-105"
+                              className="w-full bg-center bg-no-repeat aspect-[3/4] bg-contain rounded-lg flex flex-col transition-transform group-hover:scale-105 bg-[#1a2332]"
                               style={{
                                 backgroundImage:
                                   product.images && product.images.length > 0
@@ -315,3 +315,4 @@ export default function Home() {
     </div>
   );
 }
+

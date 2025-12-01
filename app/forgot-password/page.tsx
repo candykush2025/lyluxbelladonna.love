@@ -29,7 +29,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background-light dark:bg-background-dark flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-background-light flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full">
         {/* Logo/Brand */}
         <div className="text-center mb-8">
@@ -38,45 +38,45 @@ export default function ForgotPasswordPage() {
               LyLux Belladonna
             </h1>
           </Link>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
+          <p className="text-gray-600 mt-2">
             Reset your password
           </p>
         </div>
 
         {/* Forgot Password Form */}
-        <div className="bg-white dark:bg-[#1a2332] rounded-lg shadow-lg p-8">
+        <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="text-center mb-6">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
               <span className="material-symbols-outlined text-3xl text-primary">
                 lock_reset
               </span>
             </div>
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
+            <h2 className="text-2xl font-semibold text-gray-900">
               Forgot Password?
             </h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+            <p className="text-sm text-gray-600 mt-2">
               Enter your email address and we'll send you a link to reset your
               password.
             </p>
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-600">{error}</p>
             </div>
           )}
 
           {success && (
-            <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+            <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
               <div className="flex items-start gap-2">
-                <span className="material-symbols-outlined text-green-600 dark:text-green-400 text-lg">
+                <span className="material-symbols-outlined text-green-600 text-lg">
                   check_circle
                 </span>
                 <div>
-                  <p className="text-sm text-green-600 dark:text-green-400 font-medium">
+                  <p className="text-sm text-green-600 font-medium">
                     Password reset email sent!
                   </p>
-                  <p className="text-xs text-green-600 dark:text-green-400 mt-1">
+                  <p className="text-xs text-green-600 mt-1">
                     Check your inbox for instructions to reset your password.
                     Don't forget to check your spam folder.
                   </p>
@@ -89,7 +89,7 @@ export default function ForgotPasswordPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
                 Email Address
               </label>
@@ -99,7 +99,7 @@ export default function ForgotPasswordPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-white/20 rounded-lg bg-white dark:bg-[#0f1623] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-[#1a2332] text-gray-900 focus:ring-2 focus:ring-primary focus:border-transparent"
                 placeholder="you@example.com"
                 disabled={success}
               />
@@ -119,7 +119,7 @@ export default function ForgotPasswordPage() {
           </form>
 
           {/* Back to Login */}
-          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-white/10 text-center">
+          <div className="mt-6 pt-6 border-t border-gray-200 text-center">
             <Link
               href="/login"
               className="text-sm text-primary hover:underline flex items-center justify-center gap-1"
@@ -134,7 +134,7 @@ export default function ForgotPasswordPage() {
           {/* Register Link */}
           {!success && (
             <div className="mt-4 text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-gray-600">
                 Don't have an account?{" "}
                 <Link href="/register" className="text-primary hover:underline">
                   Sign up
@@ -148,7 +148,7 @@ export default function ForgotPasswordPage() {
         <div className="mt-6 text-center">
           <Link
             href="/"
-            className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+            className="text-sm text-gray-600 hover:text-gray-900"
           >
             ← Back to Home
           </Link>
@@ -157,3 +157,6 @@ export default function ForgotPasswordPage() {
     </div>
   );
 }
+
+
+

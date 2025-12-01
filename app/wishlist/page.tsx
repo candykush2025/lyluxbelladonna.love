@@ -147,7 +147,7 @@ export default function WishlistPage() {
                     </button>
                     <Link
                       href={`/products/${item.productId}`}
-                      className="w-full bg-white/10 text-white font-medium py-2 px-4 rounded-lg text-sm hover:bg-white/20 transition-colors text-center"
+                      className="w-full bg-[#1a2332]/10 text-white font-medium py-2 px-4 rounded-lg text-sm hover:bg-white/20 transition-colors text-center"
                     >
                       View Details
                     </Link>
@@ -173,3 +173,5 @@ export default function WishlistPage() {
     </div>
   );
 }
+
+

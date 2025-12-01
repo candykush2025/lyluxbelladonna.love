@@ -318,3 +318,65 @@ export const updateCurrencyRates = async (data: DocumentData) => {
   );
   return { id: "currency", ...data };
 };
+
+// Variant Template operations
+export interface VariantTemplate {
+  id?: string;
+  name: string;
+  options: {
+    id: string;
+    name: string;
+    price: number;
+    image?: string;
+  }[];
+  createdAt?: any;
+  updatedAt?: any;
+}
+
+export const getVariantTemplates = async (): Promise<VariantTemplate[]> => {
+  const templatesRef = collection(db, "variantTemplates");
+  const q = query(templatesRef, orderBy("name", "asc"));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(
+    (doc) => ({ id: doc.id, ...doc.data() } as VariantTemplate)
+  );
+};
+
+export const getVariantTemplate = async (
+  id: string
+): Promise<VariantTemplate | null> => {
+  const docRef = doc(db, "variantTemplates", id);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return { id: docSnap.id, ...docSnap.data() } as VariantTemplate;
+  }
+  return null;
+};
+
+export const createVariantTemplate = async (
+  data: Omit<VariantTemplate, "id">
+): Promise<VariantTemplate> => {
+  const templatesRef = collection(db, "variantTemplates");
+  const docRef = await addDoc(templatesRef, {
+    ...data,
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+  });
+  return { id: docRef.id, ...data };
+};
+
+export const updateVariantTemplate = async (
+  id: string,
+  data: Partial<VariantTemplate>
+) => {
+  const docRef = doc(db, "variantTemplates", id);
+  await updateDoc(docRef, {
+    ...data,
+    updatedAt: Timestamp.now(),
+  });
+};
+
+export const deleteVariantTemplate = async (id: string) => {
+  const docRef = doc(db, "variantTemplates", id);
+  await deleteDoc(docRef);
+};

@@ -50,14 +50,14 @@ const Toast: React.FC<ToastProps> = ({
 
     switch (type) {
       case "success":
-        return `${baseStyles} bg-gray-800 text-green-300 border border-green-700 dark:bg-gray-800 dark:text-green-300 dark:border-green-700`;
+        return `${baseStyles} bg-gray-800 text-green-300 border border-green-700`;
       case "error":
-        return `${baseStyles} bg-gray-800 text-red-300 border border-red-700 dark:bg-gray-800 dark:text-red-300 dark:border-red-700`;
+        return `${baseStyles} bg-gray-800 text-red-300 border border-red-700`;
       case "warning":
-        return `${baseStyles} bg-gray-800 text-yellow-300 border border-yellow-700 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-700`;
+        return `${baseStyles} bg-gray-800 text-yellow-300 border border-yellow-700`;
       case "info":
       default:
-        return `${baseStyles} bg-gray-800 text-blue-300 border border-blue-700 dark:bg-gray-800 dark:text-blue-300 dark:border-blue-700`;
+        return `${baseStyles} bg-gray-800 text-blue-300 border border-blue-700`;
     }
   };
 
@@ -86,7 +86,7 @@ const Toast: React.FC<ToastProps> = ({
       <div className="flex-1 font-medium">{message}</div>
       <button
         onClick={handleClose}
-        className="ml-4 text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100 transition-colors duration-200"
+        className="ml-4 text-gray-400 hover:text-gray-600 transition-colors duration-200"
         aria-label="Close"
       >
         <X className="w-4 h-4" />
@@ -94,7 +94,7 @@ const Toast: React.FC<ToastProps> = ({
 
       {/* Progress bar */}
       {duration > 0 && (
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-700 rounded-b-lg overflow-hidden">
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-200 rounded-b-lg overflow-hidden">
           <div
             className={`h-full transition-all duration-100 ease-linear ${
               type === "success"
@@ -114,3 +114,4 @@ const Toast: React.FC<ToastProps> = ({
 };
 
 export default Toast;
+
