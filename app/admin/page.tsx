@@ -970,6 +970,34 @@ function ProductsManagement({
     addToast(`Applied variant template: ${template.name}`, "success");
   };
 
+  // Apply variant from another product
+  const applyVariantFromProduct = (productVariant: any, productName: string) => {
+    const newVariant = {
+      id: `variant-${Date.now()}`,
+      name: productVariant.name,
+      options: productVariant.options?.map((opt: any, idx: number) => ({
+        id: `option-${Date.now()}-${idx}`,
+        name: opt.name,
+        price: opt.price || 0,
+        image: "", // Images are not copied from other products
+      })) || [],
+    };
+    setVariants([...variants, newVariant]);
+    setShowVariantTemplateDropdown(false);
+    addToast(`Copied variant "${productVariant.name}" from ${productName}`, "success");
+  };
+
+  // Get products with variants for copying (excluding current product being edited)
+  const getProductsWithVariants = () => {
+    return products.filter(
+      (p) => 
+        p.hasVariants && 
+        p.variants && 
+        p.variants.length > 0 &&
+        p.id !== selectedProduct?.id // Exclude current product being edited
+    );
+  };
+
   const openSaveTemplateModal = (variantIndex: number) => {
     setSaveTemplateVariantIndex(variantIndex);
     setNewTemplateName(variants[variantIndex]?.name || "");
@@ -2061,24 +2089,24 @@ function ProductsManagement({
                                 Use Template
                               </button>
                               {showVariantTemplateDropdown && (
-                                <div className="absolute right-0 mt-2 w-72 bg-[#1a2332] border border-gray-600 rounded-lg shadow-xl z-50">
-                                  <div className="p-3 border-b border-gray-600">
-                                    <h5 className="text-sm font-medium text-white">
-                                      Saved Variant Templates
+                                <div className="absolute right-0 mt-2 w-80 bg-[#1a2332] border border-gray-600 rounded-lg shadow-xl z-50 max-h-96 overflow-hidden flex flex-col">
+                                  {/* Saved Templates Section */}
+                                  <div className="p-3 border-b border-gray-600 bg-[#0f1825]">
+                                    <h5 className="text-sm font-medium text-white flex items-center gap-2">
+                                      <span className="material-symbols-outlined text-sm text-primary">bookmark</span>
+                                      Saved Templates
                                     </h5>
                                   </div>
-                                  <div className="max-h-64 overflow-y-auto">
+                                  <div className="max-h-40 overflow-y-auto border-b border-gray-600">
                                     {variantTemplates.length === 0 ? (
-                                      <div className="p-4 text-center text-gray-400 text-sm">
+                                      <div className="p-3 text-center text-gray-400 text-xs">
                                         No saved templates yet.
-                                        <br />
-                                        Save a variant to create a template.
                                       </div>
                                     ) : (
                                       variantTemplates.map((template) => (
                                         <div
                                           key={template.id}
-                                          className="flex items-center justify-between p-3 hover:bg-[#0f1825] border-b border-gray-700 last:border-b-0"
+                                          className="flex items-center justify-between p-2 hover:bg-[#0f1825] border-b border-gray-700/50 last:border-b-0"
                                         >
                                           <button
                                             type="button"
@@ -2098,7 +2126,9 @@ function ProductsManagement({
                                               •{" "}
                                               {template.options
                                                 .map((o) => o.name)
+                                                .slice(0, 3)
                                                 .join(", ")}
+                                              {template.options.length > 3 && "..."}
                                             </div>
                                           </button>
                                           <button
@@ -2115,6 +2145,54 @@ function ProductsManagement({
                                               delete
                                             </span>
                                           </button>
+                                        </div>
+                                      ))
+                                    )}
+                                  </div>
+                                  
+                                  {/* Copy from Products Section */}
+                                  <div className="p-3 border-b border-gray-600 bg-[#0f1825]">
+                                    <h5 className="text-sm font-medium text-white flex items-center gap-2">
+                                      <span className="material-symbols-outlined text-sm text-blue-400">content_copy</span>
+                                      Copy from Products
+                                    </h5>
+                                  </div>
+                                  <div className="flex-1 overflow-y-auto max-h-48">
+                                    {getProductsWithVariants().length === 0 ? (
+                                      <div className="p-3 text-center text-gray-400 text-xs">
+                                        No other products with variants found.
+                                      </div>
+                                    ) : (
+                                      getProductsWithVariants().map((product) => (
+                                        <div key={product.id} className="border-b border-gray-700/50 last:border-b-0">
+                                          <div className="px-3 py-2 bg-[#0f1825]/50">
+                                            <div className="text-xs text-gray-400 font-medium truncate">
+                                              {product.name}
+                                            </div>
+                                          </div>
+                                          {product.variants?.map((variant: any, vIdx: number) => (
+                                            <button
+                                              key={`${product.id}-${vIdx}`}
+                                              type="button"
+                                              onClick={() => applyVariantFromProduct(variant, product.name)}
+                                              className="w-full text-left px-3 py-2 hover:bg-[#0f1825] transition-colors"
+                                            >
+                                              <div className="text-white text-sm flex items-center gap-2">
+                                                <span className="material-symbols-outlined text-xs text-gray-500">subdirectory_arrow_right</span>
+                                                {variant.name}
+                                              </div>
+                                              <div className="text-gray-400 text-xs ml-5">
+                                                {variant.options?.length || 0} option
+                                                {(variant.options?.length || 0) !== 1 ? "s" : ""}{" "}
+                                                •{" "}
+                                                {variant.options
+                                                  ?.map((o: any) => o.name)
+                                                  .slice(0, 3)
+                                                  .join(", ")}
+                                                {(variant.options?.length || 0) > 3 && "..."}
+                                              </div>
+                                            </button>
+                                          ))}
                                         </div>
                                       ))
                                     )}
