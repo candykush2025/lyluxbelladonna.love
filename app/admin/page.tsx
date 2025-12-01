@@ -971,28 +971,35 @@ function ProductsManagement({
   };
 
   // Apply variant from another product
-  const applyVariantFromProduct = (productVariant: any, productName: string) => {
+  const applyVariantFromProduct = (
+    productVariant: any,
+    productName: string
+  ) => {
     const newVariant = {
       id: `variant-${Date.now()}`,
       name: productVariant.name,
-      options: productVariant.options?.map((opt: any, idx: number) => ({
-        id: `option-${Date.now()}-${idx}`,
-        name: opt.name,
-        price: opt.price || 0,
-        image: "", // Images are not copied from other products
-      })) || [],
+      options:
+        productVariant.options?.map((opt: any, idx: number) => ({
+          id: `option-${Date.now()}-${idx}`,
+          name: opt.name,
+          price: opt.price || 0,
+          image: "", // Images are not copied from other products
+        })) || [],
     };
     setVariants([...variants, newVariant]);
     setShowVariantTemplateDropdown(false);
-    addToast(`Copied variant "${productVariant.name}" from ${productName}`, "success");
+    addToast(
+      `Copied variant "${productVariant.name}" from ${productName}`,
+      "success"
+    );
   };
 
   // Get products with variants for copying (excluding current product being edited)
   const getProductsWithVariants = () => {
     return products.filter(
-      (p) => 
-        p.hasVariants && 
-        p.variants && 
+      (p) =>
+        p.hasVariants &&
+        p.variants &&
         p.variants.length > 0 &&
         p.id !== selectedProduct?.id // Exclude current product being edited
     );
@@ -1190,7 +1197,7 @@ function ProductsManagement({
 
     try {
       await deleteBrand(brandId);
-      
+
       // Delete logo from storage if exists
       if (brandLogo) {
         try {
@@ -1201,12 +1208,12 @@ function ProductsManagement({
       }
 
       setBrands((prev) => prev.filter((b) => b.id !== brandId));
-      
+
       // If the deleted brand was selected, clear selection
       if (formData.brand === brandId) {
         setFormData((prev) => ({ ...prev, brand: "" }));
       }
-      
+
       addToast("Brand deleted successfully!", "success");
     } catch (err) {
       console.error("Error deleting brand:", err);
@@ -1794,7 +1801,10 @@ function ProductsManagement({
                                 <div
                                   className="flex-1 flex items-center gap-3 cursor-pointer"
                                   onClick={() => {
-                                    setFormData({ ...formData, brand: brand.id });
+                                    setFormData({
+                                      ...formData,
+                                      brand: brand.id,
+                                    });
                                     setShowBrandDropdown(false);
                                   }}
                                 >
@@ -1820,7 +1830,9 @@ function ProductsManagement({
                                     className="p-1 hover:bg-blue-500/20 rounded text-blue-400 hover:text-blue-300"
                                     title="Edit brand"
                                   >
-                                    <span className="material-symbols-outlined text-sm">edit</span>
+                                    <span className="material-symbols-outlined text-sm">
+                                      edit
+                                    </span>
                                   </button>
                                   <button
                                     type="button"
@@ -1831,7 +1843,9 @@ function ProductsManagement({
                                     className="p-1 hover:bg-red-500/20 rounded text-red-400 hover:text-red-300"
                                     title="Delete brand"
                                   >
-                                    <span className="material-symbols-outlined text-sm">delete</span>
+                                    <span className="material-symbols-outlined text-sm">
+                                      delete
+                                    </span>
                                   </button>
                                 </div>
                               </div>
@@ -1842,7 +1856,11 @@ function ProductsManagement({
                                 onClick={() => {
                                   setShowBrandDropdown(false);
                                   setEditingBrand(null);
-                                  setNewBrandData({ name: "", logo: null, logoPreview: "" });
+                                  setNewBrandData({
+                                    name: "",
+                                    logo: null,
+                                    logoPreview: "",
+                                  });
                                   setShowNewBrandForm(true);
                                 }}
                               >
@@ -1896,9 +1914,16 @@ function ProductsManagement({
                                     className="object-contain rounded"
                                   />
                                 )}
-                                <label className={`flex items-center justify-center px-4 py-2 border-2 border-dashed border-gray-600 rounded-lg cursor-pointer hover:border-primary transition-colors ${savingBrand ? "opacity-50 pointer-events-none" : ""}`}>
+                                <label
+                                  className={`flex items-center justify-center px-4 py-2 border-2 border-dashed border-gray-600 rounded-lg cursor-pointer hover:border-primary transition-colors ${
+                                    savingBrand
+                                      ? "opacity-50 pointer-events-none"
+                                      : ""
+                                  }`}
+                                >
                                   <span className="text-sm text-gray-400">
-                                    {newBrandData.logo || newBrandData.logoPreview
+                                    {newBrandData.logo ||
+                                    newBrandData.logoPreview
                                       ? "Change logo"
                                       : "Upload logo"}
                                   </span>
@@ -1915,16 +1940,26 @@ function ProductsManagement({
                             <div className="flex gap-2">
                               <button
                                 type="button"
-                                onClick={editingBrand ? handleUpdateBrand : createNewBrand}
+                                onClick={
+                                  editingBrand
+                                    ? handleUpdateBrand
+                                    : createNewBrand
+                                }
                                 disabled={savingBrand}
                                 className="px-4 py-2 bg-primary text-white text-sm font-medium rounded hover:bg-opacity-90 transition-colors disabled:opacity-50 flex items-center gap-2"
                               >
                                 {savingBrand && (
-                                  <span className="material-symbols-outlined animate-spin text-sm">progress_activity</span>
+                                  <span className="material-symbols-outlined animate-spin text-sm">
+                                    progress_activity
+                                  </span>
                                 )}
                                 {savingBrand
-                                  ? (editingBrand ? "Updating..." : "Creating...")
-                                  : (editingBrand ? "Update Brand" : "Create Brand")}
+                                  ? editingBrand
+                                    ? "Updating..."
+                                    : "Creating..."
+                                  : editingBrand
+                                  ? "Update Brand"
+                                  : "Create Brand"}
                               </button>
                               <button
                                 type="button"
@@ -2093,7 +2128,9 @@ function ProductsManagement({
                                   {/* Saved Templates Section */}
                                   <div className="p-3 border-b border-gray-600 bg-[#0f1825]">
                                     <h5 className="text-sm font-medium text-white flex items-center gap-2">
-                                      <span className="material-symbols-outlined text-sm text-primary">bookmark</span>
+                                      <span className="material-symbols-outlined text-sm text-primary">
+                                        bookmark
+                                      </span>
                                       Saved Templates
                                     </h5>
                                   </div>
@@ -2128,7 +2165,8 @@ function ProductsManagement({
                                                 .map((o) => o.name)
                                                 .slice(0, 3)
                                                 .join(", ")}
-                                              {template.options.length > 3 && "..."}
+                                              {template.options.length > 3 &&
+                                                "..."}
                                             </div>
                                           </button>
                                           <button
@@ -2149,11 +2187,13 @@ function ProductsManagement({
                                       ))
                                     )}
                                   </div>
-                                  
+
                                   {/* Copy from Products Section */}
                                   <div className="p-3 border-b border-gray-600 bg-[#0f1825]">
                                     <h5 className="text-sm font-medium text-white flex items-center gap-2">
-                                      <span className="material-symbols-outlined text-sm text-blue-400">content_copy</span>
+                                      <span className="material-symbols-outlined text-sm text-blue-400">
+                                        content_copy
+                                      </span>
                                       Copy from Products
                                     </h5>
                                   </div>
@@ -2163,38 +2203,58 @@ function ProductsManagement({
                                         No other products with variants found.
                                       </div>
                                     ) : (
-                                      getProductsWithVariants().map((product) => (
-                                        <div key={product.id} className="border-b border-gray-700/50 last:border-b-0">
-                                          <div className="px-3 py-2 bg-[#0f1825]/50">
-                                            <div className="text-xs text-gray-400 font-medium truncate">
-                                              {product.name}
+                                      getProductsWithVariants().map(
+                                        (product) => (
+                                          <div
+                                            key={product.id}
+                                            className="border-b border-gray-700/50 last:border-b-0"
+                                          >
+                                            <div className="px-3 py-2 bg-[#0f1825]/50">
+                                              <div className="text-xs text-gray-400 font-medium truncate">
+                                                {product.name}
+                                              </div>
                                             </div>
+                                            {product.variants?.map(
+                                              (variant: any, vIdx: number) => (
+                                                <button
+                                                  key={`${product.id}-${vIdx}`}
+                                                  type="button"
+                                                  onClick={() =>
+                                                    applyVariantFromProduct(
+                                                      variant,
+                                                      product.name
+                                                    )
+                                                  }
+                                                  className="w-full text-left px-3 py-2 hover:bg-[#0f1825] transition-colors"
+                                                >
+                                                  <div className="text-white text-sm flex items-center gap-2">
+                                                    <span className="material-symbols-outlined text-xs text-gray-500">
+                                                      subdirectory_arrow_right
+                                                    </span>
+                                                    {variant.name}
+                                                  </div>
+                                                  <div className="text-gray-400 text-xs ml-5">
+                                                    {variant.options?.length ||
+                                                      0}{" "}
+                                                    option
+                                                    {(variant.options?.length ||
+                                                      0) !== 1
+                                                      ? "s"
+                                                      : ""}{" "}
+                                                    •{" "}
+                                                    {variant.options
+                                                      ?.map((o: any) => o.name)
+                                                      .slice(0, 3)
+                                                      .join(", ")}
+                                                    {(variant.options?.length ||
+                                                      0) > 3 && "..."}
+                                                  </div>
+                                                </button>
+                                              )
+                                            )}
                                           </div>
-                                          {product.variants?.map((variant: any, vIdx: number) => (
-                                            <button
-                                              key={`${product.id}-${vIdx}`}
-                                              type="button"
-                                              onClick={() => applyVariantFromProduct(variant, product.name)}
-                                              className="w-full text-left px-3 py-2 hover:bg-[#0f1825] transition-colors"
-                                            >
-                                              <div className="text-white text-sm flex items-center gap-2">
-                                                <span className="material-symbols-outlined text-xs text-gray-500">subdirectory_arrow_right</span>
-                                                {variant.name}
-                                              </div>
-                                              <div className="text-gray-400 text-xs ml-5">
-                                                {variant.options?.length || 0} option
-                                                {(variant.options?.length || 0) !== 1 ? "s" : ""}{" "}
-                                                •{" "}
-                                                {variant.options
-                                                  ?.map((o: any) => o.name)
-                                                  .slice(0, 3)
-                                                  .join(", ")}
-                                                {(variant.options?.length || 0) > 3 && "..."}
-                                              </div>
-                                            </button>
-                                          ))}
-                                        </div>
-                                      ))
+                                        )
+                                      )
                                     )}
                                   </div>
                                 </div>
